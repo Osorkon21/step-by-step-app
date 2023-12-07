@@ -10,6 +10,10 @@ const goalSchema = new Schema({
     type: Boolean,
     default: false
   },
+  category: {
+    type: Schema.Types.ObjectId,
+    ref: 'Category'
+  },
   steps: [
     stepSchema
   ]
@@ -23,3 +27,5 @@ const Goal = model('Goal', goalSchema);
 module.exports = Goal;
 
 // No huge notes on this model- let me know if I should add/omit anything. -LT
+// Info attached with thread is stored with an Id, assistant can refer back to an Id
+

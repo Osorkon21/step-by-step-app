@@ -4,7 +4,7 @@ const stepSchema = require("./stepSchema")
 const goalSchema = new Schema({
   name: {
     type: String,
-    required: true,
+    required: true
   },
   completed: {
     type: Boolean,

@@ -3,64 +3,77 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 require("dotenv").config();
 
-const Model = User; 
+const Model = User;
 
-  async function verifyUser(req){
-    const cookie = req.cookies["auth-cookie"]
-    if( !cookie ) return false 
+async function verifyUser(req) {
+  const cookie = req.cookies["auth-cookie"]
+  if (!cookie) return false
 
-    const isVerified = jwt.verify(cookie, process.env.JWT_SECRET)
-    if( !isVerified ) return false 
+  const isVerified = jwt.verify(cookie, process.env.JWT_SECRET)
+  if (!isVerified) return false
 
-    const user = await Model.findOne({ _id: isVerified.id })
-    if( !user ) return false 
+  const user = await Model.findOne({ _id: isVerified.id })
+  if (!user) return false
 
-    return user
+  return user
 }
 
-
-async function authenticate(data){
-  let user 
+// user authentication
+async function authenticate(data) {
+  let user
 
   try {
     user = await Model.findOne({ email: data.email })
-  } catch(err) {
+  } catch (err) {
     console.log(err)
     throw new Error(err)
   }
 
-  if(!user) throw new Error("No user found")
+  if (!user) throw new Error("No user found")
 
   let userIsOk = false
   try {
-    userIsOk = await bcrypt.compare( data.password, user.password )
-  } catch(err){
+    userIsOk = await bcrypt.compare(data.password, user.password)
+  } catch (err) {
     console.log(err)
     throw new Error(err)
   }
 
-  if(!userIsOk) throw new Error("Could not login")
+  if (!userIsOk) throw new Error("Could not login")
   return user;
 }
 
-
-async function getAllItems() {
+// get all users
+async function getAllItems(req, res) {
   try {
-    return await Model.find();
+    const users = await User.find()
+      .select('-__v')
+    res.json(users);
   } catch (err) {
-    throw new Error(err)
+    console.log(err);
+    return res.status(500).json(err);
   }
 }
 
-async function getItemById(id) {
+// get one user by id
+async function getItemById(req, res) {
   try {
-    return await Model.findById(id);
+    const user = await User.findOne({ _id: req.params.userId })
+      .select('-__v')
+      .populate('goals')
+
+    if (!user) {
+      return res.status(404).json({ message: 'No user with that ID' })
+    }
+
+    res.json(user);
   } catch (err) {
-    throw new Error(err)
+    console.log(err);
+    return res.status(500).json(err);
   }
 }
 
-// use this as our signup handler
+// signup handler
 async function createItem(data) {
   try {
     return await Model.create(data);
@@ -69,23 +82,39 @@ async function createItem(data) {
   }
 }
 
-async function updateItemById(id, data) {
+// update one user by id
+async function updateItemById(req, res) {
   try {
-    return await Model.findByIdAndUpdate(
-      id,
-      data,
-      { new: true }
-    );
+    const user = await Model.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $set: req.body },
+      { runValidators: true, new: true }
+    )
+
+    if (!user) {
+      return res.status(404).json({ message: 'No user with that ID' })
+    }
+    res.json(user);
   } catch (err) {
-    throw new Error(err)
+    console.log(err);
+    res.status(500).json(err);
   }
 }
 
-async function deleteItemById(id) {
+
+// delete user by id
+async function deleteItemById(req, res) {
   try {
-    return await Model.findByIdAndDelete(id);
+    const user = await Model.findOneAndRemove({ _id: req.params.userId });
+
+    if (!user) {
+      return res.status(404).json({ message: 'No such user exists' });
+    }
+
+    res.json({ message: 'User successfully deleted' });
   } catch (err) {
-    throw new Error(err)
+    console.log(err);
+    res.status(500).json(err);
   }
 }
 

@@ -8,6 +8,7 @@ const categorySchema = new Schema({
     name: {
         type: String,
         required: true,
+        default: 'Misc.'
     },
     goals: [{
         type: Schema.Types.ObjectId,
@@ -32,3 +33,5 @@ const Category = model('Category', categorySchema);
 module.exports = Category;
 
 // Categories will be: Social, Travel, Entertainment, Skill, Misc.
+
+// Thread data: a Helper ID, Instructions, Response, Model

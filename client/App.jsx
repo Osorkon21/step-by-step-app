@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import AppProvider from './utils/AppProvider';
 import { Header, ProtectedRoute } from './components';
-import { HomePage, AuthPage, Logout, Dashboard, AddGoal } from './pages/'
+import { HomePage, AuthPage, Logout, Dashboard, AddGoal, NotFound, CompletedGoals } from './pages/'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function App() {
@@ -27,7 +27,15 @@ export default function App() {
               </ProtectedRoute>
             } />
 
+            <Route path="/completedgoals" element={
+              <ProtectedRoute>
+                <CompletedGoals />
+              </ProtectedRoute>
+            } />
+
             <Route path="/logout" element={<Logout />} />
+
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
       </BrowserRouter>

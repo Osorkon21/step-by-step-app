@@ -12,6 +12,10 @@ const goalSchema = new Schema({
       return new Date(time).toLocaleDateString()
     }
   },
+  completed: {
+    type: Boolean,
+    default: false
+  },
   steps: [{
     type: Schema.Types.ObjectId,
     ref: 'Step'

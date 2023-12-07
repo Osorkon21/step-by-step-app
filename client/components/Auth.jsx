@@ -35,6 +35,7 @@ export default function Auth({ usage = "signup" }) {
       }
       else if (response.result === "error") {
         if (response.payload.includes("duplicate key"))
+
           // not very secure - it gives out a user's email, but I don't see a way around this right now
           setSubmitError("User already exists!");
         else {

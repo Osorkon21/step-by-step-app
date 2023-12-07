@@ -34,13 +34,9 @@ async function createItem(req, res) {
   try {
     const goal = await Model.create(req.body);
 
-    if (!goal) {
-      return res.status(404).json({ message: 'No goal with that ID' })
-    }
-
     const user = await User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $push: { goals: goal.id } },
+      { $push: { goals: goal.id } }, // might be _id
       { runValidators: true, new: true }
     )
 
@@ -67,6 +63,7 @@ async function updateItemById(req, res) {
     if (!goal) {
       return res.status(404).json({ message: 'No goal with that ID' })
     }
+
     res.json(goal);
   } catch (err) {
     console.log(err);

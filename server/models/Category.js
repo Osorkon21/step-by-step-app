@@ -23,7 +23,7 @@ const categorySchema = new Schema({
     }
 );
 
-userSchema.virtual("goalsCount").get(function () {
+categorySchema.virtual("goalsCount").get(function () {
     const glCount = this.goals.length;
     return glCount;
 })

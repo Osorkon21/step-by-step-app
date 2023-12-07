@@ -31,7 +31,7 @@ export default function Auth({ usage = "signup" }) {
       console.log(response)
       if (response.result === "success") {
         setSubmitError("");
-        window.location.href = "/"
+        window.location.href = "/dashboard"
       }
       else if (response.result === "error") {
         if (response.payload.includes("duplicate key"))

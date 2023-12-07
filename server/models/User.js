@@ -2,20 +2,23 @@ const { Schema, model } = require('mongoose');
 const bcrypt = require("bcrypt")
 
 const userSchema = new Schema({
-  username: {
-    type: String,
-    unique: true,
-    required: true,
-    trimmed: true
-  },
+  // username: {
+  //   type: String,
+  //   unique: true,
+  //   required: true,
+  //   trimmed: true
+  // },
   email: {
     type: String,
+    unique: true,
+    trimmed: true,
     required: true,
-    match: [/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/, "Incorrect format! Please try again."]
+    match: [/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/, "Invalid email address! Please try again."]
   },
   password: {
     type: String,
-    required: true
+    minLength: [8, "Password must be at least 8 characters long!"],
+    required: [true, "You must create a password!"]
   },
   goals: [{
     type: Schema.Types.ObjectId,

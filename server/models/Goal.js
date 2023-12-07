@@ -20,3 +20,5 @@ const goalSchema = new Schema({
 
 const Goal = model('Goal', goalSchema);
 module.exports = Goal;
+
+// No huge notes on this model- let me know if I should add/omit anything. -LT

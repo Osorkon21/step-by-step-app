@@ -1,5 +1,11 @@
 const db = require("../config/connection")
 
+// db.once('open', async () => {
+//   await MODEL.insertMany(seedData)
+//   console.log("seeding complete")
+//   process.exit(0)
+// });
+
 /*
   To seed data:
 
@@ -8,10 +14,3 @@ const db = require("../config/connection")
   3. Uncomment the code above and replace MODEL with your imported model
 
 */
-
-
-// db.once('open', async () => {
-//   await MODEL.insertMany(seedData)
-//   console.log("seeding complete")
-//   process.exit(0)
-// });

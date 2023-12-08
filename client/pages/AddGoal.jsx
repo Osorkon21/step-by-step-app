@@ -58,7 +58,7 @@ export default function AddGoal() {
           </div>
         </form>
       ) : (
-          
+          // add step form here (not filled out or filled out, doesn't matter)
       )}
 
     </>

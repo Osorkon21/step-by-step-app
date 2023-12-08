@@ -50,3 +50,5 @@ router.delete("/:id", async (req, res) => {
 })
 
 module.exports = router;
+
+// this file does not have the same limitations as the user routes file, but I did not delete the functions here yet because I want to keep the continuity for now. 

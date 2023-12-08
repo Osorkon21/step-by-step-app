@@ -8,7 +8,7 @@ export default function Dashboard() {
     <>
       <h1>Dashboard</h1>
       <p>In Progress User goals go here?</p>
-      <button onClick={onButtonClick}>See Completed Goals</button>
+      <button onClick={onButtonClick}>Completed Goals</button>
     </>
   )
 }

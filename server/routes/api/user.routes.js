@@ -13,19 +13,10 @@ const {
   verifyUser
 } = require('../../controllers/user.controller');
 
-
-/*
-Here we remove the password (even though it's encrypted) from the response.
-This code strips the password from the user object obtained from the controller.
-But in doing so, this will destructure the mongoose object itself, so we apply the 
-toObject() method to prevent that from happening
-*/
-
 function stripPassword(user) {
   const { password, ...payload } = user.toObject()
   return payload
 }
-
 
 function createToken(email, id) {
   return jwt.sign({ email: email, id: id }, process.env.JWT_SECRET)
@@ -106,3 +97,6 @@ router.delete("/:id", async (req, res) => {
 })
 
 module.exports = router;
+
+
+// Note for this file: I had originally edited each API fetch function to match the format of homeowrk 18, but then realized that we would then be unable to use the password stripping and token functions at the beginning of this document. There might be a way to integrate them into the functionality of the controllers, but I might need a second brain to help me with the routing tomorrow. 

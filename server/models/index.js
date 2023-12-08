@@ -1,5 +1,5 @@
 const User = require('./User');
 const Goal = require('./Goal');
-const Step = require('./Step');
+const Category = require('./Category');
 
-module.exports = { User, Goal, Step };
+module.exports = { User, Goal, Category };

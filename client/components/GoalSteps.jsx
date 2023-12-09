@@ -1,6 +1,36 @@
 import { v4 as uuidv4 } from "uuid";
+import Dropdown from "react-bootstrap/Dropdown"
+import DropdownButton from "react-bootstrap/DropdownButton"
+import categories from "../utils/getCategories";
+import { useState } from "react"
 
 export default function GoalSteps({ steps, setSteps, reset, goal, setGoal }) {
+
+  const [category, setCategory] = useState(null);
+
+  // replace this with imported "categories" once API get route works
+  const dummyCategories = [
+    {
+      id: uuidv4(),
+      name: "Social"
+    },
+    {
+      id: uuidv4(),
+      name: "Travel"
+    },
+    {
+      id: uuidv4(),
+      name: "Entertainment"
+    },
+    {
+      id: uuidv4(),
+      name: "Skill"
+    },
+    {
+      id: uuidv4(),
+      name: "Misc."
+    }
+  ]
 
   // format goal and step items, add them to database
   function onNewGoalSubmit(e) {
@@ -111,12 +141,18 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal }) {
         ))}
 
         <button onClick={handleAddStep}>Add Step</button>
-        <p>Category Dropdown Placeholder</p>
-        <div>
+
+        <DropdownButton id="dropdown-basic-button" title={category ? category : "Goal Category"}>
+          {dummyCategories.map((dummyCategory) => (
+            <Dropdown.Item key={dummyCategory.id} onClick={(e) => { setCategory(e.target.text) }}>{dummyCategory.name}</Dropdown.Item>
+          ))}
+        </DropdownButton>
+
+        <div className="d-flex">
           <button onClick={() => console.log("save goal clicked")}>Save Goal</button>
+          <button type="reset" onClick={reset}>Start Over</button>
         </div>
       </form>
-    </>)
-
-
+    </>
+  )
 }

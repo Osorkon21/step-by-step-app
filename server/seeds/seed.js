@@ -1,10 +1,34 @@
 const db = require("../config/connection")
+const Category = require("../models/Category")
 
-// db.once('open', async () => {
-//   await MODEL.insertMany(seedData)
-//   console.log("seeding complete")
-//   process.exit(0)
-// });
+const seedData = [
+  {
+    name: "Social",
+    goals: []
+  },
+  {
+    name: "Travel",
+    goals: []
+  },
+  {
+    name: "Entertainment",
+    goals: []
+  },
+  {
+    name: "Skill",
+    goals: []
+  },
+  {
+    name: "Misc.",
+    goals: []
+  }
+]
+
+db.once('open', async () => {
+  await Category.insertMany(seedData)
+  console.log("seeding complete")
+  process.exit(0)
+});
 
 /*
   To seed data:

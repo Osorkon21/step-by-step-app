@@ -5,6 +5,13 @@ require("dotenv").config();
 
 const Model = User;
 
+function stripPassword(user) {
+  const { password, ...payload } = user.toObject()
+  return payload
+}
+
+
+
 async function verifyUser(req) {
   const cookie = req.cookies["auth-cookie"]
   if (!cookie) return false
@@ -47,7 +54,7 @@ async function authenticate(data) {
 async function getAllItems(req, res) {
   try {
     const users = await User.find()
-      .select('-__v')
+      .select('-__v -password')
     res.json(users);
   } catch (err) {
     console.log(err);
@@ -59,7 +66,7 @@ async function getAllItems(req, res) {
 async function getItemById(req, res) {
   try {
     const user = await User.findOne({ _id: req.params.userId })
-      .select('-__v')
+      .select('-__v -password')
       .populate('goals')
 
     if (!user) {
@@ -73,10 +80,19 @@ async function getItemById(req, res) {
   }
 }
 
+
+function createToken(email, id) {
+  return jwt.sign({ email: email, id: id }, process.env.JWT_SECRET)
+}
+
 // signup handler
 async function createItem(data) {
   try {
-    return await Model.create(data);
+    const user = await Model.create(data)
+    const token = createToken(user.email, user._id)
+    const strippedUser = stripPassword(user)
+    console.log("in controller", token, strippedUser)
+    return {user: strippedUser, token}
   } catch (err) {
     throw new Error(err)
   }
@@ -90,7 +106,8 @@ async function updateItemById(req, res) {
       { $set: req.body },
       { runValidators: true, new: true }
     )
-
+    .select("-__v -password")
+      console.log(user)
     if (!user) {
       return res.status(404).json({ message: 'No user with that ID' })
     }
@@ -105,7 +122,7 @@ async function updateItemById(req, res) {
 // delete user by id
 async function deleteItemById(req, res) {
   try {
-    const user = await Model.findOneAndRemove({ _id: req.params.userId });
+    const user = await Model.findByIdAndDelete({ _id: req.params.userId });
 
     if (!user) {
       return res.status(404).json({ message: 'No such user exists' });

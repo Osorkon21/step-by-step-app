@@ -22,19 +22,23 @@ function createToken(email, id) {
   return jwt.sign({ email: email, id: id }, process.env.JWT_SECRET)
 }
 
+// GET ALL USERS
+router.route("/").get(getAllUsers)
 // Declare the routes that point to the controllers above
-router.get("/", async (req, res) => {
-  try {
-    const payload = await getAllUsers()
-    res.status(200).json({ result: "success", payload })
-  } catch (err) {
-    res.status(500).json({ result: "error", payload: err.message })
-  }
-})
+// router.get("/", async (req, res) => {
+//   try {
+//     const payload = await getAllUsers()
+//     res.status(200).json({ result: "success", payload })
+//   } catch (err) {
+//     res.status(500).json({ result: "error", payload: err.message })
+//   }
+// })
 
+// router.route("/verify").get(verifyUser)
 
 router.get("/verify", async (req, res) => {
   const user = await verifyUser(req)
+
   if (!user) {
     res.status(401).json({ result: "invalid login" })
   } else {
@@ -44,26 +48,33 @@ router.get("/verify", async (req, res) => {
   }
 })
 
+//  USER BY ID - one user
+router.route("/:userId")
+  .get(getUserById)
+  .put(updateUserById)
+  .delete(deleteUserById)
+// router.get("/:userId", async (req, res) => {
+//   try {
+//     const user = await getUserById(req.params.id)
+//     const payload = stripPassword(user)
+//     res.status(200).json({ result: "success", payload })
+//   } catch (err) {
+//     res.status(500).json({ result: "error", payload: err.message })
+//   }
+// })
 
-router.get("/:id", async (req, res) => {
-  try {
-    const user = await getUserById(req.params.id)
-    const payload = stripPassword(user)
-    res.status(200).json({ result: "success", payload })
-  } catch (err) {
-    res.status(500).json({ result: "error", payload: err.message })
-  }
-})
+//this needs to contain the token
+// router.route("/").post(createUser)
 
 router.post("/", async (req, res) => {
   try {
-    const user = await createUser(req.body)
-    const token = createToken(user.email, user._id)
-    const payload = stripPassword(user)
-    res.cookie("auth-cookie", token).json({ result: "success", payload })
+    const { user, token } = await createUser(req.body)
+    console.log("in route", user, token)
+    res.cookie("auth-cookie", token).json({ result: "success", user })
   } catch (err) {
     res.status(500).json({ result: "error", payload: err.message })
   }
+
 })
 
 router.post("/auth", async (req, res) => {
@@ -77,24 +88,27 @@ router.post("/auth", async (req, res) => {
   }
 })
 
-router.put("/:id", async (req, res) => {
-  try {
-    const user = await updateUserById(req.params.id, req.body)
-    const payload = stripPassword(user)
-    res.status(200).json({ result: "success", payload })
-  } catch (err) {
-    res.status(500).json({ result: "error", payload: err.message })
-  }
-})
 
-router.delete("/:id", async (req, res) => {
-  try {
-    const payload = await deleteUserById(req.params.id)
-    res.status(200).json({ result: "success", payload })
-  } catch (err) {
-    res.status(500).json({ result: "error", payload: err.message })
-  }
-})
+// router.route("/:userId").put(updateUserById)
+// router.put("/:userId", async (req, res) => {
+//   try {
+//     const user = await updateUserById(req.params.userId, req.body)
+//     console.log("User route put", user)
+//     // const payload = stripPassword(user)
+//     res.status(200).json({ result: "success", payload })
+//   } catch (err) {
+//     res.status(500).json({ result: "error", payload: err.message })
+//   }
+// })
+// router.route("/:userId").delete(deleteUserById)
+// router.delete("/:userId", async (req, res) => {
+//   try {
+//     const payload = await deleteUserById(req.params.id)
+//     res.status(200).json({ result: "success", payload })
+//   } catch (err) {
+//     res.status(500).json({ result: "error", payload: err.message })
+//   }
+// })
 
 module.exports = router;
 

@@ -3,51 +3,21 @@ const router = require('express').Router();
 // Import any controllers needed here
 const { getAllGoals, getGoalById, createGoal, updateGoalById, deleteGoalById } = require('../../controllers/goal.controller');
 
+//will need to go add step routing to goal controller file, import functions here
+
 // Declare the routes that point to the controllers above
-router.get("/", async (req, res) => {
-  try {
-    const payload = await getAllGoals()
-    res.status(200).json({ result: "success", payload })
-  } catch (err) {
-    res.status(500).json({ result: "error", payload: err.message })
-  }
-})
 
-router.get("/:id", async (req, res) => {
-  try {
-    const payload = await getGoalById(req.params.id)
-    res.status(200).json({ result: "success", payload })
-  } catch (err) {
-    res.status(500).json({ result: "error", payload: err.message })
-  }
-})
+router.route("/")
+  .get(getAllGoals)
+  .post(createGoal)
 
-router.post("/", async (req, res) => {
-  try {
-    const payload = await createGoal(req.body)
-    res.status(200).json({ result: "success", payload })
-  } catch (err) {
-    res.status(500).json({ result: "error", payload: err.message })
-  }
-})
+router.route("/:_id")
+  .get(getGoalById)
+  .put(updateGoalById)
+  .delete(deleteGoalById)
 
-router.put("/:id", async (req, res) => {
-  try {
-    const payload = await updateGoalById(req.params.id, req.body)
-    res.status(200).json({ result: "success", payload })
-  } catch (err) {
-    res.status(500).json({ result: "error", payload: err.message })
-  }
-})
+// will eventually need a route for ("/:_id/steps") and ("/:_id/steps/:_id")to manipulate data within stepSchema, depending on how we want to store and display steps. 
 
-router.delete("/:id", async (req, res) => {
-  try {
-    const payload = await deleteGoalById(req.params.id)
-    res.status(200).json({ result: "success", payload })
-  } catch (err) {
-    res.status(500).json({ result: "error", payload: err.message })
-  }
-})
 
 module.exports = router;
 

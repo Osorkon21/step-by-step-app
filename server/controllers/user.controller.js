@@ -46,19 +46,35 @@ async function authenticate(data) {
 // get all users
 async function getAllItems(req, res) {
   try {
+    console.log("you hit the controller for ALL USERS")
     const users = await User.find()
       .select('-__v')
+
     res.json(users);
+
+
   } catch (err) {
-    console.log(err);
-    return res.status(500).json(err);
+    throw new Error(err)
   }
 }
+
+// get one user by id: testing
+
+// router.get("/:id", async (req, res) => {
+//   try {
+//     const user = await getUserById(req.params.id)
+//     const payload = stripPassword(user)
+//     res.status(200).json({ result: "success", payload })
+//   } catch (err) {
+//     res.status(500).json({ result: "error", payload: err.message })
+//   }
+// })
 
 // get one user by id
 async function getItemById(req, res) {
   try {
-    const user = await User.findOne({ _id: req.params.userId })
+    console.log("you hit the controller for SINGLE USER")
+    const user = await User.findOne({ _id: req.params })
       .select('-__v')
       .populate('goals')
 
@@ -66,7 +82,8 @@ async function getItemById(req, res) {
       return res.status(404).json({ message: 'No user with that ID' })
     }
 
-    res.json(user);
+    res.json({ response: "you hit the controller", user: user });
+
   } catch (err) {
     console.log(err);
     return res.status(500).json(err);

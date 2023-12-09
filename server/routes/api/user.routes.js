@@ -14,23 +14,25 @@ const {
 } = require('../../controllers/user.controller');
 
 function stripPassword(user) {
+  console.log("you hit the strip pass function", user)
   const { password, ...payload } = user.toObject()
   return payload
+}
+
+async function stripPasswordMiddleware(req, res, next) {
+  if (req.user) {
+    req.user = stripPassword(req.user);
+    console.log("this is req.user:", req.user)
+  }
+  next();
 }
 
 function createToken(email, id) {
   return jwt.sign({ email: email, id: id }, process.env.JWT_SECRET)
 }
 
-// Declare the routes that point to the controllers above
-router.get("/", async (req, res) => {
-  try {
-    const payload = await getAllUsers()
-    res.status(200).json({ result: "success", payload })
-  } catch (err) {
-    res.status(500).json({ result: "error", payload: err.message })
-  }
-})
+// get all users
+router.route("/").get(getAllUsers)  // the route to the left works in insomnia
 
 
 router.get("/verify", async (req, res) => {
@@ -44,16 +46,11 @@ router.get("/verify", async (req, res) => {
   }
 })
 
+router.route("/:_id").get(getUserById, stripPasswordMiddleware, (req, res) => {
+  res.json({ status: "you hit this response!", body: req.user });
+});
 
-router.get("/:id", async (req, res) => {
-  try {
-    const user = await getUserById(req.params.id)
-    const payload = stripPassword(user)
-    res.status(200).json({ result: "success", payload })
-  } catch (err) {
-    res.status(500).json({ result: "error", payload: err.message })
-  }
-})
+// router.route("/:_id").get(getUserById) // the route to the left works in insomnia but does not strip password 
 
 router.post("/", async (req, res) => {
   try {

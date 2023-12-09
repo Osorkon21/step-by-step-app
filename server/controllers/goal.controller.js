@@ -4,6 +4,7 @@ const Model = Goal;
 // get all goals
 async function getAllItems(req, res) {
   try {
+    console.log("get all function")
     const goals = await Model.find()
       .select('-__v')
     res.json(goals);
@@ -16,7 +17,7 @@ async function getAllItems(req, res) {
 // get one goal by id
 async function getItemById(req, res) {
   try {
-    const goal = await Model.findOne({ _id: req.params.goalId })
+    const goal = await Model.findOne({ _id: req.params._id })
 
     if (!goal) {
       return res.status(404).json({ message: 'No goal with that ID' })
@@ -55,7 +56,7 @@ async function createItem(req, res) {
 async function updateItemById(req, res) {
   try {
     const goal = await Model.findOneAndUpdate(
-      { _id: req.params.goalId },
+      { _id: req.params._id },
       { $set: req.body },
       { runValidators: true, new: true }
     )
@@ -74,7 +75,7 @@ async function updateItemById(req, res) {
 // delete a goal
 async function deleteItemById(req, res) {
   try {
-    const goal = await Model.findOneAndRemove({ _id: req.params.goalId });
+    const goal = await Model.findOneAndRemove({ _id: req.params._id });
 
     if (!goal) {
       return res.status(404).json({ message: 'No such goal exists' });
@@ -104,3 +105,6 @@ module.exports = {
   updateGoalById: updateItemById,
   deleteGoalById: deleteItemById
 }
+
+
+// step needs ability to update, create, and delete

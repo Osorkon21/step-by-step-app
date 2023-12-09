@@ -3,6 +3,7 @@ import Dropdown from "react-bootstrap/Dropdown"
 import DropdownButton from "react-bootstrap/DropdownButton"
 import categories from "../utils/getCategories";
 import { useState } from "react"
+import { redirect } from "react-router-dom";
 
 export default function GoalSteps({ steps, setSteps, reset, goal, setGoal }) {
 
@@ -33,14 +34,37 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal }) {
   ]
 
   // format goal and step items, add them to database
-  function onNewGoalSubmit(e) {
+  async function onNewGoalSubmit(e) {
     e.preventDefault();
 
-    const btnName = e.nativeEvent.submitter.name;
+    // name = goal
+    // completed = steps[n].completed
+    // category = category
+    // steps = [{
+    // title = steps[n].title
+    // text = steps[n].description
+    // }]
 
-    // process new goal submit here...
+    // make sure that goal, step, category are not an empty string...
 
-    // make sure that goal and step titles are not an empty string...
+    // replace email and password with empty string checks...
+    if (email && password) {
+      const response = await fetch('/api/goals', {
+        method: 'POST',
+        body: JSON.stringify({ email, password }),
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (response.ok) {
+
+        // go to dashboard after creating new goal
+        redirect("/dashboard");
+      } else {
+
+        //
+        alert('Failed to log in - incorrect email or password.');
+      }
+    }
   }
 
   // handle text input
@@ -128,7 +152,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal }) {
                 <label htmlFor={item.id}>Step Title:</label>
                 <input className="form-control" name="title" type="text" value={item.title} id={item.id} onChange={handleInputChange} />
               </div>
-              <button className="ms-2" id={item.id} onClick={handleDeleteStep}>Delete Step</button>
+              <button type="button" className="ms-2" id={item.id} onClick={handleDeleteStep}>Delete Step</button>
             </div>
 
             <div>
@@ -140,7 +164,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal }) {
           </div>
         ))}
 
-        <button onClick={handleAddStep}>Add Step</button>
+        <button type="button" onClick={handleAddStep}>Add Step</button>
 
         <DropdownButton id="dropdown-basic-button" title={category ? category : "Goal Category"}>
           {dummyCategories.map((dummyCategory) => (
@@ -149,8 +173,8 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal }) {
         </DropdownButton>
 
         <div className="d-flex">
-          <button onClick={() => console.log("save goal clicked")}>Save Goal</button>
-          <button type="reset" onClick={reset}>Start Over</button>
+          <button type="submit">Save Goal</button>
+          <button type="reset" onClick={reset}>Clear All</button>
         </div>
       </form>
     </>

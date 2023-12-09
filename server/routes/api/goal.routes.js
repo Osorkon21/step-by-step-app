@@ -16,6 +16,8 @@ router.route("/:_id")
   .put(updateGoalById)
   .delete(deleteGoalById)
 
+// will eventually need a route for ("/:_id/steps") and ("/:_id/steps/:_id")to manipulate data within stepSchema, depending on how we want to store and display steps. 
+
 
 module.exports = router;
 

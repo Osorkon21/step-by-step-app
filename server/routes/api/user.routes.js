@@ -23,7 +23,16 @@ function createToken(email, id) {
 }
 
 // GET ALL USERS
-router.route("/").get(getAllUsers)
+router.route("/")
+  .get(getAllUsers)
+  .post(async (req, res) => {
+    try {
+      const { user, token } = await createUser(req.body)
+      res.cookie("auth-cookie", token).json({ result: "success", user })
+    } catch (err) {
+      res.status(500).json({ result: "error", payload: err.message })
+    }
+  })
 // Declare the routes that point to the controllers above
 // router.get("/", async (req, res) => {
 //   try {
@@ -34,9 +43,8 @@ router.route("/").get(getAllUsers)
 //   }
 // })
 
-// router.route("/verify").get(verifyUser)
 
-router.get("/verify", async (req, res) => {
+router.route("/verify").get(async (req, res) => {
   const user = await verifyUser(req)
 
   if (!user) {
@@ -53,31 +61,45 @@ router.route("/:userId")
   .get(getUserById)
   .put(updateUserById)
   .delete(deleteUserById)
-// router.get("/:userId", async (req, res) => {
+
+
+router.get("/:userId", async (req, res) => {
+  try {
+    const user = await getUserById(req.params.id)
+
+    console.log(user)
+    const payload = stripPassword(user)
+    res.status(200).json({ result: "success", payload })
+  } catch (err) {
+    res.status(500).json({ result: "error", payload: err.message })
+  }
+})
+
+//this needs to contain the token
+// router.route("/").post(createUser)
+
+// router.post("/", async (req, res) => {
 //   try {
-//     const user = await getUserById(req.params.id)
-//     const payload = stripPassword(user)
-//     res.status(200).json({ result: "success", payload })
+//     const { user, token } = await createUser(req.body)
+//     res.cookie("auth-cookie", token).json({ result: "success", user })
 //   } catch (err) {
 //     res.status(500).json({ result: "error", payload: err.message })
 //   }
 // })
 
-//this needs to contain the token
-// router.route("/").post(createUser)
+// CHATGPT EXAMPLE
+// router.route("/:id")
+//   .get(async (req, res, next) => {
+//     try {
+//       await getSingleUser(req, res);
+//     } catch (err) {
+//       next(err); // This passes the error to the Express error handler
+//     }
+//   })
+//   // ... other methods
 
-router.post("/", async (req, res) => {
-  try {
-    const { user, token } = await createUser(req.body)
-    console.log("in route", user, token)
-    res.cookie("auth-cookie", token).json({ result: "success", user })
-  } catch (err) {
-    res.status(500).json({ result: "error", payload: err.message })
-  }
 
-})
-
-router.post("/auth", async (req, res) => {
+router.route("/auth").post(async (req, res) => {
   try {
     const user = await authenticate(req.body)
     const token = createToken(user.email, user._id)

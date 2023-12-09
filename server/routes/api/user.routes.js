@@ -14,8 +14,17 @@ const {
 } = require('../../controllers/user.controller');
 
 function stripPassword(user) {
+  console.log("you hit the strip pass function", user)
   const { password, ...payload } = user.toObject()
   return payload
+}
+
+async function stripPasswordMiddleware(req, res, next) {
+  if (req.user) {
+    req.user = stripPassword(req.user);
+    console.log("this is req.user:", req.user)
+  }
+  next();
 }
 
 function createToken(email, id) {

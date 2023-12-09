@@ -16,7 +16,7 @@ async function getAllItems(req, res) {
 // get one category by id
 async function getItemById(req, res) {
     try {
-        const category = await Model.findOne({ _id: req.params.categoryId })
+        const category = await Model.findOne({ _id: req.params._id })
 
         if (!category) {
             return res.status(404).json({ message: 'No category with that ID' })
@@ -42,7 +42,7 @@ async function createItem(req, res) {
 async function updateItemById(req, res) {
     try {
         const category = await Model.findOneAndUpdate(
-            { _id: req.params.categoryId },
+            { _id: req.params._id },
             { $set: req.body },
             { runValidators: true, new: true }
         )
@@ -61,7 +61,7 @@ async function updateItemById(req, res) {
 // delete a category
 async function deleteItemById(req, res) {
     try {
-        const category = await Model.findOneAndRemove({ _id: req.params.categoryId });
+        const category = await Model.findOneAndDelete({ _id: req.params._id });
 
         if (!category) {
             return res.status(404).json({ message: 'No such category exists' });

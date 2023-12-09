@@ -53,14 +53,28 @@ async function authenticate(data) {
 // get all users
 async function getAllItems(req, res) {
   try {
+    console.log("you hit the controller for ALL USERS")
     const users = await User.find()
       .select('-__v -password')
     res.json(users);
+
+
   } catch (err) {
-    console.log(err);
-    return res.status(500).json(err);
+    throw new Error(err)
   }
 }
+
+// get one user by id: testing
+
+// router.get("/:id", async (req, res) => {
+//   try {
+//     const user = await getUserById(req.params.id)
+//     const payload = stripPassword(user)
+//     res.status(200).json({ result: "success", payload })
+//   } catch (err) {
+//     res.status(500).json({ result: "error", payload: err.message })
+//   }
+// })
 
 // get one user by id
 async function getItemById(req, res) {
@@ -73,7 +87,8 @@ async function getItemById(req, res) {
       return res.status(404).json({ message: 'No user with that ID' })
     }
 
-    res.json(user);
+    res.json({ response: "you hit the controller", user: user });
+
   } catch (err) {
     console.log(err);
     return res.status(500).json(err);
@@ -92,7 +107,7 @@ async function createItem(data) {
     const token = createToken(user.email, user._id)
     const strippedUser = stripPassword(user)
     console.log("in controller", token, strippedUser)
-    return {user: strippedUser, token}
+    return { user: strippedUser, token }
   } catch (err) {
     throw new Error(err)
   }
@@ -106,8 +121,8 @@ async function updateItemById(req, res) {
       { $set: req.body },
       { runValidators: true, new: true }
     )
-    .select("-__v -password")
-      console.log(user)
+      .select("-__v -password")
+    console.log(user)
     if (!user) {
       return res.status(404).json({ message: 'No user with that ID' })
     }

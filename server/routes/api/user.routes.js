@@ -13,7 +13,6 @@ const {
   verifyUser
 } = require('../../controllers/user.controller');
 
-
 //  USER BY ID - one user
 router.route("/:userId")
   .get(getUserById)

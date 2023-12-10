@@ -10,22 +10,23 @@ function stripPassword(user) {
   return payload
 }
 
-
-
+function createToken(email, id) {
+  return jwt.sign({ email: email, id: id }, process.env.JWT_SECRET)
+}
 
 // user authentication
 async function authenticate(data) {
   let user
-  
+
   try {
     user = await Model.findOne({ email: data.email })
   } catch (err) {
     console.log(err)
     throw new Error(err)
   }
-  
+
   if (!user) throw new Error("No user found")
-  
+
   let userIsOk = false
   try {
     userIsOk = await bcrypt.compare(data.password, user.password)
@@ -33,19 +34,18 @@ async function authenticate(data) {
     console.log(err)
     throw new Error(err)
   }
-  
+
   if (!userIsOk) throw new Error("Could not login")
   const strippedUser = stripPassword(user)
-const token = createToken(user.email, user._id)
-
-return {user: strippedUser, token};
+  const token = createToken(user.email, user._id)
+  return { user: strippedUser, token };
 }
 
 // get all users
 async function getAllItems(req, res) {
   try {
     const users = await User.find()
-    .select('-__v -password')
+      .select('-__v -password')
     res.json(users);
   } catch (err) {
     console.log(err);
@@ -57,9 +57,9 @@ async function getAllItems(req, res) {
 async function getItemById(req, res) {
   try {
     const user = await User.findOne({ _id: req.params.userId })
-    .select('-__v -password')
-    .populate('goals')
-    
+      .select('-__v -password')
+      .populate('goals')
+
     if (!user) {
       return res.status(404).json({ message: 'No user with that ID' })
     }
@@ -81,12 +81,13 @@ async function verifyUser(req) {
   const user = await Model.findOne({ _id: isVerified.id })
   if (!user) return false
 
-  return user
+  const token = createToken(user.email, user._id)
+  const strippedUser = stripPassword(user)
+  console.log("in controller, user and token:", strippedUser, token)
+  return { user: strippedUser, token }
 }
 
-function createToken(email, id) {
-  return jwt.sign({ email: email, id: id }, process.env.JWT_SECRET)
-}
+
 
 // signup handler
 async function createItem(data) {
@@ -95,7 +96,7 @@ async function createItem(data) {
     const token = createToken(user.email, user._id) // TOKEN CREATED
     const strippedUser = stripPassword(user)
     console.log("in controller", token, strippedUser)
-    return {user: strippedUser, token}
+    return { user: strippedUser, token }
   } catch (err) {
     throw new Error(err)
   }
@@ -109,8 +110,8 @@ async function updateItemById(req, res) {
       { $set: req.body },
       { runValidators: true, new: true }
     )
-    .select("-__v -password")
-      console.log(user)
+      .select("-__v -password")
+    console.log(user)
     if (!user) {
       return res.status(404).json({ message: 'No user with that ID' })
     }

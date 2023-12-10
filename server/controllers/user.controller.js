@@ -10,19 +10,8 @@ function stripPassword(user) {
   return payload
 }
 
-
-
-async function verifyUser(req) {
-  const cookie = req.cookies["auth-cookie"]
-  if (!cookie) return false
-
-  const isVerified = jwt.verify(cookie, process.env.JWT_SECRET)
-  if (!isVerified) return false
-
-  const user = await Model.findOne({ _id: isVerified.id })
-  if (!user) return false
-
-  return user
+function createToken(email, id) {
+  return jwt.sign({ email: email, id: id }, process.env.JWT_SECRET)
 }
 
 // user authentication
@@ -47,7 +36,9 @@ async function authenticate(data) {
   }
 
   if (!userIsOk) throw new Error("Could not login")
-  return user;
+  const strippedUser = stripPassword(user)
+  const token = createToken(user.email, user._id)
+  return { user: strippedUser, token };
 }
 
 // get all users
@@ -95,16 +86,29 @@ async function getItemById(req, res) {
   }
 }
 
+async function verifyUser(req) {
+  const cookie = req.cookies["auth-cookie"]
+  if (!cookie) return false
 
-function createToken(email, id) {
-  return jwt.sign({ email: email, id: id }, process.env.JWT_SECRET)
+  const isVerified = jwt.verify(cookie, process.env.JWT_SECRET)
+  if (!isVerified) return false
+
+  const user = await Model.findOne({ _id: isVerified.id })
+  if (!user) return false
+
+  const token = createToken(user.email, user._id)
+  const strippedUser = stripPassword(user)
+  console.log("in controller, user and token:", strippedUser, token)
+  return { user: strippedUser, token }
 }
+
+
 
 // signup handler
 async function createItem(data) {
   try {
-    const user = await Model.create(data)
-    const token = createToken(user.email, user._id)
+    const user = await Model.create(data) //USER IS CREATED
+    const token = createToken(user.email, user._id) // TOKEN CREATED
     const strippedUser = stripPassword(user)
     console.log("in controller", token, strippedUser)
     return { user: strippedUser, token }

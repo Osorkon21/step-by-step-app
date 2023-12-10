@@ -17,7 +17,7 @@ export default function Auth({ usage = "signup" }) {
   async function handleFormSubmit(e) {
     e.preventDefault()
     const apiPath = (usage === "signup") ? "/" : "/auth"
-    const finalPath = `/api/user${apiPath}`
+    const finalPath = `/api/users${apiPath}`
     try {
       const query = await fetch(finalPath, {
         method: "POST",
@@ -49,11 +49,10 @@ export default function Auth({ usage = "signup" }) {
   }
 
   useEffect(() => {
-    setUserData({ ...userData, email: appCtx.user.email || "" })
+    setUserData({ ...userData, email: appCtx.user?.email || "" })
   }, [appCtx])
 
   useEffect(() => {
-    console.log("submitError: " + submitError)
   }, [submitError]);
 
   return (

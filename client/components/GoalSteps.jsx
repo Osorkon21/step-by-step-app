@@ -9,6 +9,8 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal }) {
 
   const [category, setCategory] = useState(null);
 
+  console.log(categories);
+
   // replace this with imported "categories" once API get route works
   const dummyCategories = [
     {

@@ -1,5 +1,5 @@
 // get all categories
-const query = await fetch("/api/category", {
+const query = await fetch("/api/categories", {
   method: "GET",
   headers: {
     "Content-Type": "application/json"

@@ -17,7 +17,7 @@ function createToken(email, id) {
 // user authentication
 async function authenticate(data) {
   let user
-
+  console.log(data)
   try {
     user = await Model.findOne({ email: data.email })
   } catch (err) {
@@ -29,7 +29,9 @@ async function authenticate(data) {
 
   let userIsOk = false
   try {
+    console.log()
     userIsOk = await bcrypt.compare(data.password, user.password)
+    console.log("userIsOk = ", userIsOk)
   } catch (err) {
     console.log(err)
     throw new Error(err)
@@ -38,6 +40,7 @@ async function authenticate(data) {
   if (!userIsOk) throw new Error("Could not login")
   const strippedUser = stripPassword(user)
   const token = createToken(user.email, user._id)
+  console.log("in controller: ", token, strippedUser)
   return { user: strippedUser, token };
 }
 

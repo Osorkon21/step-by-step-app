@@ -19,7 +19,7 @@ export default function AppProvider(props){
     }
     
     try {
-      const query = await fetch("/api/user/verify")
+      const query = await fetch("/api/users/verify")
       const response = await query.json()
       if( response.result === "success" ){
         setUser(response.payload)

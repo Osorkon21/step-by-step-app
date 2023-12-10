@@ -18,7 +18,6 @@ export default function Auth({ usage = "signup" }) {
     e.preventDefault()
     const apiPath = (usage === "signup") ? "/" : "/auth"
     const finalPath = `/api/users${apiPath}`
-
     try {
       const query = await fetch(finalPath, {
         method: "POST",
@@ -28,7 +27,6 @@ export default function Auth({ usage = "signup" }) {
         }
       })
       const response = await query.json()
-      console.log(response)
       if (response.result === "success") {
         setSubmitError("");
         window.location.href = "/dashboard"
@@ -51,11 +49,10 @@ export default function Auth({ usage = "signup" }) {
   }
 
   useEffect(() => {
-    setUserData({ ...userData, email: appCtx.user.email || "" })
+    setUserData({ ...userData, email: appCtx.user?.email || "" })
   }, [appCtx])
 
   useEffect(() => {
-    console.log("submitError: " + submitError)
   }, [submitError]);
 
   return (

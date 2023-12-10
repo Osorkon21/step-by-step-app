@@ -51,8 +51,8 @@ Below: image of the step-by-step webpage that was created.
 
 ```
 Kurt Wennsman - napoleondd86 (Github username)
-Leah Tillman - 
-Peter Krause - 
+Leah Tillman - Leah Tillman (Github username)
+Peter Krause - Osorkon21 (Github username)
 Joey Thao - Thaodev23 (Github username)
 ```
 

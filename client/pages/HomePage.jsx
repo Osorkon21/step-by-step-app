@@ -1,5 +1,8 @@
 import '../css/HomePage.css'
 import targetImage from '../image/pic1.png'
+import AiImage from '../image/pic2.png'
+import HealthyImage from '../image/pic3.png'
+import MembershipImage from '../image/pic4.png'
 
 export default function HomePage() {
 
@@ -34,6 +37,11 @@ export default function HomePage() {
               We are a non-profit organization therefore signing up for membership is totally free. We truly have a strong desire to assist people who are in need to achieve their goals.
             </p>
           </section>
+        </aside>
+        <aside className="benefits images">
+          <img src={AiImage} className="AiImage" alt="AiImage" />
+          <img src={HealthyImage} className="HealthyImage" alt="HealthyImage" />
+          <img src={MembershipImage} className="MembershipImage" alt="MembershipImage" />
         </aside>
       </p>
       <img src={targetImage} className="targetImage" alt="targetImage" />

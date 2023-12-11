@@ -1,4 +1,4 @@
-const { Schema, Types, model } = require('mongoose');
+const { Schema } = require('mongoose');
 
 const stepSchema = new Schema({
     title: {
@@ -6,11 +6,14 @@ const stepSchema = new Schema({
         required: true,
     },
     text: {
-        type: String,
-        required: true,
+        type: String
     },
     completed: {
         type: Boolean,
+        required: true
+    },
+    uuid: {
+        type: String,
         required: true
     }
 });

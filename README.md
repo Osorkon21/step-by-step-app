@@ -45,7 +45,7 @@ THEN the users will be taken to the add goal page where the step-by-step process
 ## Image 
 
 Below: image of the step-by-step webpage that was created.
-![README.file](./client/assets/pic1.png)
+![README.file](./assets/pic1.png)
 
 ## Team Members
 

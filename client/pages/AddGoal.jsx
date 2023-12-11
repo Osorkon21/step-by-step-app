@@ -2,13 +2,13 @@ import { useState } from "react"
 import { GoalCreate, GoalSteps } from "../components";
 
 export default function AddGoal() {
-  const [goal, setGoal] = useState("");
+  const [goal, setGoal] = useState({ name: "" });
   const [goalSelected, setGoalSelected] = useState(false);
   const [steps, setSteps] = useState(null);
 
   // clear all fields, go to goal create screen
   function reset() {
-    setGoal("");
+    setGoal({ name: "" });
     setGoalSelected(false);
     setSteps(null);
   }
@@ -28,7 +28,7 @@ export default function AddGoal() {
       ) :
         // if goal has been submitted, render this
         <>
-          {/* makes sure steps exist before rendering */}
+          {/* make sure steps exist before rendering */}
           {steps ? (
             <GoalSteps
               steps={steps}
@@ -36,6 +36,7 @@ export default function AddGoal() {
               reset={reset}
               goal={goal}
               setGoal={setGoal}
+              usage="createGoal"
             ></GoalSteps>
           ) : (
             // while waiting on API response, display this

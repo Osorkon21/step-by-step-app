@@ -48,6 +48,7 @@ async function createItem(req, res) {
     res.json("Goal successfully added to user!");
 
   } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 }

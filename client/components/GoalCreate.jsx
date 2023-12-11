@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from "uuid"
 
 export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps }) {
   const [submitError, setSubmitError] = useState("");
@@ -10,8 +10,8 @@ export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps })
 
     // make a call to a random goal generator API here
 
-    // set randomGoal to whatever API response we use to generate a random goal
-    const randomGoal = "<put-random-goal-here>"
+    // set randomGoal.name to whatever API response we use to generate a random goal
+    const randomGoal = { name: "<put-random-goal-here>" }
 
     setGoal(randomGoal);
   }
@@ -29,7 +29,7 @@ export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps })
       return;
     }
 
-    if (goal) {
+    if (goal.name) {
 
       // go to step edit page
       setGoalSelected(true);
@@ -40,7 +40,7 @@ export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps })
       }
       // does not call chatGPT API
       else if (btnName === "no-generate") {
-        setSteps([{ id: uuidv4(), title: "", description: "", completed: false }]);
+        setSteps([{ uuid: uuidv4(), title: "", text: "", completed: false }]);
       }
     }
     else
@@ -56,27 +56,27 @@ export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps })
     // chatGPT response needs to be formatted into an array of step objects, use this sample template for now
     const formattedAIResponse = [
       {
-        id: uuidv4(),
+        uuid: uuidv4(),
         title: "placeholderTitle",
-        description: "placeholderContent",
+        text: "placeholderContent",
         completed: false
       },
       {
-        id: uuidv4(),
+        uuid: uuidv4(),
         title: "placeholderTitle2",
-        description: "placeholderContent2",
+        text: "placeholderContent2",
         completed: false
       },
       {
-        id: uuidv4(),
+        uuid: uuidv4(),
         title: "placeholderTitle3",
-        description: "placeholderContent3",
+        text: "placeholderContent3",
         completed: false
       },
       {
-        id: uuidv4(),
+        uuid: uuidv4(),
         title: "placeholderTitle4",
-        description: "placeholderContent4",
+        text: "placeholderContent4",
         completed: false
       }
     ];
@@ -86,7 +86,7 @@ export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps })
 
   // change goal text input field
   function handleInputChange(e) {
-    setGoal(e.target.value);
+    setGoal({ name: e.target.value });
   }
 
   return (
@@ -95,7 +95,7 @@ export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps })
         <div>
           <div className="d-flex">
             <label className="d-block mb-1 me-2">What is your new goal?</label>
-            <input type="text" className="col-4" name="goal" value={goal} onChange={handleInputChange} />
+            <input type="text" className="col-4" name="goal" value={goal.name} onChange={handleInputChange} />
             <button className="ms-4" name="random-goal">Generate Random Goal</button>
           </div>
         </div>

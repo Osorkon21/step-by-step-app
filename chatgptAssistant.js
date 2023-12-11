@@ -6,8 +6,8 @@
 //   "model": "gpt-4-1106-preview"
 // }
 
-require("dotenv").config();
 const OpenAI = require("openai");
+require("dotenv").config();
 
 const fsPromises = require("fs").promises;
 
@@ -29,7 +29,7 @@ async function askQuestion(question) {
   });
 }
 
-async function main() {
+async function generateSteps(userGoal) {
   try {
     let assistantId;
     const assistantFilePath = "./assistant.json";
@@ -78,7 +78,7 @@ async function main() {
     // const userQuestion = 
     await openai.beta.threads.messages.create(thread.id,{
       role: "user",
-      content: "build a garden shed."}); //  NEED TO HAVE userGoal 
+      content: userGoal}); //  NEED TO HAVE userGoal 
 
     const run = await openai.beta.threads.runs.create(thread.id, {
       assistant_id: assistantId
@@ -106,13 +106,13 @@ async function main() {
     } else if(!["failed", "cancelled", "expired"].includes(runStatus.status)) {
       console.log("No response received from assistant")
     }
-
+    return lastMessage
   } catch (error) {
     console.error(error);
   }
 }
 
-module.exports = { generateSteps: main}
+module.exports = { generateSteps: main};
 // Call the main function
 // main();
 

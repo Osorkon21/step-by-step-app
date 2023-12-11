@@ -1,12 +1,12 @@
 import { useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 
+
 export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps }) {
   const [submitError, setSubmitError] = useState("");
-
+  let lastMessage;
   // populates goal with random project
   async function setRandomGoal() {
-
 
     // make a call to a random goal generator API here
 
@@ -29,6 +29,7 @@ export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps })
       return;
     }
 
+    let aiResponse;
     if (goal.name) {
 
       // go to step edit page
@@ -36,7 +37,9 @@ export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps })
 
       // have chatGPT generate steps
       if (btnName === "generate") {
-        generateSteps();
+        generateStepsTest(goal.name);
+        aiResponse = generateSteps(goal.name)
+        console.log(aiResponse)
       }
       // does not call chatGPT API
       else if (btnName === "no-generate") {
@@ -50,7 +53,7 @@ export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps })
   }
 
   // add generated steps created by chatGPT
-  async function generateSteps() {
+  async function generateStepsTest() {
     // make chatGPT API call here
 
     // chatGPT response needs to be formatted into an array of step objects, use this sample template for now

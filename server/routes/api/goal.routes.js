@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 // Import any controllers needed here
-const { getAllGoals, getGoalById, createGoal, updateGoalById, deleteGoalById } = require('../../controllers/goal.controller');
+const { getAllGoals, getGoalById, createGoal, updateGoalById, deleteGoalById, deleteStep, createStep } = require('../../controllers/goal.controller');
 
 //will need to go add step routing to goal controller file, import functions here
 
@@ -11,12 +11,19 @@ router.route("/")
   .get(getAllGoals)
   .post(createGoal)
 
-router.route("/:_id")
+
+router.route("/:goalId")
   .get(getGoalById)
   .put(updateGoalById)
   .delete(deleteGoalById)
 
-// will eventually need a route for ("/:_id/steps") and ("/:_id/steps/:_id")to manipulate data within stepSchema, depending on how we want to store and display steps. 
+router.route("/:goalId/steps").post(createStep)
+
+router.route("/:goalId/steps/:stepsId").delete(deleteStep)
+
+// will need a post route for ("/:userId/goals") use createGoal function here
+
+// will eventually need a route for ("/:GoalId/steps").get and ("/:_id/steps/:_id")to manipulate data within stepSchema, depending on how we want to store and display steps. 
 
 
 module.exports = router;

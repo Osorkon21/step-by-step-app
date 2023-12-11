@@ -19,8 +19,9 @@ router.route("/")
   .post(async (req, res) => {
     try {
       const { user, token } = await createUser(req.body)
-      res.cookie("auth-cookie", token).json({ result: "success", user })
+      res.cookie("auth-cookie", token).json({ result: "success", payload: user })
     } catch (err) {
+      console.log(err.message)
       res.status(500).json({ result: "error", payload: err.message })
     }
   })
@@ -50,6 +51,7 @@ router.route("/auth")
       const { user, token } = await authenticate(req.body)
       res.cookie("auth-cookie", token).json({ result: "success", payload: user })
     } catch (err) {
+      console.log(err.message)
       res.status(500).json({ result: "error", payload: "Could not authenticate user" })
     }
   })

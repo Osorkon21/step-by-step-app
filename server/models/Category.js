@@ -1,10 +1,6 @@
 const { Schema, model, Types } = require('mongoose');
 
 const categorySchema = new Schema({
-    categoryId: {
-        type: Schema.Types.ObjectId,
-        default: () => new Types.ObjectId(),
-    },
     name: {
         type: String,
         required: true,

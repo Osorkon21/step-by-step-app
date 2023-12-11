@@ -7,7 +7,7 @@ async function getAllItems(req, res) {
         const categories = await Model.find()
             .select('-__v')
         // .populate('goals')
-        res.json(categories);
+        res.json({ result: "success!", payload: categories });
     } catch (err) {
         console.log(err);
         return res.status(500).json(err);
@@ -23,7 +23,7 @@ async function getItemById(req, res) {
             return res.status(404).json({ message: 'No category with that ID' })
         }
 
-        res.json(category);
+        res.json({ result: "success!", payload: category });
     } catch (err) {
         console.log(err);
         return res.status(500).json(err);
@@ -34,7 +34,7 @@ async function getItemById(req, res) {
 async function createItem(req, res) {
     try {
         const category = await Model.create(req.body);
-        res.json(category);
+        res.json({ result: "success!", payload: category });
     } catch (err) {
         throw new Error(err)
     }
@@ -53,7 +53,7 @@ async function updateItemById(req, res) {
             return res.status(404).json({ message: 'No category with that ID' })
         }
 
-        res.json(category);
+        res.json({ result: "success!", payload: category });
     } catch (err) {
         console.log(err);
         res.status(500).json(err);

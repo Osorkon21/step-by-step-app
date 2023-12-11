@@ -2,10 +2,6 @@ const { Schema, model, Types } = require('mongoose');
 const stepSchema = require("./stepSchema")
 
 const goalSchema = new Schema({
-  goalId: {
-    type: Schema.Types.ObjectId,
-    default: () => new Types.ObjectId(),
-  },
   name: {
     type: String,
     required: true

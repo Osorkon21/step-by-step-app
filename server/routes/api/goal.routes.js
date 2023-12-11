@@ -18,6 +18,7 @@ router.route("/:goalId")
   .delete(deleteGoalById)
 
 router.route("/:goalId/steps").post(createStep)
+
 router.route("/:goalId/steps/:stepsId").delete(deleteStep)
 
 // will need a post route for ("/:userId/goals") use createGoal function here

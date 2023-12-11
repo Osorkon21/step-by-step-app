@@ -17,7 +17,7 @@ async function getAllItems(req, res) {
 // get one goal by id
 async function getItemById(req, res) {
   try {
-    const goal = await Model.findOne({ _id: req.params._id })
+    const goal = await Model.findOne({ _id: req.params.goalId })
 
     if (!goal) {
       return res.status(404).json({ message: 'No goal with that ID' })
@@ -34,6 +34,7 @@ async function getItemById(req, res) {
 async function createItem(req, res) {
   try {
     const goal = await Model.create(req.body);
+    res.json(goal);
 
     // const user = await User.findOneAndUpdate(
     //   { _id: req.params.userId },
@@ -45,7 +46,6 @@ async function createItem(req, res) {
     //   return res.status(404).json({ message: 'No user with that ID' })
     // }
 
-    res.json("Goal successfully added to user!");
 
   } catch (err) {
     res.status(500).json(err);
@@ -56,7 +56,7 @@ async function createItem(req, res) {
 async function updateItemById(req, res) {
   try {
     const goal = await Model.findOneAndUpdate(
-      { goalId: req.params.goalId },
+      { _id: req.params.goalId },
       { $set: req.body },
       { runValidators: true, new: true }
     )
@@ -75,7 +75,7 @@ async function updateItemById(req, res) {
 // delete a goal
 async function deleteItemById(req, res) {
   try {
-    const goal = await Model.findOneAndDelete({ goalId: req.params.goalId });
+    const goal = await Model.findOneAndDelete({ _id: req.params.goalId });
 
     if (!goal) {
       return res.status(404).json({ message: 'No such goal exists' });
@@ -98,26 +98,6 @@ async function deleteItemById(req, res) {
   }
 }
 
-// delete a step
-async function deleteStep(req, res) {
-  try {
-    const goal = await Goal.findOneAndUpdate(
-      { goalId: req.params.goalId },
-      { $pull: { steps: { stepsId: req.params.stepsId } } },
-    )
-
-    if (!goal) {
-      return res.status(404).json({ message: 'No goal with that ID' })
-    }
-
-    res.json({ message: 'Step successfully deleted' });
-
-  } catch (err) {
-
-    res.status(500).json(err);
-  }
-}
-
 // create a step
 async function createStep(req, res) {
   //example of req.body:
@@ -129,7 +109,7 @@ async function createStep(req, res) {
 
   try {
     const goal = await Goal.findOneAndUpdate(
-      { goalId: req.params.goalId },
+      { _id: req.params.goalId },
       { $push: { steps: req.body } },
       { runValidators: true, new: true }
     )
@@ -141,6 +121,26 @@ async function createStep(req, res) {
     res.json("Reaction successfully added to goal!");
 
   } catch (err) {
+    res.status(500).json(err);
+  }
+}
+
+// delete a step
+async function deleteStep(req, res) {
+  try {
+    const goal = await Goal.findOneAndUpdate(
+      { _id: req.params.goalId },
+      { $pull: { steps: { _id: req.params.stepsId } } },
+    )
+
+    if (!goal) {
+      return res.status(404).json({ message: 'No goal with that ID' })
+    }
+
+    res.json({ message: 'Step successfully deleted' });
+
+  } catch (err) {
+
     res.status(500).json(err);
   }
 }

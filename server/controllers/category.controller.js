@@ -6,7 +6,7 @@ async function getAllItems(req, res) {
     try {
         const categories = await Model.find()
             .select('-__v')
-            .populate('goals')
+        // .populate('goals')
         res.json(categories);
     } catch (err) {
         console.log(err);
@@ -17,7 +17,7 @@ async function getAllItems(req, res) {
 // get one category by id
 async function getItemById(req, res) {
     try {
-        const category = await Model.findOne({ _id: req.params._id })
+        const category = await Model.findOne({ _id: req.params.categoryId })
 
         if (!category) {
             return res.status(404).json({ message: 'No category with that ID' })
@@ -33,7 +33,8 @@ async function getItemById(req, res) {
 // create a category
 async function createItem(req, res) {
     try {
-        return await Model.create(req.body);
+        const category = await Model.create(req.body);
+        res.json(category);
     } catch (err) {
         throw new Error(err)
     }
@@ -62,7 +63,7 @@ async function updateItemById(req, res) {
 // delete a category
 async function deleteItemById(req, res) {
     try {
-        const category = await Model.findOneAndDelete({ _id: req.params._id });
+        const category = await Model.findOneAndDelete({ _id: req.params.categoryId });
 
         if (!category) {
             return res.status(404).json({ message: 'No such category exists' });

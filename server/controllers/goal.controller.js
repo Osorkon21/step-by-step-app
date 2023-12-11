@@ -85,13 +85,13 @@ async function deleteItemById(req, res) {
 
     await User.findOneAndUpdate(
       { _id: req.body.userId }, // no body
-      { $pull: { goals: goal._id } },
+      { $pull: { goals: goal._id } }, // edit
       { runValidators: true }
     )
 
     await Category.findOneAndUpdate(
       { _id: req.body.goal.category }, // no body
-      { $pull: { goals: goal._id } },
+      { $pull: { goals: goal._id } }, // edit
       { runValidators: true }
     )
 

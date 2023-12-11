@@ -1,7 +1,11 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 const bcrypt = require("bcrypt")
 
 const userSchema = new Schema({
+  userId: {
+    type: Schema.Types.ObjectId,
+    default: () => new Types.ObjectId(),
+  },
   email: {
     type: String,
     unique: true,

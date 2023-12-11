@@ -6,6 +6,7 @@ async function getAllItems(req, res) {
     try {
         const categories = await Model.find()
             .select('-__v')
+            .populate('goals')
         res.json(categories);
     } catch (err) {
         console.log(err);

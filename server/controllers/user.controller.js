@@ -17,7 +17,6 @@ function createToken(email, id) {
 // user authentication
 async function authenticate(data) {
   let user
-
   try {
     user = await Model.findOne({ email: data.email })
   } catch (err) {
@@ -44,28 +43,14 @@ async function authenticate(data) {
 // get all users
 async function getAllItems(req, res) {
   try {
-    console.log("you hit the controller for ALL USERS")
     const users = await User.find()
       .select('-__v -password')
     res.json(users);
-
-
   } catch (err) {
     throw new Error(err)
   }
 }
 
-// get one user by id: testing
-
-// router.get("/:id", async (req, res) => {
-//   try {
-//     const user = await getUserById(req.params.id)
-//     const payload = stripPassword(user)
-//     res.status(200).json({ result: "success", payload })
-//   } catch (err) {
-//     res.status(500).json({ result: "error", payload: err.message })
-//   }
-// })
 
 // get one user by id
 async function getItemById(req, res) {
@@ -98,7 +83,6 @@ async function verifyUser(req) {
 
   const token = createToken(user.email, user._id)
   const strippedUser = stripPassword(user)
-  console.log("in controller, user and token:", strippedUser, token)
   return { user: strippedUser, token }
 }
 
@@ -110,7 +94,6 @@ async function createItem(data) {
     const user = await Model.create(data) //USER IS CREATED
     const token = createToken(user.email, user._id) // TOKEN CREATED
     const strippedUser = stripPassword(user)
-    console.log("in controller", token, strippedUser)
     return { user: strippedUser, token }
   } catch (err) {
     throw new Error(err)
@@ -126,7 +109,6 @@ async function updateItemById(req, res) {
       { runValidators: true, new: true }
     )
       .select("-__v -password")
-    console.log(user)
     if (!user) {
       return res.status(404).json({ message: 'No user with that ID' })
     }

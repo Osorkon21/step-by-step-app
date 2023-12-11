@@ -40,7 +40,6 @@ export default function HomePage() {
         </aside>
       </p>
       <img src={targetImage} className="targetImage" alt="targetImage" />
-
       <h2 className='video'>Walkthrough .gif/video goes here</h2>
     </>
   )

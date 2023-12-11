@@ -5,23 +5,18 @@ require("dotenv").config();
 
 const Model = User;
 
-async function verifyUser(req) {
-  const cookie = req.cookies["auth-cookie"]
-  if (!cookie) return false
+function stripPassword(user) {
+  const { password, ...payload } = user.toObject()
+  return payload
+}
 
-  const isVerified = jwt.verify(cookie, process.env.JWT_SECRET)
-  if (!isVerified) return false
-
-  const user = await Model.findOne({ _id: isVerified.id })
-  if (!user) return false
-
-  return user
+function createToken(email, id) {
+  return jwt.sign({ email: email, id: id }, process.env.JWT_SECRET)
 }
 
 // user authentication
 async function authenticate(data) {
   let user
-
   try {
     user = await Model.findOne({ email: data.email })
   } catch (err) {
@@ -40,43 +35,66 @@ async function authenticate(data) {
   }
 
   if (!userIsOk) throw new Error("Could not login")
-  return user;
+  const strippedUser = stripPassword(user)
+  const token = createToken(user.email, user._id)
+  return { user: strippedUser, token };
 }
 
 // get all users
 async function getAllItems(req, res) {
   try {
     const users = await User.find()
-      .select('-__v')
-    res.json(users);
+      .select('-__v -password')
+    res.json({ result: "success!", payload: users });
   } catch (err) {
-    console.log(err);
-    return res.status(500).json(err);
+    throw new Error(err)
   }
 }
+
 
 // get one user by id
 async function getItemById(req, res) {
   try {
     const user = await User.findOne({ _id: req.params.userId })
-      .select('-__v')
+      .select('-__v -password')
       .populate('goals')
 
     if (!user) {
       return res.status(404).json({ message: 'No user with that ID' })
     }
 
-    res.json(user);
+    res.json({ response: "success", payload: user });
+
   } catch (err) {
     console.log(err);
     return res.status(500).json(err);
   }
 }
 
+async function verifyUser(req) {
+  const cookie = req.cookies["auth-cookie"]
+  if (!cookie) return false
+
+  const isVerified = jwt.verify(cookie, process.env.JWT_SECRET)
+  if (!isVerified) return false
+
+  const user = await Model.findOne({ _id: isVerified.id })
+  if (!user) return false
+
+  const token = createToken(user.email, user._id)
+  const strippedUser = stripPassword(user)
+  return { user: strippedUser, token }
+}
+
+
+
 // signup handler
 async function createItem(data) {
   try {
-    return await Model.create(data);
+    const user = await Model.create(data) //USER IS CREATED
+    const token = createToken(user.email, user._id) // TOKEN CREATED
+    const strippedUser = stripPassword(user)
+    return { user: strippedUser, token }
   } catch (err) {
     throw new Error(err)
   }
@@ -90,11 +108,11 @@ async function updateItemById(req, res) {
       { $set: req.body },
       { runValidators: true, new: true }
     )
-
+      .select("-__v -password")
     if (!user) {
       return res.status(404).json({ message: 'No user with that ID' })
     }
-    res.json(user);
+    res.json({ result: "success!", payload: user });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
@@ -105,7 +123,7 @@ async function updateItemById(req, res) {
 // delete user by id
 async function deleteItemById(req, res) {
   try {
-    const user = await Model.findOneAndRemove({ _id: req.params.userId });
+    const user = await Model.findByIdAndDelete({ _id: req.params.userId });
 
     if (!user) {
       return res.status(404).json({ message: 'No such user exists' });

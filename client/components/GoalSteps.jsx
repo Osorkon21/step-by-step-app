@@ -1,16 +1,77 @@
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from "uuid"
+import Dropdown from "react-bootstrap/Dropdown"
+import DropdownButton from "react-bootstrap/DropdownButton"
+import categories from "../utils/getCategories";
+import { useState } from "react"
+import { useAppCtx } from "../utils/AppProvider"
 
-export default function GoalSteps({ steps, setSteps, reset, goal, setGoal }) {
+export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage }) {
+
+  const appCtx = useAppCtx()
+
+  const [submitError, setSubmitError] = useState("");
+  const [category, setCategory] = useState(null);
 
   // format goal and step items, add them to database
-  function onNewGoalSubmit(e) {
+  async function handleFormSubmit(e) {
     e.preventDefault();
+    setSubmitError("");
 
-    const btnName = e.nativeEvent.submitter.name;
+    // remove all steps without a title
+    const filteredSteps = steps.filter(step => step.title);
 
-    // process new goal submit here...
+    // if required field is empty, display error
+    if (!goal.name) {
+      setSubmitError("Goal must have a title!");
+      return;
+    }
+    else if (!filteredSteps.length) {
+      setSubmitError("At least one step must have a title!");
+      return;
+    }
+    else if (!category) {
+      setSubmitError("Goal must have a category!");
+      return;
+    }
 
-    // make sure that goal and step titles are not an empty string...
+    const catToUse = categories.find((cat) => cat.name === category);
+
+    const newGoal = {
+      name: goal.name,
+
+      // if all steps are completed, goal is completed
+      completed: filteredSteps.every((step) => step.completed),
+
+      category: catToUse.id,
+      steps: filteredSteps
+    }
+
+    var response;
+
+    if (usage === "createGoal") {
+      response = await fetch('/api/goals', {
+        method: 'POST',
+        body: JSON.stringify({ goal: newGoal, userId: appCtx.user._id }),
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+    else if (usage === "updateGoal") {
+      response = await fetch(`/api/goals/${goal.id}`, {
+        method: 'PUT',
+        body: JSON.stringify({ goal: newGoal }),
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    if (response.ok) {
+
+      // go to dashboard after creating/updating goal
+      window.location.href = "/dashboard";
+    }
+    else {
+      console.log(response);
+      setSubmitError("Database error - unable to save goal!");
+    }
   }
 
   // handle text input
@@ -18,12 +79,12 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal }) {
 
     // change goal title
     if (e.target.name === "goal")
-      setGoal(e.target.value);
+      setGoal({ ...goal, name: e.target.value });
 
-    // change step title/description
+    // change step title/text
     else {
       setSteps(steps.map(item => {
-        if (item.id != e.target.id)
+        if (item.uuid != e.target.id)
           return item;
 
         return {
@@ -45,7 +106,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal }) {
     // checks/unchecks one checkbox
     else {
       setSteps(steps.map(item => {
-        if (item.id != e.target.id)
+        if (item.uuid != e.target.id)
           return item;
 
         return {
@@ -58,7 +119,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal }) {
 
   // remove step item from steps array
   function handleDeleteStep(e) {
-    setSteps(steps.filter(item => item.id != e.target.id));
+    setSteps(steps.filter(item => item.uuid != e.target.id));
   }
 
   // add new blank step
@@ -66,9 +127,9 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal }) {
     setSteps([
       ...steps,
       {
-        id: uuidv4(),
+        uuid: uuidv4(),
         title: "",
-        description: "",
+        text: "",
         completed: false
       }
     ]);
@@ -76,47 +137,57 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal }) {
 
   return (
     <>
-      <form onSubmit={onNewGoalSubmit} className="form">
+      <form onSubmit={handleFormSubmit} className="form">
         <div className="d-flex align-items-center">
           <label htmlFor="complete-all">Mark All Completed:</label>
           <input className="checkbox" type="checkbox" defaultChecked={false} id="complete-all" onChange={handleCheck} />
           <div className="w-50">
             <label htmlFor="goal">Goal Title:</label>
-            <input type="text" name="goal" id="goal" className="form-control" value={goal} onChange={handleInputChange} />
+            <input type="text" name="goal" id="goal" className="form-control" value={goal.name} onChange={handleInputChange} />
           </div>
           <button className="ms-2" type="reset" onClick={reset}>Clear All</button>
         </div>
 
         {steps.map(item => (
-          <div key={item.id} >
+          <div key={item.uuid} >
             <div className="d-flex align-items-center">
               <div className="form-group">
-                <label htmlFor={item.id}>Completed:</label>
-                <input className="checkbox" type="checkbox" checked={item.completed} id={item.id} onChange={handleCheck} />
+                <label htmlFor={item.uuid}>Completed:</label>
+                <input className="checkbox" type="checkbox" checked={item.completed} id={item.uuid} onChange={handleCheck} />
               </div>
               <div className="form-group col-6">
-                <label htmlFor={item.id}>Step Title:</label>
-                <input className="form-control" name="title" type="text" value={item.title} id={item.id} onChange={handleInputChange} />
+                <label htmlFor={item.uuid}>Step Title:</label>
+                <input className="form-control" name="title" type="text" value={item.title} id={item.uuid} onChange={handleInputChange} />
               </div>
-              <button className="ms-2" id={item.id} onClick={handleDeleteStep}>Delete Step</button>
+              <button type="button" className="ms-2" id={item.uuid} onClick={handleDeleteStep}>Delete Step</button>
             </div>
 
             <div>
               <div className="form-group col-6">
-                <label htmlFor={item.id}>Description:</label>
-                <input className="form-control" name="description" type="text" value={item.description} id={item.id} onChange={handleInputChange} />
+                <label htmlFor={item.uuid}>Description:</label>
+                <input className="form-control" name="text" type="text" value={item.text} id={item.uuid} onChange={handleInputChange} />
               </div>
             </div>
           </div>
         ))}
 
-        <button onClick={handleAddStep}>Add Step</button>
-        <p>Category Dropdown Placeholder</p>
-        <div>
-          <button onClick={() => console.log("save goal clicked")}>Save Goal</button>
+        <button type="button" onClick={handleAddStep}>Add Step</button>
+
+        <DropdownButton id="dropdown-basic-button" title={category ? category : "Goal Category"}>
+          {categories.map((category) => (
+            <Dropdown.Item key={category.id} onClick={(e) => { setCategory(e.target.text) }}>{category.name}</Dropdown.Item>
+          ))}
+        </DropdownButton>
+
+        <div className="d-flex">
+          <button type="submit">Save Goal</button>
+          <button type="reset" onClick={reset}>Clear All</button>
+        </div>
+
+        <div className="text-danger">
+          {submitError}
         </div>
       </form>
-    </>)
-
-
+    </>
+  )
 }

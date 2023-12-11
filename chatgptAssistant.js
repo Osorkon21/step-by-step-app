@@ -50,9 +50,9 @@ async function main() {
       const assistantConfig = {
         name: "Helper",
         instructions:
-          "A user will tell you about something they want to do. For Example 'I want to build a wood chair'.  Provide the user with a list of up to 10 steps so they can actualize this thing.  Save the steps as a JSON object with an array of objects. Each step as an object in the array.  For each step object include: id (corresponds to its order, ex: 1), title (ex.. Choose the Right guitar), substeps (as one string with each sentence on a separate line).",
+          "You are a helpful assistant that provides a list of up to 10 steps to fulfill an inputted goal, which designed to ouput JSON. Sample response,  id:, title: (User's goal), steps: .",
         tools: [], // configure the retrieval tool to retrieve files in the future
-        model: "gpt-4-1106-preview",
+        model: "gpt-3.5-turbo-1106",
       };
 
       // This would Create assistant if it didn't exist
@@ -79,7 +79,7 @@ async function main() {
     // const userQuestion = 
     await openai.beta.threads.messages.create(thread.id,{
       role: "user",
-      content: "Bake a Cake"}); //  NEED TO HAVE userGoal 
+      content: "Bake a clafoutis."}); //  NEED TO HAVE userGoal 
 
     const run = await openai.beta.threads.runs.create(thread.id, {
       assistant_id: assistantId

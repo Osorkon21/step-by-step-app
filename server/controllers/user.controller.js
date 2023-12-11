@@ -10,25 +10,13 @@ function stripPassword(user) {
   return payload
 }
 
-
-
-async function verifyUser(req) {
-  const cookie = req.cookies["auth-cookie"]
-  if (!cookie) return false
-
-  const isVerified = jwt.verify(cookie, process.env.JWT_SECRET)
-  if (!isVerified) return false
-
-  const user = await Model.findOne({ _id: isVerified.id })
-  if (!user) return false
-
-  return user
+function createToken(email, id) {
+  return jwt.sign({ email: email, id: id }, process.env.JWT_SECRET)
 }
 
 // user authentication
 async function authenticate(data) {
   let user
-
   try {
     user = await Model.findOne({ email: data.email })
   } catch (err) {
@@ -47,34 +35,22 @@ async function authenticate(data) {
   }
 
   if (!userIsOk) throw new Error("Could not login")
-  return user;
+  const strippedUser = stripPassword(user)
+  const token = createToken(user.email, user._id)
+  return { user: strippedUser, token };
 }
 
 // get all users
 async function getAllItems(req, res) {
   try {
-    console.log("you hit the controller for ALL USERS")
     const users = await User.find()
       .select('-__v -password')
     res.json(users);
-
-
   } catch (err) {
     throw new Error(err)
   }
 }
 
-// get one user by id: testing
-
-// router.get("/:id", async (req, res) => {
-//   try {
-//     const user = await getUserById(req.params.id)
-//     const payload = stripPassword(user)
-//     res.status(200).json({ result: "success", payload })
-//   } catch (err) {
-//     res.status(500).json({ result: "error", payload: err.message })
-//   }
-// })
 
 // get one user by id
 async function getItemById(req, res) {
@@ -95,18 +71,29 @@ async function getItemById(req, res) {
   }
 }
 
+async function verifyUser(req) {
+  const cookie = req.cookies["auth-cookie"]
+  if (!cookie) return false
 
-function createToken(email, id) {
-  return jwt.sign({ email: email, id: id }, process.env.JWT_SECRET)
+  const isVerified = jwt.verify(cookie, process.env.JWT_SECRET)
+  if (!isVerified) return false
+
+  const user = await Model.findOne({ _id: isVerified.id })
+  if (!user) return false
+
+  const token = createToken(user.email, user._id)
+  const strippedUser = stripPassword(user)
+  return { user: strippedUser, token }
 }
+
+
 
 // signup handler
 async function createItem(data) {
   try {
-    const user = await Model.create(data)
-    const token = createToken(user.email, user._id)
+    const user = await Model.create(data) //USER IS CREATED
+    const token = createToken(user.email, user._id) // TOKEN CREATED
     const strippedUser = stripPassword(user)
-    console.log("in controller", token, strippedUser)
     return { user: strippedUser, token }
   } catch (err) {
     throw new Error(err)
@@ -122,7 +109,6 @@ async function updateItemById(req, res) {
       { runValidators: true, new: true }
     )
       .select("-__v -password")
-    console.log(user)
     if (!user) {
       return res.status(404).json({ message: 'No user with that ID' })
     }

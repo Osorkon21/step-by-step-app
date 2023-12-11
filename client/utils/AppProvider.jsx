@@ -7,25 +7,37 @@ const AppContext = createContext({})
 // Create a React hook that will allow other components to use the context 
 export const useAppCtx = () => useContext(AppContext)
 
-export default function AppProvider(props){
+export default function AppProvider(props) {
 
-  const [ user, setUser ] = useState({})
+  const [user, setUser] = useState({})
 
-  async function verifyUser(){
+  async function verifyUser() {
     const cookie = Cookie.get("auth-cookie")
 
-    if(!cookie && window.location.pathname !== "/" && !window.location.pathname.includes("/auth")){
+    if (!cookie && window.location.pathname !== "/" && !window.location.pathname.includes("/auth")) {
       window.location.href = "/auth"
     }
-    
+
     try {
-      const query = await fetch("/api/user/verify")
+      const query = await fetch("/api/users/verify", {
+        method: "POST",
+        body: JSON.stringify(user),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+
+
       const response = await query.json()
-      if( response.result === "success" ){
+
+      if (response.result === "success") {
+        console.log(response);
+
         setUser(response.payload)
       }
-    } catch(err){
-      if( window.location.pathname !== "" && !window.location.pathname.includes("/auth")) {
+    } catch (err) {
+      console.log(err.message)
+      if (window.location.pathname !== "" && !window.location.pathname.includes("/auth")) {
         window.location.href = "/auth"
       }
     }
@@ -33,12 +45,12 @@ export default function AppProvider(props){
 
   useEffect(() => {
     verifyUser()
-  },[])
+  }, [])
 
 
   return (
     <AppContext.Provider value={{ user, verifyUser }}>
-      { props.children }
+      {props.children}
     </AppContext.Provider>
   )
 }

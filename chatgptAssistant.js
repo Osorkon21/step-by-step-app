@@ -10,7 +10,6 @@ require("dotenv").config();
 const OpenAI = require("openai");
 
 const fsPromises = require("fs").promises;
-const fs = require("fs");
 
 
 
@@ -79,7 +78,7 @@ async function main() {
     // const userQuestion = 
     await openai.beta.threads.messages.create(thread.id,{
       role: "user",
-      content: "Bake a clafoutis."}); //  NEED TO HAVE userGoal 
+      content: "build a garden shed."}); //  NEED TO HAVE userGoal 
 
     const run = await openai.beta.threads.runs.create(thread.id, {
       assistant_id: assistantId
@@ -113,11 +112,10 @@ async function main() {
   }
 }
 
+module.exports = { generateSteps: main}
 // Call the main function
-main();
-/////////////////// CREATE MESSAGE, - the first one ////////////\
-/////////////////// CREATE RUN, - the first one ///////////////
-/////////////////// SET RUN STATUS - check at interval if run is complete
+// main();
+
 
 
 //     // THIS WOULDN'T BE NEEDED IF WE AREN'T GOING TO ALLOW USER TO - RE-ASK

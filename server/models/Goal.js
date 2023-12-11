@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 const stepSchema = require("./stepSchema")
 
 const goalSchema = new Schema({
@@ -19,9 +19,31 @@ const goalSchema = new Schema({
   ]
 },
   {
+    toJSON: {
+      getters: true,
+      virtuals: true,
+    },
     timestamps: true,
+    id: false,
   }
 );
+
+goalSchema.virtual("stepsCount").get(function () {
+  const stCount = this.steps.length;
+  return stCount;
+})
+
+goalSchema.virtual("completedStepCount").get(function () {
+
+  var CSCount = 0;
+  for (i = 0; i < this.steps.length; i++) {
+    if (this.steps[i].completed) {
+      CSCount++
+    }
+  }
+
+  return CSCount;
+})
 
 const Goal = model('Goal', goalSchema);
 module.exports = Goal;

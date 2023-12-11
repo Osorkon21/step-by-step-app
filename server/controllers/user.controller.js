@@ -45,7 +45,7 @@ async function getAllItems(req, res) {
   try {
     const users = await User.find()
       .select('-__v -password')
-    res.json(users);
+    res.json({ result: "success!", payload: users });
   } catch (err) {
     throw new Error(err)
   }
@@ -63,7 +63,7 @@ async function getItemById(req, res) {
       return res.status(404).json({ message: 'No user with that ID' })
     }
 
-    res.json({ response: "you hit the controller", user: user });
+    res.json({ response: "success", payload: user });
 
   } catch (err) {
     console.log(err);
@@ -112,7 +112,7 @@ async function updateItemById(req, res) {
     if (!user) {
       return res.status(404).json({ message: 'No user with that ID' })
     }
-    res.json(user);
+    res.json({ result: "success!", payload: user });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);

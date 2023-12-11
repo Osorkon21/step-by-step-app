@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { GoalCreate, GoalSteps } from "../components";
-// import '../css/AddGoal.css'
-// import stepImage from '../image/pic5.png'
+import '../css/AddGoal.css'
+import stepImage from '../image/pic5.png'
 
 export default function AddGoal() {
   const [goal, setGoal] = useState({ name: "" });
@@ -17,6 +17,8 @@ export default function AddGoal() {
 
   return (
     <>
+      <img src={stepImage} className="stepImage" alt="stepImage"/>
+      <body className="body">
       {/* if no goal has been submitted, display goal create form */}
       {!goalSelected ? (
         <>
@@ -46,6 +48,7 @@ export default function AddGoal() {
           )}
         </>
       }
+    </body>
     </>
   )
 }

@@ -17,7 +17,6 @@ export default function AddGoal() {
 
   return (
     <>
-
       {/* if no goal has been submitted, display goal create form */}
       {!goalSelected ? (
         <>

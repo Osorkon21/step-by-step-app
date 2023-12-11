@@ -12,7 +12,7 @@ var categories;
 if (query.ok) {
   const response = await query.json();
 
-  categories = response.map(function (category) { return { id: category._id, name: category.name } })
+  categories = response.payload.map(function (category) { return { id: category._id, name: category.name } })
 }
 
 export default categories;

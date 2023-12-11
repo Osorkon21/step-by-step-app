@@ -3,7 +3,6 @@ import Dropdown from "react-bootstrap/Dropdown"
 import DropdownButton from "react-bootstrap/DropdownButton"
 import categories from "../utils/getCategories";
 import { useState } from "react"
-import { redirect } from "react-router-dom";
 import { useAppCtx } from "../utils/AppProvider"
 
 export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage }) {
@@ -35,13 +34,15 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
       return;
     }
 
+    const catToUse = categories.find((cat) => cat.name === category);
+
     const newGoal = {
       name: goal.name,
 
       // if all steps are completed, goal is completed
       completed: filteredSteps.every((step) => step.completed),
 
-      category: category,
+      category: catToUse.id,
       steps: filteredSteps
     }
 
@@ -50,17 +51,13 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
     if (usage === "createGoal") {
       response = await fetch('/api/goals', {
         method: 'POST',
-
-        // wire up api/goals POST route to use user id to add goal...
-        body: JSON.stringify({ goal: newGoal, user: appCtx.user._id }),
+        body: JSON.stringify({ goal: newGoal, userId: appCtx.user._id }),
         headers: { 'Content-Type': 'application/json' },
       });
     }
     else if (usage === "updateGoal") {
       response = await fetch(`/api/goals/${goal.id}`, {
         method: 'PUT',
-
-        // wire up api/goals/:goalId PUT route to work with this...
         body: JSON.stringify({ goal: newGoal }),
         headers: { 'Content-Type': 'application/json' },
       });
@@ -69,7 +66,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
     if (response.ok) {
 
       // go to dashboard after creating/updating goal
-      redirect("/dashboard");
+      window.location.href = "/dashboard";
     }
     else {
       console.log(response);

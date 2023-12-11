@@ -1,4 +1,4 @@
-const { User, Goal } = require('../models');
+const { User, Goal, Category } = require('../models');
 const Model = Goal;
 
 // get all goals
@@ -33,19 +33,23 @@ async function getItemById(req, res) {
 // create a goal
 async function createItem(req, res) {
   try {
-    const goal = await Model.create(req.body);
+    const goal = await Model.create(req.body.goal);
 
-    const user = await User.findOneAndUpdate(
-      { _id: req.params.userId },
-      { $push: { goals: goal.id } }, // might be _id
-      { runValidators: true, new: true }
+    console.log(goal);
+
+    await User.findOneAndUpdate(
+      { _id: req.body.userId },
+      { $push: { goals: goal._id } },
+      { runValidators: true }
     )
 
-    if (!user) {
-      return res.status(404).json({ message: 'No user with that ID' })
-    }
+    await Category.findOneAndUpdate(
+      { _id: req.body.goal.category },
+      { $push: { goals: goal._id } },
+      { runValidators: true }
+    )
 
-    res.json("Goal successfully added to user!");
+    res.status(200).json({ status: "success", payload: goal })
 
   } catch (err) {
     console.log(err);

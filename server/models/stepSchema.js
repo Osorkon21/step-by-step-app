@@ -1,10 +1,6 @@
-const { Types, Schema, model } = require('mongoose');
+const { Schema } = require('mongoose');
 
 const stepSchema = new Schema({
-    id: {
-        type: Schema.Types.ObjectId,
-        default: () => new Types.ObjectId(),
-    },
     title: {
         type: String,
         required: true,

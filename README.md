@@ -36,7 +36,9 @@ they can learn the step-by-step process of achieving that goal which is generate
 
 ## Image 
 
+```
 Below: image of the step-by-step webpage that was created.
+```
 ![README.file](./assets/pic1.png)
 
 ## Team Members

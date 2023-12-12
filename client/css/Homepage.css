@@ -1,16 +1,9 @@
-/* #root {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
-    background-color: rgb(94, 78, 78);
-  } */
-  
+#root {
+   background-image: linear-gradient(to right, #b43a57, #cfa028, #cc820a)
+  }
 
 .about.app {
-  /* margin-top: 0px; */
   max-width: 1280px;
-  /* margin: 0 auto; */
   padding: 10px;
   text-align: center;
   color: white;
@@ -28,26 +21,18 @@
 }
 
 .targetImage {
-  /* display: block; */
   margin-left: 120px;
-  /* margin-right: 10px; */
   margin-top: 30px;
-  /* margin-bottom: 50px; */
-  width: 480px;
+  width: 500px;
   height: 600px;
 }
 
 .benefits {
-  /* margin-right: 0px; */
-  /* margin-left: 200px; */
   margin-top: 40px;
   padding: 0px;
-  /* clear: both; */
   float: right;
   width: 20%;
   height: 100%;
-  /* font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  background-color: #2589bd; */
 }
 
 .benefits.images {

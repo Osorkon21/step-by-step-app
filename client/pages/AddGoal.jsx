@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { GoalCreate, GoalSteps } from "../components";
-import '../css/AddGoal.css'
+// import '../css/AddGoal.css'
 import stepImage from '../image/pic5.png'
 import assistStep from '../image/pic6.png'
 import stepAi from '../image/pic7.png'

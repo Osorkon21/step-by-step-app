@@ -3,6 +3,9 @@ import AppProvider from './utils/AppProvider';
 import { Header, ProtectedRoute } from './components';
 import { HomePage, AuthPage, Logout, Dashboard, AddGoal, NotFound, CompletedGoals } from './pages/'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './css/HomePage.css'
+import './css/AddGoal.css'
+
 
 export default function App() {
 

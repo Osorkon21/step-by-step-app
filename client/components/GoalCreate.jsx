@@ -70,8 +70,10 @@ export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps })
             const payload = aiResponse?.payload 
             if(payload.content && payload.content.length > 0){
               const firstContentItem = payload.content[0];
-            
+              console.log("firstContentItem = ", typeof(firstContentItem), firstContentItem)
+
               if(firstContentItem.text && firstContentItem.text.value) {
+                console.log(typeof(firstContentItem.text.value))
                 const textValue = JSON.parse(firstContentItem.text.value);
                 const userSteps = textValue.steps       
               

@@ -5,7 +5,7 @@ import { HomePage, AuthPage, Logout, Dashboard, AddGoal, NotFound, CompletedGoal
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/HomePage.css'
 import './css/AddGoal.css'
-
+import './css/AuthPage.css'
 
 export default function App() {
 

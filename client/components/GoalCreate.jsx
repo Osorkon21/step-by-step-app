@@ -1,5 +1,5 @@
-import { useState } from "react"
-import { v4 as uuidv4 } from "uuid"
+import { useState, useEffect } from "react"
+import { parse, v4 as uuidv4 } from "uuid"
 
 
 export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps }) {
@@ -23,9 +23,13 @@ export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps })
     // const randomGoal = { name: "<put-random-goal-here>" }
   }
 
+  
   // fires when buttons are clicked
   function handleFormSubmit(e) {
     e.preventDefault();
+    
+      let aiResponse;
+      let steps;
     setSubmitError("");
 
     const btnName = e.nativeEvent.submitter.name;
@@ -35,15 +39,56 @@ export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps })
       setRandomGoal();
       return;
     }
-
-    if (goal.name) {
+    const userGoal = goal.name
+    if (userGoal) {
 
       // go to step edit page
       setGoalSelected(true);
 
       // have chatGPT generate steps
       if (btnName === "generate") {
-        generateSteps();
+        
+        //do the fetch call her with async
+        const sendDataToServer = async (userGoal) => {
+          try {
+            const response = await fetch('/api/openai', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(userGoal),
+            });
+
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            aiResponse = await response.json()
+            
+            // Log server response
+            console.log("This is response in GoalCreate.jsx", aiResponse); 
+
+            const payload = aiResponse?.payload 
+            if(payload.content && payload.content.length > 0){
+              const firstContentItem = payload.content[0];
+            
+              if(firstContentItem.text && firstContentItem.text.value) {
+                const textValue = JSON.parse(firstContentItem.text.value);
+                const userSteps = textValue.steps       
+              
+                // Generate steps
+                generateSteps(userSteps);
+              }
+            }
+
+          } catch (error) {
+            console.error('There was a problem with the fetch operation:', error);
+          }
+        };
+
+        // Example usage
+        sendDataToServer({ userGoal: userGoal });
+
+        // aiResponse = generateSteps(goal.name)
       }
       // does not call chatGPT API
       else if (btnName === "no-generate") {
@@ -51,46 +96,24 @@ export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps })
       }
     }
     else
-
       // display error if goal field is empty
       setSubmitError("Goal cannot be blank!");
   }
 
   // add generated steps created by chatGPT
-  async function generateSteps() {
+  async function generateSteps(steps) {
     // make chatGPT API call here
-
-    // chatGPT response needs to be formatted into an array of step objects, use this sample template for now
-    const formattedAIResponse = [
-      {
-        uuid: uuidv4(),
-        title: "placeholderTitle",
-        text: "placeholderContent",
-        completed: false
-      },
-      {
-        uuid: uuidv4(),
-        title: "placeholderTitle2",
-        text: "placeholderContent2",
-        completed: false
-      },
-      {
-        uuid: uuidv4(),
-        title: "placeholderTitle3",
-        text: "placeholderContent3",
-        completed: false
-      },
-      {
-        uuid: uuidv4(),
-        title: "placeholderTitle4",
-        text: "placeholderContent4",
-        completed: false
-      }
-    ];
-
-    setSteps(formattedAIResponse);
+        
+    // confirm it is an array and Map to format the steps
+    if (Array.isArray(steps)){
+      const formattedAIResponse = steps.map(function (step) { return { uuid: uuidv4(), title: step, text: "", completed: false };
+    });
+      setSteps(formattedAIResponse);
+    } else {
+      console.log("Steps is not an array or is not available yet.");
+    }    
   }
-
+    
   // change goal text input field
   function handleInputChange(e) {
     setGoal({ name: e.target.value });

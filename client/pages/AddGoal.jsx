@@ -18,7 +18,7 @@ export default function AddGoal() {
 
   return (
     <>
-      <img src={assistStep} className="assistStep" alt="assistStep" />
+     <img src={assistStep} className="assistStep" alt="assistStep" />
       <img src={stepAi} className="stepAi" alt="Ai" />
       <img src={stepImage} className="stepImage" alt="stepImage" />
       <p className="paragraphStep">In order to achieve your goal you can't just take one huge step and
@@ -27,6 +27,7 @@ export default function AddGoal() {
         are willingly to help out with. Start generating goals below and an all-knowing AI will assist
         with the process.
       </p>
+     
       <div className="body">
         {/* if no goal has been submitted, display goal create form */}
         {!goalSelected ? (

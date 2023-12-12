@@ -1,4 +1,5 @@
 const { Schema } = require('mongoose');
+// default 
 
 const stepSchema = new Schema({
     title: {
@@ -10,7 +11,8 @@ const stepSchema = new Schema({
     },
     completed: {
         type: Boolean,
-        required: true
+        required: true,
+        default: false
     },
     uuid: {
         type: String,

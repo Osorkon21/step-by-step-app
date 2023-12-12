@@ -31,15 +31,34 @@
 }
 
 .goalTitle {
-    color: rgb(22, 114, 59);
+    color: black;
     margin-top: 0px;
+    margin-left: 160px;
+    font-size: larger;
+    font-family: fantasy;
 
 }
 
 .markComplete {
-    color: red;
     margin-left: 10px;
     margin-top: 40px;
+}
+
+.checkbox1 {
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-top: 40px;
+}
+
+.form-control {
+    margin-top: 40px;
+    margin-right: 20px;
+}
+
+.ms-2-1 {
+    margin-top: 40px;
+    margin-right: 90px;
+    margin-left: 10px;
 }
 
 

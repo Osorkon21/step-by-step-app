@@ -142,11 +142,11 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
         <div className="d-flex align-items-center">
           <label htmlFor="goal" className="goalTitle">Goal Title:</label>
           <label htmlFor="complete-all" className="markComplete">Mark All Completed:</label>
-          <input className="checkbox" type="checkbox" defaultChecked={false} id="complete-all" onChange={handleCheck} />
+          <input className="checkbox1" type="checkbox" defaultChecked={false} id="complete-all" onChange={handleCheck} />
           <div className="w-50">
-            <input type="text" name="goal" id="goal" className="form-control1" value={goal.name} onChange={handleInputChange} />
+            <input type="text" name="goal" id="goal" className="form-control" value={goal.name} onChange={handleInputChange} />
           </div>
-          <button className="ms-2" type="reset" onClick={reset}>Clear All</button>
+          <button className="ms-2-1" type="reset" onClick={reset}>Clear All</button>
         </div>
 
         {steps.map(item => (

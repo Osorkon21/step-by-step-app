@@ -1,4 +1,5 @@
 export { default as Goal } from "./Goal"
+export { default as GoalBar } from "./GoalBar"
 export { default as GoalCreate } from "./GoalCreate"
 export { default as GoalForm } from "./GoalForm"
 export { default as GoalList } from "./GoalList"

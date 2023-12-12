@@ -1,0 +1,31 @@
+.body {
+    background-color: rgb(83, 14, 14);
+}
+
+.assistStep {
+    height: 200px;
+    width: 320px;
+    margin-bottom: 10px;
+    margin-left: 150px;
+    margin-right: 20px;
+}
+
+.stepAi {
+    height: 200px;
+    width: 320px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 0px;
+}
+
+.stepImage {
+    height: 200px;
+    width: 320px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.paragraphStep {
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+}

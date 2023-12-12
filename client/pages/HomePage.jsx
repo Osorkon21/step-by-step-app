@@ -13,8 +13,6 @@ export default function HomePage() {
         <aside className="benefits">
           <section className="AI" >
             <h3>AI Assistance</h3>
-            {/* <img src="./assets/images/lead-generation.png" alt="turning gear pointing down to a dollar 
-            sign." /> */}
             <p>
               With the assistance of an all-knowing AI you don't have to plan out anything to determine
               the steps to achieve your goals.
@@ -22,17 +20,14 @@ export default function HomePage() {
           </section>
           <section className="goals">
             <h3>Importance of Achieving Goals</h3>
-            {/* <img src="./assets/images/brand-awareness.png" alt="blinking light bulb on top of a suit and 
-            tie." /> */}
             <p>
               We believed that achieving your goals is vital to human-being overall health. Achieving your
               goals can have major impact on one's mental, emotional and physical state so we have come
-              with a solution that we believed will provide significant support to those that are in need off assistance in achieving their goals.
+              with a solution that we believed will provide significant support to those that are in need of assistance in achieving their goals.
             </p>
           </section>
           <section className="membership">
             <h3>Membership</h3>
-            {/* <img src="./assets/images/cost-management.png" alt="turning gear on top of three dollar signs." /> */}
             <p>
               We are a non-profit organization therefore signing up for membership is totally free. We truly have a strong desire to assist people who are in need to achieve their goals.
             </p>
@@ -45,7 +40,6 @@ export default function HomePage() {
         </aside>
       </p>
       <img src={targetImage} className="targetImage" alt="targetImage" />
-
       <h2 className='video'>Walkthrough .gif/video goes here</h2>
     </>
   )

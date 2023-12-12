@@ -1,7 +1,6 @@
 import { v4 as uuidv4 } from "uuid"
 import Dropdown from "react-bootstrap/Dropdown"
 import DropdownButton from "react-bootstrap/DropdownButton"
-import categories from "../utils/getCategories";
 import { useState } from "react"
 import { useAppCtx } from "../utils/AppProvider"
 
@@ -11,6 +10,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
 
   const [submitError, setSubmitError] = useState("");
   const [category, setCategory] = useState(goal.category?.name || null);
+  const [categories, setCategories] = useState(null);
 
   // format goal and step items, add them to database
   async function handleFormSubmit(e) {
@@ -134,6 +134,29 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
       }
     ]);
   }
+
+  async function getCategories() {
+    try {
+      // get all categories
+      const query = await fetch("/api/categories", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      const response = await query.json();
+      setCategories(response.payload.map(function (category) { return { id: category._id, name: category.name } }));
+    }
+    catch (err) {
+      console.log(err.message);
+    }
+  }
+
+  useEffect(() => {
+    if (!categories)
+      getCategories();
+  }, [categories])
 
   return (
     <>

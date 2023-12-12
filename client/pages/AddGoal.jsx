@@ -27,7 +27,7 @@ export default function AddGoal() {
         are willingly to help out with. Start generating goals below and an all-knowing AI will assist
         with the process.
       </p>
-      <body className="body">
+      <div className="body">
         {/* if no goal has been submitted, display goal create form */}
         {!goalSelected ? (
           <>
@@ -60,7 +60,7 @@ export default function AddGoal() {
             )}
           </>
         }
-      </body>
+      </div>
     </>
   )
 }

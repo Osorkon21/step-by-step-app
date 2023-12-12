@@ -5,11 +5,50 @@ import MembershipImage from '../image/pic4.png'
 
 export default function HomePage() {
 
+  async function seedDatabase() {
+    const seedData = [
+      {
+        name: "Social",
+        goals: []
+      },
+      {
+        name: "Travel",
+        goals: []
+      },
+      {
+        name: "Entertainment",
+        goals: []
+      },
+      {
+        name: "Skill",
+        goals: []
+      },
+      {
+        name: "Misc.",
+        goals: []
+      }
+    ]
+
+    for (var i = 0; i < seedData.length; i++) {
+      try {
+        await fetch('/api/categories', {
+          method: 'POST',
+          body: JSON.stringify(seedData[i]),
+          headers: { 'Content-Type': 'application/json' },
+        });
+      }
+      catch (err) {
+        console.log(err.message)
+      }
+
+    }
+  }
+
   return (
     <>
       <h1 className='about app'>About This App</h1>
-      <p>Want to accomplish things but don't know how to begin? Start here! Generate goals and with a little help from AI.
-        <aside className="benefits">
+      <div>Want to accomplish things but don't know how to begin? Start here! Generate goals and with a little help from AI.
+        <div className="benefits">
           <section className="AI" >
             <h3>AI Assistance</h3>
             <p>
@@ -31,15 +70,16 @@ export default function HomePage() {
               We are a non-profit organization therefore signing up for membership is totally free. We truly have a strong desire to assist people who are in need to achieve their goals.
             </p>
           </section>
-        </aside>
-        <aside className="benefits images">
+        </div>
+        <div className="benefits images">
           <img src={AiImage} className="AiImage" alt="AiImage" />
           <img src={HealthyImage} className="HealthyImage" alt="HealthyImage" />
           <img src={MembershipImage} className="MembershipImage" alt="MembershipImage" />
-        </aside>
-      </p>
+        </div>
+      </div>
       <img src={targetImage} className="targetImage" alt="targetImage" />
       <h2 className='video'>Walkthrough .gif/video goes here</h2>
+      <button type="button" onClick={seedDatabase}>Run Category Seed</button>
     </>
   )
 }

@@ -2,6 +2,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser')
 const path = require('path');
 const db = require('./config/connection');
+const cors = require('cors'); // added because of fetch in Client
 
 const routes = require('./routes');
 
@@ -11,6 +12,9 @@ const app = express();
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors()); // ADDED FOR - CORS
+
+
 
 app.use(routes);
 

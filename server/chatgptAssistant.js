@@ -29,8 +29,10 @@ async function askQuestion(question) {
   });
 }
 
-async function generateSteps(userGoal) {
+async function generateSteps(data) {
   try {
+    const userGoal = data.userGoal
+    console.log("inside generateSteps", data.userGoal)
     let assistantId;
     const assistantFilePath = "./assistant.json";
 
@@ -112,7 +114,7 @@ async function generateSteps(userGoal) {
   }
 }
 
-module.exports = { generateSteps: main};
+module.exports = { generateSteps };
 // Call the main function
 // main();
 

@@ -1,10 +1,11 @@
 const router = require('express').Router();
-const { generateSteps } = require("../../../chatgptAssistant")
+const { generateSteps } = require("../../chatgptAssistant")
 
-// GET ALL USERS
+
 router.route("/")
   .post(async (req, res) => {
     try {
+      console.log(req.body)
       const payload = await generateSteps(req.body)
       res.status(200).json({ result: "success", payload })
     } catch (err) {
@@ -13,8 +14,15 @@ router.route("/")
     }
   })
 
+module.exports = router
 
+//   app.post('/api/userdata', (req, res) => {
+//     const userData = req.body; // Data sent from the frontend
+//     console.log(userData);
+//     // Process userData here...
 
+//     res.send('Data received');
+// });
 
 
   // async function createItem(req, res) {

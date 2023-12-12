@@ -4,6 +4,7 @@ Github repo:
 https://github.com/Osorkon21/step-by-step-app
 
 Heroku deployement:
+https://step-by-step-2d601ea78552.herokuapp.com/
 
 ```
 
@@ -37,7 +38,7 @@ they can learn the step-by-step process of achieving that goal which is generate
 ## Image 
 
 ```
-Below: image of the step-by-step webpage that was created.
+Below: image of the homepage for step-by-step app that was created.
 ```
 ![README.file](./assets/pic1.png)
 

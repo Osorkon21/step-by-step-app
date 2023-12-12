@@ -31,8 +31,6 @@ export default function AppProvider(props) {
       const response = await query.json()
 
       if (response.result === "success") {
-        console.log(response);
-
         setUser(response.payload)
       }
     } catch (err) {

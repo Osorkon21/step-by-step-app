@@ -197,7 +197,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
         <button type="button" onClick={handleAddStep}>Add Step</button>
 
         <DropdownButton id="dropdown-basic-button" title={category ? category : "Goal Category"}>
-          {categories.map((category) => (
+          {categories?.map((category) => (
             <Dropdown.Item key={category.id} onClick={(e) => { setCategory(e.target.text) }}>{category.name}</Dropdown.Item>
           ))}
         </DropdownButton>

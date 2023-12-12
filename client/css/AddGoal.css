@@ -31,19 +31,15 @@
 }
 
 .goalTitle {
-    float: left;
-    color: red;
+    color: rgb(22, 114, 59);
     margin-top: 0px;
-    margin-bottom: 15px
+
 }
 
 .markComplete {
     color: red;
-    margin-left: 0px;
-    margin-top: 50px;
+    margin-left: 10px;
+    margin-top: 40px;
 }
 
-.form-control1 {
-   margin-top: 10px
-}
 

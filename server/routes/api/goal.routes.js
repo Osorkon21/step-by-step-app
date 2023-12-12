@@ -15,11 +15,14 @@ router.route("/")
 router.route("/:goalId")
   .get(getGoalById)
   .put(updateGoalById)
-  .delete(deleteGoalById)
+
 
 router.route("/:goalId/steps").post(createStep)
 
 router.route("/:goalId/steps/:stepsId").delete(deleteStep)
+
+router.route("/:userId/:goalId")
+  .delete(deleteGoalById)
 
 // will need a post route for ("/:userId/goals") use createGoal function here
 

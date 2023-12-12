@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import AppProvider from './utils/AppProvider';
 import { Header, ProtectedRoute } from './components';
-import { HomePage, AuthPage, Logout, Dashboard, AddGoal, NotFound, CompletedGoals } from './pages/'
+import { HomePage, AuthPage, Logout, Dashboard, AddGoal, NotFound } from './pages/'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './css/HomePage.css'
+import './css/Homepage.css'
 import './css/AddGoal.css'
 import './css/AuthPage.css'
 
@@ -27,12 +27,6 @@ export default function App() {
             <Route path="/addgoal" element={
               <ProtectedRoute>
                 <AddGoal />
-              </ProtectedRoute>
-            } />
-
-            <Route path="/completedgoals" element={
-              <ProtectedRoute>
-                <CompletedGoals />
               </ProtectedRoute>
             } />
 

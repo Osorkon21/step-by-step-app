@@ -10,7 +10,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
   const appCtx = useAppCtx()
 
   const [submitError, setSubmitError] = useState("");
-  const [category, setCategory] = useState(null);
+  const [category, setCategory] = useState(goal.category?.name || null);
 
   // format goal and step items, add them to database
   async function handleFormSubmit(e) {
@@ -56,7 +56,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
       });
     }
     else if (usage === "updateGoal") {
-      response = await fetch(`/api/goals/${goal.id}`, {
+      response = await fetch(`/api/goals/${goal._id}`, {
         method: 'PUT',
         body: JSON.stringify({ goal: newGoal }),
         headers: { 'Content-Type': 'application/json' },

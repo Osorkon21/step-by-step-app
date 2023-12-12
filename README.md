@@ -40,7 +40,7 @@ they can learn the step-by-step process of achieving that goal which is generate
 ```
 Below: image of the homepage for step-by-step app that was created.
 ```
-![README.file](./assets/pic1.png)
+![README.file](./client/image/pic10.png)
 
 ## Team Members
 

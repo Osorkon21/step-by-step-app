@@ -1,8 +1,7 @@
 import { v4 as uuidv4 } from "uuid"
 import Dropdown from "react-bootstrap/Dropdown"
 import DropdownButton from "react-bootstrap/DropdownButton"
-import categories from "../utils/getCategories";
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useAppCtx } from "../utils/AppProvider"
 
 export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage }) {
@@ -10,7 +9,8 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
   const appCtx = useAppCtx()
 
   const [submitError, setSubmitError] = useState("");
-  const [category, setCategory] = useState(null);
+  const [category, setCategory] = useState(goal.category?.name || null);
+  const [categories, setCategories] = useState(null);
 
   // format goal and step items, add them to database
   async function handleFormSubmit(e) {
@@ -56,7 +56,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
       });
     }
     else if (usage === "updateGoal") {
-      response = await fetch(`/api/goals/${goal.id}`, {
+      response = await fetch(`/api/goals/${goal._id}`, {
         method: 'PUT',
         body: JSON.stringify({ goal: newGoal }),
         headers: { 'Content-Type': 'application/json' },
@@ -135,6 +135,29 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
     ]);
   }
 
+  async function getCategories() {
+    try {
+      // get all categories
+      const query = await fetch("/api/categories", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      const response = await query.json();
+      setCategories(response.payload.map(function (category) { return { id: category._id, name: category.name } }));
+    }
+    catch (err) {
+      console.log(err.message);
+    }
+  }
+
+  useEffect(() => {
+    if (!categories)
+      getCategories();
+  }, [categories])
+
   return (
     <>
       <form onSubmit={handleFormSubmit} className="form">
@@ -174,7 +197,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
         <button type="button" onClick={handleAddStep}>Add Step</button>
 
         <DropdownButton id="dropdown-basic-button" title={category ? category : "Goal Category"}>
-          {categories.map((category) => (
+          {categories?.map((category) => (
             <Dropdown.Item key={category.id} onClick={(e) => { setCategory(e.target.text) }}>{category.name}</Dropdown.Item>
           ))}
         </DropdownButton>

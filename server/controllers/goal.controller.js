@@ -35,8 +35,6 @@ async function createItem(req, res) {
   try {
     const goal = await Model.create(req.body.goal);
 
-    console.log(goal);
-
     await User.findOneAndUpdate(
       { _id: req.body.userId },
       { $push: { goals: goal._id } },
@@ -83,15 +81,17 @@ async function deleteItemById(req, res) {
       return res.status(404).json({ message: 'No such goal exists' });
     }
 
-    // const user = await User.findOneAndUpdate(
-    //   { goals: req.params.goalId },
-    //   { $pull: { goals: req.params.goalId } },
-    //   { runValidators: true, new: true }
-    // )
+    await User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $pull: { goals: goal._id } },
+      { runValidators: true }
+    )
 
-    // if (!user) {
-    //   return res.status(404).json({ message: 'No user with that ID' })
-    // }
+    const category = await Category.findOneAndUpdate(
+      { _id: goal.category },
+      { $pull: { goals: goal._id } },
+      { runValidators: true }
+    )
 
     res.json({ message: 'Goal successfully deleted' });
   } catch (err) {

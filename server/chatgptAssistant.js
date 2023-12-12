@@ -51,11 +51,12 @@ async function generateSteps(data) {
       const assistantConfig = {
         name: "Helper",
         instructions:
-          "You are a helpful assistant that provides a list of up to 10 steps to fulfill an inputted goal, which designed to ouput JSON. Sample response,  id:, title: (User's goal), steps: .",
+          "You are a helpful assistant that provides a list of up to 10 steps to fulfill an inputted goal. Sample response,  id:, title: (User's goal), steps: .",
         tools: [], // configure the retrieval tool to retrieve files in the future
         model: "gpt-3.5-turbo-1106",
       };
 
+      // , which designed to ouput JSON
       // This would Create assistant if it didn't exist
       const assistant = await openai.beta.assistants.create(assistantConfig);
       assistantDetails = { assistantId: assistant.id, ...assistantConfig };

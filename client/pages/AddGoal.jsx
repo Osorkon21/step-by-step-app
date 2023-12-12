@@ -21,6 +21,7 @@ export default function AddGoal() {
           <GoalCreate
             goal={goal}
             setGoal={setGoal}
+            steps={steps}
             setGoalSelected={setGoalSelected}
             setSteps={setSteps}
           ></GoalCreate>

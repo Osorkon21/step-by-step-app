@@ -1,10 +1,10 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { parse, v4 as uuidv4 } from "uuid"
 
 
-export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps }) {
+export default function GoalCreate({ goal, setGoal, setGoalSelected, steps, setSteps }) {
   const [submitError, setSubmitError] = useState("");
-  let lastMessage;
+
   // populates goal with random project
   async function setRandomGoal() {
 
@@ -15,11 +15,14 @@ export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps })
 
     setGoal(randomGoal);
   }
-  let steps;
-  let aiResponse;
+
+  
   // fires when buttons are clicked
   function handleFormSubmit(e) {
     e.preventDefault();
+    
+      let aiResponse;
+      let steps;
     setSubmitError("");
 
     const btnName = e.nativeEvent.submitter.name;
@@ -30,7 +33,6 @@ export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps })
       return;
     }
     const userGoal = goal.name
-    console.log(userGoal)
     if (userGoal) {
 
       // go to step edit page
@@ -38,9 +40,8 @@ export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps })
 
       // have chatGPT generate steps
       if (btnName === "generate") {
+        
         //do the fetch call her with async
-        // In one of your React components
-
         const sendDataToServer = async (userGoal) => {
           try {
             const response = await fetch('/api/openai', {
@@ -54,25 +55,21 @@ export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps })
             if (!response.ok) {
               throw new Error('Network response was not ok');
             }
+            aiResponse = await response.json()
+            
+            // Log server response
+            console.log("This is response in GoalCreate.jsx", aiResponse); 
 
-            aiResponse = await response.json();
-            console.log("This is aiResponse in GoalCreate.jsx", aiResponse); // Log server response
-            const payload = aiResponse.payload
-            console.log("payload = ", payload)
+            const payload = aiResponse?.payload 
             if(payload.content && payload.content.length > 0){
               const firstContentItem = payload.content[0];
-              console.log("firstContentItem = ", firstContentItem)
+            
               if(firstContentItem.text && firstContentItem.text.value) {
-                const textValue = firstContentItem.text.value;
-                console.log("textValue = ", textValue)
-                try{
-                  const parsedData = JSON.parse(textValue)
-                  console.log("parsedData = ", parsedData)
-                  steps = parsedData.steps;
-                  console.log(steps)
-                } catch (err) {
-                  console.error("Error parsing JSON string: ", err)
-                }
+                const textValue = JSON.parse(firstContentItem.text.value);
+                const userSteps = textValue.steps       
+              
+                // Generate steps
+                generateSteps(userSteps);
               }
             }
 
@@ -84,9 +81,7 @@ export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps })
         // Example usage
         sendDataToServer({ userGoal: userGoal });
 
-        generateSteps(userGoal);
         // aiResponse = generateSteps(goal.name)
-        // console.log(aiResponse)
       }
       // does not call chatGPT API
       else if (btnName === "no-generate") {
@@ -94,53 +89,24 @@ export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps })
       }
     }
     else
-
       // display error if goal field is empty
       setSubmitError("Goal cannot be blank!");
   }
 
   // add generated steps created by chatGPT
-  async function generateSteps() {
+  async function generateSteps(steps) {
     // make chatGPT API call here
-    console.log("aiResponse = ", aiResponse)
-    
-    console.log("steps on  line 128", steps)
-    
-    const formattedAIResponse = await steps?.map(function (step) { return { uuid: uuid(), title: step, text: "", completed: false } })
-    console.log("formattedAiResponse = ", formattedAIResponse)
-    
-    setSteps(formattedAIResponse);
+        
+    // confirm it is an array and Map to format the steps
+    if (Array.isArray(steps)){
+      const formattedAIResponse = steps.map(function (step) { return { uuid: uuidv4(), title: step, text: "", completed: false };
+    });
+      setSteps(formattedAIResponse);
+    } else {
+      console.log("Steps is not an array or is not available yet.");
+    }    
   }
     
-    // chatGPT response needs to be formatted into an array of step objects, use this sample template for now
-    // const formattedAIResponse = [
-    //   {
-    //     uuid: uuidv4(),
-    //     title: "placeholderTitle",
-    //     text: "placeholderContent",
-    //     completed: false
-    //   },
-    //   {
-    //     uuid: uuidv4(),
-    //     title: "placeholderTitle2",
-    //     text: "placeholderContent2",
-    //     completed: false
-    //   },
-    //   {
-    //     uuid: uuidv4(),
-    //     title: "placeholderTitle3",
-    //     text: "placeholderContent3",
-    //     completed: false
-    //   },
-    //   {
-    //     uuid: uuidv4(),
-    //     title: "placeholderTitle4",
-    //     text: "placeholderContent4",
-    //     completed: false
-    //   }
-    // ];
-
-
   // change goal text input field
   function handleInputChange(e) {
     setGoal({ name: e.target.value });

@@ -2,6 +2,7 @@ import { useState } from "react"
 import { GoalCreate, GoalSteps } from "../components";
 import '../css/AddGoal.css'
 import stepImage from '../image/pic5.png'
+import AiGoal from '../image/pic6.png'
 
 export default function AddGoal() {
   const [goal, setGoal] = useState({ name: "" });
@@ -49,6 +50,9 @@ export default function AddGoal() {
         </>
       }
     </body>
+    <div className="AiSuccess"> 
+      <img src={AiGoal} className="AiGoal" alt="AiGoal"/>
+    </div>
     </>
   )
 }

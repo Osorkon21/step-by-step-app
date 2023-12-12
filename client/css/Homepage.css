@@ -1,5 +1,5 @@
 #root {
-    background-color: rgb(78, 51, 51);
+   background-image: linear-gradient(to right, #b43a57, #cfa028, #cc820a)
   }
 
 .about.app {
@@ -23,7 +23,7 @@
 .targetImage {
   margin-left: 120px;
   margin-top: 30px;
-  width: 480px;
+  width: 500px;
   height: 600px;
 }
 

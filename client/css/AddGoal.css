@@ -1,4 +1,9 @@
 .body {
-    background-color: rgb(164, 90, 90);
+    background-image: linear-gradient(to right, #3ab488, #28bdcf, #0acc3e) 
 }
-  
+
+.stepImage {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

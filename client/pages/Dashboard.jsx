@@ -41,8 +41,6 @@ export default function Dashboard() {
   // load goals from database once user id is defined
   useEffect(() => {
     if (appCtx.user?._id) {
-      console.log("appCtx has changed");
-      console.log(appCtx);
       getUserGoals();
     }
 

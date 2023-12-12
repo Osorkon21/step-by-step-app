@@ -1,18 +1,14 @@
-export default function GoalBar(props) {
+export default function GoalBar({ goal, displayGoal }) {
   return (
     <>
-      {/* <div class="newpost-btn-div d-flex justify-content-center">
-        <a href="/newpost" id="new-post-btn" class="btn fs-3">Add New Post</a>
-      </div>
-
       <div class="article-container mx-4">
-        {{ #each userArticles as | article |}}
-        <button class="btn btn-secondary mt-3 w-100 d-flex justify-content-between" data-id="{{id}}">
-          <span data-id="{{id}}">{{ title }}</span>
-          <span data-id="{{id}}">{{ format_date createdAt }}</span>
+        <button className="btn btn-secondary mt-3 w-100 d-flex justify-content-between" onClick={displayGoal(goal)}>
+          <span onClick={displayGoal(goal)}>{goal.title}</span>
+          <span onClick={displayGoal(goal)}>{goal.createdAt.toLocaleString()}</span>
         </button>
-        {{/ each}}
-      </div> */}
+
+        {/* add a trash can to right of button, have it delete the goal from the database on click... */}
+      </div>
     </>
   );
 }

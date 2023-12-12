@@ -1,19 +1,28 @@
 import { useState } from "react"
 import { v4 as uuidv4 } from "uuid"
+import getRandomNumber from '../utils/randomizer'
 
 export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps }) {
   const [submitError, setSubmitError] = useState("");
 
   // populates goal with random project
-  async function setRandomGoal() {
+  function setRandomGoal() {
 
+    var requestRandom = `https://www.boredapi.com/api/activity/`;
 
-    // make a call to a random goal generator API here
-
+    fetch(requestRandom)
+      .then(function (response) {
+        var resPonse = response.json();
+        console.log(resPonse)
+        return resPonse
+      })
+      .then(function (data) {
+        var randomGoal = { name: data.activity };
+        console.log(randomGoal)
+        setGoal(randomGoal);
+      })
     // set randomGoal.name to whatever API response we use to generate a random goal
-    const randomGoal = { name: "<put-random-goal-here>" }
-
-    setGoal(randomGoal);
+    // const randomGoal = { name: "<put-random-goal-here>" }
   }
 
   // fires when buttons are clicked

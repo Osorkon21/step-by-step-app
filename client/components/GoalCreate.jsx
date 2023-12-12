@@ -13,12 +13,10 @@ export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps })
     fetch(requestRandom)
       .then(function (response) {
         var resPonse = response.json();
-        console.log(resPonse)
         return resPonse
       })
       .then(function (data) {
         var randomGoal = { name: data.activity };
-        console.log(randomGoal)
         setGoal(randomGoal);
       })
     // set randomGoal.name to whatever API response we use to generate a random goal

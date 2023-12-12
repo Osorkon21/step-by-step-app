@@ -4,6 +4,7 @@ import DropdownButton from "react-bootstrap/DropdownButton"
 import categories from "../utils/getCategories";
 import { useState } from "react"
 import { useAppCtx } from "../utils/AppProvider"
+import '../css/AddGoal.css'
 
 export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage }) {
 
@@ -139,10 +140,11 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
     <>
       <form onSubmit={handleFormSubmit} className="form">
         <div className="d-flex align-items-center">
-          <label htmlFor="complete-all">Mark All Completed:</label>
+          {/* <label htmlFor="goal" className="goalTitle">Goal Title:</label> */}
+          <label htmlFor="complete-all" className="markComplete">Mark All Completed:</label>
           <input className="checkbox" type="checkbox" defaultChecked={false} id="complete-all" onChange={handleCheck} />
           <div className="w-50">
-            <label htmlFor="goal">Goal Title:</label>
+            <label htmlFor="goal" className="goalTitle">Goal Title:</label>
             <input type="text" name="goal" id="goal" className="form-control" value={goal.name} onChange={handleInputChange} />
           </div>
           <button className="ms-2" type="reset" onClick={reset}>Clear All</button>

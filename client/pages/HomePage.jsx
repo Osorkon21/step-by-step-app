@@ -1,4 +1,3 @@
-import '../css/HomePage.css'
 import targetImage from '../image/pic1.png'
 import AiImage from '../image/pic2.png'
 import HealthyImage from '../image/pic3.png'

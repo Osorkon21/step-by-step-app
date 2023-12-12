@@ -34,10 +34,18 @@ export default function Dashboard() {
     setCompletedGoals(userGoals.filter((goal) => goal.completed));
   }
 
+  function setSteps(steps) {
+    setCurrentGoal({ ...currentGoal, steps: steps });
+  }
+
   // load goals from database once user id is defined
   useEffect(() => {
-    if (appCtx.user?._id)
-      getUserGoals()
+    if (appCtx.user?._id) {
+      console.log("appCtx has changed");
+      console.log(appCtx);
+      getUserGoals();
+    }
+
   }, [appCtx]);
 
   return (
@@ -47,17 +55,17 @@ export default function Dashboard() {
         setInProgress={setInProgress}
       ></DashboardHeader>
 
-      {/* database updates fire on save goal button click */}
+      {/* display in progress goals */}
       {inProgress && inProgressGoals?.length &&
         <>
           {inProgressGoals.map(goal => (
-            <>
+            <div key={goal._id}>
               <GoalBar
                 goal={goal}
                 setCurrentGoal={setCurrentGoal}
               ></GoalBar>
 
-              {(goal.id === currentGoal._id) &&
+              {(currentGoal && goal._id === currentGoal._id) &&
                 <GoalSteps
                   steps={currentGoal.steps}
                   setSteps={setSteps}
@@ -67,7 +75,32 @@ export default function Dashboard() {
                   usage="updateGoal"
                 ></GoalSteps>
               }
-            </>
+            </div>
+          ))}
+        </>
+      }
+
+      {/* display completed goals */}
+      {!inProgress && completedGoals?.length &&
+        <>
+          {completedGoals.map(goal => (
+            <div key={goal._id}>
+              <GoalBar
+                goal={goal}
+                setCurrentGoal={setCurrentGoal}
+              ></GoalBar>
+
+              {(currentGoal && goal._id === currentGoal._id) &&
+                <GoalSteps
+                  steps={currentGoal.steps}
+                  setSteps={setSteps}
+                  reset={reset}
+                  goal={currentGoal}
+                  setGoal={setCurrentGoal}
+                  usage="updateGoal"
+                ></GoalSteps>
+              }
+            </div>
           ))}
         </>
       }

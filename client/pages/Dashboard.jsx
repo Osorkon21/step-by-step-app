@@ -10,43 +10,19 @@ export default function Dashboard() {
   // all user goals
   const [goals, setGoals] = useState(null);
 
-  // goal currently displayed
-  const [goal, setGoal] = useState(null);
-
-  // steps of goal currently displayed
-  const [steps, setSteps] = useState(null);
-
   const [inProgressGoals, setInProgressGoals] = useState(null);
   const [completedGoals, setCompletedGoals] = useState(null);
 
-  // id of goal currently displayed
-  const [goalDisplayed, setGoalDisplayed] = useState("");
+  // goal currently displayed
+  const [currentGoal, setCurrentGoal] = useState(null);
 
   // display inProgress (true) or completed (false) goals
   const [inProgress, setInProgress] = useState(true);
 
-  // title: {
-  //   type: String,
-  //     required: true,
-  //   },
-  // text: {
-  //   type: String
-  // },
-  // completed: {
-  //   type: Boolean,
-  //     required: true
-  // },
-  // uuid: {
-  //   type: String,
-  //     required: true
-  // }
-
   // clear goal currently displayed
   function reset() {
     const emptyStep = [{ uuid: uuidv4(), title: "", text: "", completed: false }];
-
-    setSteps(emptyStep);
-    setGoal({ ...goal, name: "", completed: false, category: null, steps: emptyStep });
+    setCurrentGoal({ ...currentGoal, name: "", completed: false, category: null, steps: emptyStep });
   }
 
   async function getUserGoals() {
@@ -56,12 +32,6 @@ export default function Dashboard() {
     setGoals(userGoals);
     setInProgressGoals(userGoals.filter((goal) => !goal.completed));
     setCompletedGoals(userGoals.filter((goal) => goal.completed));
-  }
-
-  function displayGoal(goal) {
-    setGoal(goal);
-    setSteps(goal.steps);
-    setGoalDisplayed(goal._id);
   }
 
   // load goals from database once user id is defined
@@ -77,23 +47,23 @@ export default function Dashboard() {
         setInProgress={setInProgress}
       ></DashboardHeader>
 
-      {/* add dashboard components, general layout is like the dashboard in the tech-blog homework, when you click on dashboard items it would add a GoalSteps component below the selected item, database updates fire on save goal button click */}
+      {/* database updates fire on save goal button click */}
       {inProgress && inProgressGoals?.length &&
         <>
           {inProgressGoals.map(goal => (
             <>
               <GoalBar
                 goal={goal}
-                displayGoal={displayGoal}
+                setCurrentGoal={setCurrentGoal}
               ></GoalBar>
 
-              {(goal.id === goalDisplayed) &&
+              {(goal.id === currentGoal._id) &&
                 <GoalSteps
-                  steps={goal.steps}
+                  steps={currentGoal.steps}
                   setSteps={setSteps}
                   reset={reset}
-                  goal={goal}
-                  setGoal={setGoal}
+                  goal={currentGoal}
+                  setGoal={setCurrentGoal}
                   usage="updateGoal"
                 ></GoalSteps>
               }
@@ -101,30 +71,6 @@ export default function Dashboard() {
           ))}
         </>
       }
-
-
-      {steps.map(item => (
-        <div key={item.uuid} >
-          <div className="d-flex align-items-center">
-            <div className="form-group">
-              <label htmlFor={item.uuid}>Completed:</label>
-              <input className="checkbox" type="checkbox" checked={item.completed} id={item.uuid} onChange={handleCheck} />
-            </div>
-            <div className="form-group col-6">
-              <label htmlFor={item.uuid}>Step Title:</label>
-              <input className="form-control" name="title" type="text" value={item.title} id={item.uuid} onChange={handleInputChange} />
-            </div>
-            <button type="button" className="ms-2" id={item.uuid} onClick={handleDeleteStep}>Delete Step</button>
-          </div>
-
-          <div>
-            <div className="form-group col-6">
-              <label htmlFor={item.uuid}>Description:</label>
-              <input className="form-control" name="text" type="text" value={item.text} id={item.uuid} onChange={handleInputChange} />
-            </div>
-          </div>
-        </div>
-      ))}
     </>
   );
 }

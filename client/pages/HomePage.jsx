@@ -5,45 +5,6 @@ import MembershipImage from '../image/pic4.png'
 
 export default function HomePage() {
 
-  async function seedDatabase() {
-    const seedData = [
-      {
-        name: "Social",
-        goals: []
-      },
-      {
-        name: "Travel",
-        goals: []
-      },
-      {
-        name: "Entertainment",
-        goals: []
-      },
-      {
-        name: "Skill",
-        goals: []
-      },
-      {
-        name: "Misc.",
-        goals: []
-      }
-    ]
-
-    for (var i = 0; i < seedData.length; i++) {
-      try {
-        await fetch('/api/categories', {
-          method: 'POST',
-          body: JSON.stringify(seedData[i]),
-          headers: { 'Content-Type': 'application/json' },
-        });
-      }
-      catch (err) {
-        console.log(err.message)
-      }
-
-    }
-  }
-
   return (
     <>
       <h1 className='about app'>About This App</h1>
@@ -79,7 +40,6 @@ export default function HomePage() {
       </div>
       <img src={targetImage} className="targetImage" alt="targetImage" />
       <h2 className='video'>Walkthrough .gif/video goes here</h2>
-      <button type="button" onClick={seedDatabase}>Run Category Seed</button>
     </>
   )
 }

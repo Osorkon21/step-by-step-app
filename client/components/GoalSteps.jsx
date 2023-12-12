@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid"
 import Dropdown from "react-bootstrap/Dropdown"
 import DropdownButton from "react-bootstrap/DropdownButton"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useAppCtx } from "../utils/AppProvider"
 
 export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage }) {

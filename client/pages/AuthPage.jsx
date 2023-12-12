@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import Auth from "../components/Auth"
 import join from '../image/pic8.png'
 import freeMember from '../image/pic9.png'
-import '../css/AuthPage.css'
+// import '../css/AuthPage.css'
 
 export default function AuthPage(){
 

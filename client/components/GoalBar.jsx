@@ -1,3 +1,5 @@
+import trashCan from "../assets/icons/trash-can.svg"
+
 export default function GoalBar({ goal, setCurrentGoal, deleteGoal }) {
   return (
     <>
@@ -7,7 +9,7 @@ export default function GoalBar({ goal, setCurrentGoal, deleteGoal }) {
           <span>{new Date(goal.createdAt).toLocaleDateString()}</span>
         </button>
 
-        <img className="trash-can mt-3 ms-2" src="../assets/icons/trash-can.svg" alt="trash can" width="32" height="32" onClick={() => deleteGoal(goal._id)} />
+        <img className="trash-can mt-3 ms-2" src={trashCan} alt="trash can" width="32" height="32" onClick={() => deleteGoal(goal._id)} />
       </div>
     </>
   );

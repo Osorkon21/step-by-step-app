@@ -105,10 +105,18 @@ async function generateSteps(data) {
     === run.id && message.role === "assistant").pop()
 
     if(lastMessage) {
+      
       console.log(`${lastMessage.content[0].text.value} \n`)
+      console.log(typeof(lastMessage), lastMessage)
+      if (lastMessage.content[0].text.value.match(/^```json/)) {
+        lastMessage.content[0].text.value = lastMessage.content[0].text.value.replace("```json", "").replace("```", "");
+        console.log(`${lastMessage.content[0].text.value} \n`)
+
+      }
     } else if(!["failed", "cancelled", "expired"].includes(runStatus.status)) {
       console.log("No response received from assistant")
     }
+
     return lastMessage
   } catch (error) {
     console.error(error);

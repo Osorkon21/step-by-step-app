@@ -8,7 +8,7 @@ export default function HomePage() {
   return (
     <>
       <h1 className='about app'>About This App</h1>
-      <div>Want to accomplish things but don't know how to begin? Start here! Generate goals and with a little help from AI.
+      <div>Want to accomplish things but don't know how to begin? Start here! Generate goals with a little help from AI.
         <div className="benefits">
           <section className="AI" >
             <h3>AI Assistance</h3>
@@ -39,7 +39,6 @@ export default function HomePage() {
         </div>
       </div>
       <img src={targetImage} className="targetImage" alt="targetImage" />
-      <h2 className='video'>Walkthrough .gif/video goes here</h2>
     </>
   )
 }

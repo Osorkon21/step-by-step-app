@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/Homepage.css'
 import './css/AddGoal.css'
 import './css/AuthPage.css'
+import "./css/Dashboard.css"
 
 export default function App() {
 

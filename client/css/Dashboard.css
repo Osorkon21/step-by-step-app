@@ -1,0 +1,7 @@
+.trash-can {
+  cursor: pointer;
+}
+
+.trash-can:hover {
+  filter: invert(13%) sepia(93%) saturate(7491%) hue-rotate(11deg) brightness(98%) contrast(125%);
+}

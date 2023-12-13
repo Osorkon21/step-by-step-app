@@ -38,6 +38,27 @@ export default function Dashboard() {
     setCurrentGoal({ ...currentGoal, steps: steps });
   }
 
+  async function deleteGoal(goalId) {
+    try {
+      const query = await fetch(`/api/goals/${appCtx.user._id}/${goalId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      const response = await query.json();
+
+      if (response.message === 'Goal successfully deleted')
+        await getUserGoals();
+      else
+        throw new Error("bad response on delete goal route")
+    }
+    catch (err) {
+      console.log(err.message);
+    }
+  }
+
   // load goals from database once user id is defined
   useEffect(() => {
     if (appCtx.user?._id) {
@@ -54,13 +75,14 @@ export default function Dashboard() {
       ></DashboardHeader>
 
       {/* display in progress goals */}
-      {inProgress && inProgressGoals?.length &&
+      {inProgress && Boolean(inProgressGoals?.length) &&
         <>
           {inProgressGoals.map(goal => (
             <div key={goal._id}>
               <GoalBar
                 goal={goal}
                 setCurrentGoal={setCurrentGoal}
+                deleteGoal={deleteGoal}
               ></GoalBar>
 
               {(currentGoal && goal._id === currentGoal._id) &&
@@ -70,6 +92,7 @@ export default function Dashboard() {
                   reset={reset}
                   goal={currentGoal}
                   setGoal={setCurrentGoal}
+                  deleteGoal={deleteGoal}
                   usage="updateGoal"
                 ></GoalSteps>
               }
@@ -78,8 +101,12 @@ export default function Dashboard() {
         </>
       }
 
+      {inProgress && inProgressGoals?.length === 0 &&
+        <p className="mt-2">You have no goals in progress!</p>
+      }
+
       {/* display completed goals */}
-      {!inProgress && completedGoals?.length &&
+      {!inProgress && Boolean(completedGoals?.length) &&
         <>
           {completedGoals.map(goal => (
             <div key={goal._id}>
@@ -101,6 +128,10 @@ export default function Dashboard() {
             </div>
           ))}
         </>
+      }
+
+      {!inProgress && completedGoals?.length === 0 &&
+        <p className="mt-2">You have no completed goals!</p>
       }
     </>
   );

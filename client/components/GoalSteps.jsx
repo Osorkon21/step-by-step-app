@@ -180,7 +180,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
               </div>
               <div className="form-group col-6">
                 <label htmlFor={item.uuid}>Step Title:</label>
-                <input className="form-control" name="title" type="text" value={item.title} id={item.uuid} onChange={handleInputChange} />
+                <textarea className="form-control" name="title" value={item.title} id={item.uuid} onChange={handleInputChange} />
               </div>
               <button type="button" className="ms-2" id={item.uuid} onClick={handleDeleteStep}>Delete Step</button>
             </div>
@@ -188,7 +188,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
             <div>
               <div className="form-group col-6">
                 <label htmlFor={item.uuid}>Description:</label>
-                <input className="form-control" name="text" type="text" value={item.text} id={item.uuid} onChange={handleInputChange} />
+                <textarea className="form-control" name="text" value={item.text} id={item.uuid} onChange={handleInputChange} />
               </div>
             </div>
           </div>

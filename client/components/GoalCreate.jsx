@@ -74,6 +74,8 @@ export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps })
 
               if(firstContentItem.text && firstContentItem.text.value) {
                 console.log(typeof(firstContentItem.text.value))
+
+
                 const textValue = JSON.parse(firstContentItem.text.value);
                 const userSteps = textValue.steps       
               
@@ -123,7 +125,7 @@ export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps })
 
   return (
     <form onSubmit={handleFormSubmit}>
-      <div>
+      <div className="step">
         <div>
           <div className="d-flex">
             <label className="d-block mb-1 me-2">What is your new goal?</label>

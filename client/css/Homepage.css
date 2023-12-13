@@ -1,8 +1,35 @@
+html {
+  --mutedlight: #eaeaea;
+  --mutedgray: #dddddd;
+  --mutedpink: #ecd9d9;
+  --mutedblue: #d5e1ea;
+  --mutedgreen: #e8f0d1;
+
+  --waterlight:#eef5f9;
+  --waterpale: #d1eefb;
+  --watermedium: #bbeafb;
+  --wateraqua: #76d0e3;
+  --waterteal: #32c4e3;
+  
+  --dreamslightest:#ddfbff;
+  --dreamslightaqua: #c7ebf0;
+  --dreamsgray: #bfd5e2;
+  --dreamspurple: #b1b5c8;
+  --dreamsmauve: #b2abbf;
+}
+
 #root {
-   background-image: linear-gradient(to right, #b43a57, #cfa028, #cc820a)
+   background-color: var(--waterpale);
+   color: black;
+  /* background-image: linear-gradient(to right, #b43a57, #cfa028, #cc820a) */
   }
 
-.about.app {
+.header-dreams{
+  text-align: center;
+  background-color: var(--wateraqua);
+}
+
+.about {
   max-width: 1280px;
   padding: 10px;
   text-align: center;
@@ -21,10 +48,11 @@
 }
 
 .targetImage {
-  margin-left: 120px;
+  margin-left: auto;
   margin-top: 30px;
-  width: 500px;
-  height: 600px;
+  max-width: 100%;
+  width: auto;
+  height: auto;
 }
 
 .benefits {

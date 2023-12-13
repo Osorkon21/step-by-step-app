@@ -7,8 +7,8 @@ export default function HomePage() {
 
   return (
     <>
-      <h1 className='about app'>About This App</h1>
-      <div>Want to accomplish things but don't know how to begin? Start here! Generate goals with a little help from AI.
+      <h1 className='about'>Step By Step</h1>
+      <div className='header-dreams'>Dreams & Aspirations Start Here! 
         <div className="benefits">
           <section className="AI" >
             <h3>AI Assistance</h3>

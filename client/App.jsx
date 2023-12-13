@@ -13,6 +13,7 @@ export default function App() {
   return (
     <AppProvider>
       <BrowserRouter>
+      <main>
         <Header />
         <div className="container pt-5">
           <Routes>
@@ -36,6 +37,8 @@ export default function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
+        
+      </main>
       </BrowserRouter>
     </AppProvider>
   )

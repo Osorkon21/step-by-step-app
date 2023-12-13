@@ -51,7 +51,7 @@ async function generateSteps(data) {
       const assistantConfig = {
         name: "Helper",
         instructions:
-          "You are a helpful assistant that provides a list of up to 10 steps to fulfill an inputted goal. Sample response,  id:, title: (User's goal), steps: .",
+          "You are a helpful assistant that provides a list of up to 10 steps to fulfill an inputted goal, which designed to ouput JSON. Sample response,  title: (User's goal), steps: .",
         tools: [], // configure the retrieval tool to retrieve files in the future
         model: "gpt-3.5-turbo-1106",
       };
@@ -105,10 +105,18 @@ async function generateSteps(data) {
     === run.id && message.role === "assistant").pop()
 
     if(lastMessage) {
+      
       console.log(`${lastMessage.content[0].text.value} \n`)
+      console.log(typeof(lastMessage), lastMessage)
+      if (lastMessage.content[0].text.value.match(/^```json/)) {
+        lastMessage.content[0].text.value = lastMessage.content[0].text.value.replace("```json", "").replace("```", "");
+        console.log(`${lastMessage.content[0].text.value} \n`)
+
+      }
     } else if(!["failed", "cancelled", "expired"].includes(runStatus.status)) {
       console.log("No response received from assistant")
     }
+
     return lastMessage
   } catch (error) {
     console.error(error);

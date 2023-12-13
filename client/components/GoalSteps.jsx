@@ -152,20 +152,20 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
         {steps.map(item => (
           <div key={item.uuid} >
             <div className="d-flex align-items-center">
+              <label htmlFor={item.uuid} className="stepTitle">Step Title:</label>
               <div className="form-group">
-                <label htmlFor={item.uuid}>Completed:</label>
-                <input className="checkbox" type="checkbox" checked={item.completed} id={item.uuid} onChange={handleCheck} />
+                <label htmlFor={item.uuid} className="completed">Completed:</label>
+                <input className="checkbox2" type="checkbox" checked={item.completed} id={item.uuid} onChange={handleCheck} />
               </div>
               <div className="form-group col-6">
-                <label htmlFor={item.uuid}>Step Title:</label>
                 <input className="form-control" name="title" type="text" value={item.title} id={item.uuid} onChange={handleInputChange} />
               </div>
-              <button type="button" className="ms-2" id={item.uuid} onClick={handleDeleteStep}>Delete Step</button>
+              <button type="button" className="ms-2-2" id={item.uuid} onClick={handleDeleteStep}>Delete Step</button>
             </div>
 
             <div>
               <div className="form-group col-6">
-                <label htmlFor={item.uuid}>Description:</label>
+                <label htmlFor={item.uuid} className="description">Description:</label>
                 <input className="form-control" name="text" type="text" value={item.text} id={item.uuid} onChange={handleInputChange} />
               </div>
             </div>

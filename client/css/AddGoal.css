@@ -27,38 +27,74 @@
 
 .paragraphStep {
     color: black;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .goalTitle {
-    color: black;
-    margin-top: 0px;
+    color: yellow;
+    margin-top: -30px;
     margin-left: 160px;
-    font-size: larger;
+    font-size: x-large;
     font-family: fantasy;
-
 }
 
 .markComplete {
-    margin-left: 10px;
-    margin-top: 40px;
+    margin-left: -10px;
+    margin-bottom: -25px;
+    margin-top: 20px;
 }
 
 .checkbox1 {
     margin-right: 5px;
     margin-left: 5px;
-    margin-top: 40px;
+    margin-top: 55px;
+    margin-bottom: 5px;
 }
 
 .form-control {
-    margin-top: 40px;
-    margin-right: 20px;
+    margin-top: 50px;
+    margin-left: 5px;
 }
 
 .ms-2-1 {
-    margin-top: 40px;
+    margin-top: 50px;
     margin-right: 90px;
     margin-left: 10px;
+    margin-bottom: 5px;
 }
 
+.completed {
+    margin-left: 40px;
+    margin-right: -10px;
+    margin-bottom: -20px;
+    margin-top: 55px;
+}
 
+.checkbox2 {
+    margin-top: 30px;
+    margin-left: 15px;
+    margin-right: 5px;
+}
+
+.stepTitle {
+    margin-right: -20px;
+    margin-left: 200px;
+    margin-top: -10px;
+    margin-bottom: -20px;
+    color: yellow
+}
+
+.ms-2-2 {
+    margin-top: 55px;
+    margin-right: 90px;
+    margin-left: 10px;
+    margin-bottom: 5px;
+}
+
+.description {
+    color: red;
+    margin-top: -100px;
+    margin-bottom: -500px;
+    margin-left: 1110px;
+    margin-right: 100px;
+}

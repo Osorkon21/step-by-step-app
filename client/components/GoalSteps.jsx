@@ -164,15 +164,15 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
             </div>
 
             <div>
-              <div className="form-group col-6">
-                <label htmlFor={item.uuid} className="description">Description:</label>
+              <label htmlFor={item.uuid} className="description">Description:</label>
+              <div className="form-group col-6-1">
                 <input className="form-control" name="text" type="text" value={item.text} id={item.uuid} onChange={handleInputChange} />
               </div>
             </div>
           </div>
         ))}
 
-        <button type="button" onClick={handleAddStep}>Add Step</button>
+        <button type="button" onClick={handleAddStep} className="addStep">Add Step</button>
 
         <DropdownButton id="dropdown-basic-button" title={category ? category : "Goal Category"}>
           {categories.map((category) => (
@@ -181,8 +181,8 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
         </DropdownButton>
 
         <div className="d-flex">
-          <button type="submit">Save Goal</button>
-          <button type="reset" onClick={reset}>Clear All</button>
+          <button type="submit" className="saveGoal">Save Goal</button>
+          <button type="reset" onClick={reset} className="clearAll">Clear All</button>
         </div>
 
         <div className="text-danger">

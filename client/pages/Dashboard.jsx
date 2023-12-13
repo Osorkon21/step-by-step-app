@@ -71,7 +71,10 @@ export default function Dashboard() {
     <>
       {/* buttons at the top that switch between in progress and completed goals */}
       <DashboardHeader
+        goals={goals}
         setInProgress={setInProgress}
+        setInProgressGoals={setInProgressGoals}
+        setCompletedGoals={setCompletedGoals}
       ></DashboardHeader>
 
       {/* display in progress goals */}

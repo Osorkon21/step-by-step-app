@@ -10,7 +10,7 @@ https://step-by-step-2d601ea78552.herokuapp.com/
 
 ## Background Story
 
-```
+
 As a non-profit organization we believed in assisting people to the best of our abilities therefore we 
 have come up with an app that will assist others when it comes to achieving their goals. We know about
 the struggles of achieving one's goal so we decided to use the most cutting-edge tech to assist others with
@@ -19,7 +19,7 @@ that need to be taken in order to achieve that specific goal. What is awesome ab
 have to do any research on how to achieve your goal you simply just type in whatever that you are trying to achieve 
 and the AI will generate those steps for you. Another awesome perk about this app is that it is completely free
 so sign up now to become a member.
-```
+
 
 ## Information About the App
 

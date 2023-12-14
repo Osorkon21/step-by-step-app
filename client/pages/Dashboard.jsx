@@ -71,7 +71,7 @@ export default function Dashboard() {
   }, [appCtx]);
 
   return (
-    <>
+    <div className="body">
       {/* buttons at the top that switch between in progress and completed goals */}
       <DashboardHeader
         goals={goals}
@@ -86,7 +86,7 @@ export default function Dashboard() {
       {inProgress && Boolean(inProgressGoals?.length) &&
         <>
           {inProgressGoals.map(goal => (
-            <div key={goal._id}>
+            <div className="goal-container" key={goal._id}>
               <GoalBar
                 goal={goal}
                 setCurrentGoal={setCurrentGoal}
@@ -123,7 +123,7 @@ export default function Dashboard() {
       {!inProgress && Boolean(completedGoals?.length) &&
         <>
           {completedGoals.map(goal => (
-            <div key={goal._id}>
+            <div className="goal-container" key={goal._id}>
               <GoalBar
                 goal={goal}
                 setCurrentGoal={setCurrentGoal}
@@ -155,6 +155,6 @@ export default function Dashboard() {
       {!inProgress && completedGoals?.length === 0 &&
         <p className="mt-2">You have no completed goals!</p>
       }
-    </>
+    </div>
   );
 }

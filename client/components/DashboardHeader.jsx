@@ -62,10 +62,11 @@ export default function DashboardHeader({ goals, setInProgress, setInProgressGoa
   }, [categories])
 
   return (
-    <>
-      <div>
-        <button type="button" onClick={() => { setCurrentGoal(null); setInProgress(true); setSubmitError(""); }}>In Progress Goals</button>
-        <button type="button" onClick={() => { setCurrentGoal(null); setInProgress(false); setSubmitError(""); }}>Completed Goals</button>
+    <div className="dashboard-header ">
+      <h1>Dashboard</h1>
+      <div className="tabs">
+        <button className="dashboard-tab col" type="button" onClick={() => { setCurrentGoal(null); setInProgress(true); setSubmitError(""); }}>In Progress Goals</button>
+        <button className="dashboard-tab col" type="button" onClick={() => { setCurrentGoal(null); setInProgress(false); setSubmitError(""); }}>Completed Goals</button>
       </div>
       Filter by category:
       <div className="mt-1">
@@ -75,6 +76,6 @@ export default function DashboardHeader({ goals, setInProgress, setInProgressGoa
           ))}
         </DropdownButton>
       </div>
-    </>
+    </div>
   );
 }

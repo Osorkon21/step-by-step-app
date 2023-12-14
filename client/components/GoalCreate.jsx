@@ -69,11 +69,7 @@ export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps, s
             if (payload.content && payload.content.length > 0) {
               const firstContentItem = payload.content[0];
 
-              // console.log("firstContentItem = ", typeof (firstContentItem), firstContentItem)
-
               if (firstContentItem.text && firstContentItem.text.value) {
-                // console.log(typeof (firstContentItem.text.value))
-
                 var userSteps;
                 var textValue;
 
@@ -141,7 +137,7 @@ export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps, s
 
   return (
     <form onSubmit={handleFormSubmit}>
-      <div>
+      <div className="step">
         <div>
           <div className="d-flex">
             <label className="d-block mb-1 me-2">What is your new goal?</label>

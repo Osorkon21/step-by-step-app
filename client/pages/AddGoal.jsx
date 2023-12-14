@@ -24,11 +24,7 @@ export default function AddGoal() {
       {/* <img src={assistStep} className="assistStep" alt="assistStep" />
       <img src={stepAi} className="stepAi" alt="Ai" />
       <img src={stepImage} className="stepImage" alt="stepImage" /> */}
-        <p className="paragraphStep">In order to achieve your goal you can't just take one huge step and
-          expect to get there. One step at a time is the key to achieving one's
-          goal and one step at a time is also another crucial aspect that we
-          are willingly to help out with. Start generating goals below and an all-knowing AI will assist
-          with the process.
+        <p className="paragraphStep">
         </p>
 
       <div className="goal-body">

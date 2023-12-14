@@ -75,11 +75,11 @@ body{
   /* justify-self: center; */
 }
 
-.header{
+/* .header{
   border-radius: 1rem;
   width: 100px;
   border: 2px solid red;
-}
+} */
 
 .header-dreams{
   text-align: center;
@@ -161,6 +161,14 @@ h3 {
   background-color: var(--middleblur);
   padding: var(--padding);
   border-radius: 2rem;
+}
+
+.slogan {
+  background-color: var(--middleblur);
+  padding: var(--padding);
+  border-radius: 2rem;
+  font-size: 2rem;
+  color: #ad90c1;
 }
 
 /* .color-nav{

@@ -6,9 +6,9 @@ import MembershipImage from '../image/pic4.png'
 export default function HomePage() {
 
   return (
-    <div className='body'>
+    <div className='body homepage'>
       <div className='about'>
-        <h1>Step By Step</h1>
+        <h1>Step-By-Step</h1>
         <p>Your Dreams & Aspirations Start Here!</p>
 
       </div>
@@ -17,13 +17,12 @@ export default function HomePage() {
           <img src={targetImage} className="targetImage" alt="targetImage" />
         </div>
         <div className="benefits">
-          <h2>How Step By Step Can Help You</h2>
+          <h2>How <strong>Step-By-Step</strong> Can Help You</h2>
           <section className="AI" >
             <h3>AI Assistance</h3>
             <img src={AiImage} className="AiImage" alt="AiImage" />
             <p>
-              With the assistance of an all-knowing AI you don't have to plan out anything to determine
-              the steps to achieve your goals.
+              With the assistance AI, you don't have to know the steps to achieve your goals.
             </p>
           </section>
           <section className="goals">

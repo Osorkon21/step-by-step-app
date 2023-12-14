@@ -9,7 +9,7 @@ export default function HomePage() {
     <div className='body homepage'>
       <div className='about'>
         <h1>Step-By-Step</h1>
-        <p>Your Dreams & Aspirations Start Here!</p>
+        <p className='slogan'><strong> Your Dreams & Aspirations Start Here!</strong></p>
 
       </div>
       <div className='header-dreams'> 

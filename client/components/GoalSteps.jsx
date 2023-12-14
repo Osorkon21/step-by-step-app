@@ -160,14 +160,16 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
   return (
     <>
       <form onSubmit={handleFormSubmit} className="form">
-        <div className="d-flex align-items-center">
-          <label htmlFor="complete-all">Mark All Completed:</label>
-          <input className="checkbox" type="checkbox" defaultChecked={false} id="complete-all" onChange={handleCheck} />
-          <div className="w-50">
+        <div className="add-goal-items">
+          <div className="col-sm m-1">
+            <label htmlFor="complete-all">Mark All Completed:</label>
+            <input className="checkbox" type="checkbox" defaultChecked={false} id="complete-all" onChange={handleCheck} />
+          </div>
+          <div className="col-sm m-1">
             <label htmlFor="goal">Goal Title:</label>
             <input type="text" name="goal" id="goal" className="form-control" value={goal.name} onChange={handleInputChange} />
           </div>
-          <button className="ms-2" type="reset" onClick={reset}>Clear All</button>
+          <button className="col-sm update-goal-btn" type="reset" onClick={reset}>Clear All</button>
         </div>
 
         {steps.map(item => (
@@ -195,7 +197,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
           </div>
         ))}
 
-        <button type="button" onClick={handleAddStep}>Add Step</button>
+        <button className="update-goal-btn mt-3" type="button" onClick={handleAddStep}>Add Step</button>
 
         <DropdownButton id="dropdown-basic-button" title={category ? category : "Goal Category"}>
           {categories?.map((category) => (
@@ -203,9 +205,9 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
           ))}
         </DropdownButton>
 
-        <div className="d-flex">
-          <button type="submit">Save Goal</button>
-          <button type="reset" onClick={reset}>Clear All</button>
+        <div className=" ">
+          <button className="update-goal-btn m-2" type="submit">Save Goal</button>
+          <button className="update-goal-btn m-2" type="reset" onClick={reset}>Clear All</button>
         </div>
       </form>
     </>

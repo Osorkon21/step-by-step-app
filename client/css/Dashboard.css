@@ -56,6 +56,9 @@ input.checkbox {
   border-radius: 50%;
 }
 
+input.checkbox:hover {
+  outline: 2px solid #ad90c1;
+}
 .dropdown {
   margin: 1rem;
 }
@@ -64,4 +67,13 @@ input.checkbox {
   color: black;
   background-color: var(--purple);
   border: 2px solid var(--light);
+}
+
+.update-goal-btn {
+  border: 2px solid var(--light);
+  padding: .5rem;
+}
+
+.update-goal-btn:hover {
+  outline: 2px solid #ad90c1;
 }

@@ -31,6 +31,10 @@ Below: image of the homepage for step-by-step app that was created.
 
 ![README.file](./client/image/pic10.png)
 
+![README.file](./client/image/pic11.png)
+
+![README.file](./client/image/pic12.png)
+
 ## Team Members
 
 Kurt Wensmann - napoleondd86 (Github username)

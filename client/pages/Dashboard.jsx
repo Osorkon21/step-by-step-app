@@ -89,8 +89,10 @@ export default function Dashboard() {
             <div className="goal-container" key={goal._id}>
               <GoalBar
                 goal={goal}
+                currentGoal={currentGoal}
                 setCurrentGoal={setCurrentGoal}
                 deleteGoal={deleteGoal}
+                setSubmitError={setSubmitError}
               ></GoalBar>
 
               {(currentGoal && goal._id === currentGoal._id) &&
@@ -126,8 +128,10 @@ export default function Dashboard() {
             <div className="goal-container" key={goal._id}>
               <GoalBar
                 goal={goal}
+                currentGoal={currentGoal}
                 setCurrentGoal={setCurrentGoal}
                 deleteGoal={deleteGoal}
+                setSubmitError={setSubmitError}
               ></GoalBar>
 
               {(currentGoal && goal._id === currentGoal._id) &&

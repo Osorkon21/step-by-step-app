@@ -8,7 +8,7 @@ export default function Header() {
   const { user } = useAppCtx()
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar expand="lg" bg='dark' variant="light" className=" bg-body-tertiary">
       <Container>
         <Navbar.Brand href="/">Home</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

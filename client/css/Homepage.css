@@ -1,4 +1,19 @@
 html {
+  --lightest: #eef5f9;
+  --lightestblur: #eef5f982;
+  --light: #d1eefb;
+  --lightblur: #d1eefb83;
+  --middle: #bbeafb;
+  --middleblur: #bbeafb78;
+  --middledark: #76d0e3;
+  --middledarkblur: #76d1e37a;
+  --dark: #32c4e3;
+  --darkblur: #32c2e37b;
+  --darker: teal;
+  --darkerblur: rgba(0, 128, 128, 0.055);
+  --background: linear-gradient(180deg, rgba(187,234,251,1) 0%, rgba(236,217,217,1) 35%, rgba(118,208,227,1) 100%);
+  --puruple: #ad90c1;
+
   --mutedlight: #eaeaea;
   --mutedgray: #dddddd;
   --mutedpink: #ecd9d9;
@@ -16,17 +31,58 @@ html {
   --dreamsgray: #bfd5e2;
   --dreamspurple: #b1b5c8;
   --dreamsmauve: #b2abbf;
+
+  --border-radius: .5rem;
+  --border-thickness: .1rem;
+  --padding: 1rem;
 }
 
 #root {
-   background-color: var(--waterpale);
-   color: black;
+  color: black;
   /* background-image: linear-gradient(to right, #b43a57, #cfa028, #cc820a) */
-  }
+}
+
+
+
+body{
+  /* border: 1rem solid red; */
+  background: linear-gradient(180deg, rgba(187,234,251,1) 0%, rgba(236,217,217,1) 35%, rgba(118,208,227,1) 100%);
+  /* background-color: var(--darker); */
+  padding: 4rem;
+}
+
+.body {
+  border-radius: var(--border-radius);
+  /* border: var(--border-thickness) solid var(--dark); */
+  background-color: var(--light);
+  padding: var(--padding);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+/* .color-nav{
+  background-color: green;
+} */
+
+/* THIS DOESN'T WORK - IDK WHY */
+/* nav.bg-body-tertiary{
+  color: green;
+  background-color: green;
+} */
+/* .navbar-header{
+  background-color: chartreuse;
+} */
+
+navbar{
+  border-radius: 1rem;
+}
 
 .header-dreams{
   text-align: center;
-  background-color: var(--wateraqua);
+  background-color: var(--middledark);
+  flex-direction: column;
 }
 
 .about {
@@ -34,55 +90,52 @@ html {
   padding: 10px;
   text-align: center;
   color: white;
-  background-color: burlywood;
+  background-color: var(--dark);
 }
 
-.video {
-  max-width: 1300px;
-  margin: 0 auto;
-  margin-top: 100px;
-  padding: 10px;
-  text-align: center;
-  color: white;
-  background-color: burlywood;
+.image-container{
+  /* padding: 1rem; */
 }
 
+/* FIX THIS ON MOBILE!!!!!!!!!!!!!!!!!!!!!!!! */
 .targetImage {
-  margin-left: auto;
-  margin-top: 30px;
+  margin: 1rem;
   max-width: 100%;
   width: auto;
   height: auto;
 }
 
 .benefits {
-  margin-top: 40px;
   padding: 0px;
-  float: right;
-  width: 20%;
   height: 100%;
+  margin-top: 2rem;
+  border-top: 2rem solid var(--light);
+  /* border: purple 1rem solid; */
 }
 
-.benefits.images {
-  float: left;
-  display: flex;
-  flex-direction: column;
+h2 {
+  background-color: var(--dark);
+  margin: 1rem;
 }
 
 .AiImage {
   height: 200px;
   width: 200px;
-  margin-top: 10px;
-  margin-bottom: 50px;
+  margin: 1rem;
 }
 
 .HealthyImage {
   height: 200px;
   width: 200px;
-  margin-bottom: 50px;
+  margin: 1rem;
 }
 
 .MembershipImage {
   height: 200px;
   width: 200px;
+  margin: 1rem;
+}
+
+h1 {
+  color: black;
 }

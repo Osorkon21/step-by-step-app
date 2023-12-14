@@ -13,9 +13,9 @@ export default function App() {
   return (
     <AppProvider>
       <BrowserRouter>
-      <main>
+      <>
         <Header />
-        <div className="container pt-5">
+        <div className=" p-3">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/auth" element={<AuthPage />} />
@@ -38,7 +38,7 @@ export default function App() {
           </Routes>
         </div>
         
-      </main>
+      </>
       </BrowserRouter>
     </AppProvider>
   )

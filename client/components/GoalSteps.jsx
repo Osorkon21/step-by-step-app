@@ -172,23 +172,25 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
         </div>
 
         {steps.map(item => (
-          <div key={item.uuid} >
-            <div className="d-flex align-items-center">
+          <div className="step" key={item.uuid} >
+            <button type="button" className="ms-2" id={item.uuid} onClick={handleDeleteStep}>Delete Step</button>
               <div className="form-group">
                 <label htmlFor={item.uuid}>Completed:</label>
                 <input className="checkbox" type="checkbox" checked={item.completed} id={item.uuid} onChange={handleCheck} />
               </div>
-              <div className="form-group col-6">
+            <div className="input-container">
+              <div className="form-group col-12">
                 <label htmlFor={item.uuid}>Step Title:</label>
-                <textarea className="form-control" name="title" value={item.title} id={item.uuid} onChange={handleInputChange} />
+                <textarea className="input form-control" name="title" value={item.title} id={item.uuid} onChange={handleInputChange} />
               </div>
-              <button type="button" className="ms-2" id={item.uuid} onClick={handleDeleteStep}>Delete Step</button>
             </div>
+            {/* <div className="d-flex align-items-center">
+            </div> */}
 
-            <div>
-              <div className="form-group col-6">
+            <div className="input-container">
+              <div className="form-group col-12">
                 <label htmlFor={item.uuid}>Description:</label>
-                <textarea className="form-control" name="text" value={item.text} id={item.uuid} onChange={handleInputChange} />
+                <textarea className="input form-control" name="text" value={item.text} id={item.uuid} onChange={handleInputChange} />
               </div>
             </div>
           </div>

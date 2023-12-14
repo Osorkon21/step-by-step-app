@@ -7,17 +7,15 @@ export default function AuthPage() {
 
 
   return (
-    <>
-      <div className="d-flex gap-5">
-        <div>
-          <Auth usage="signup" />
-        </div>
-        <div>
-          <Auth usage="login" />
-        </div>
+    <div className="auth-content">
+      <div className="auth">
+        <Auth usage="signup" />
       </div>
-      <img src={join} className="join" alt="join" />
-      <img src={freeMember} className="freeMember" alt="freeMember" />
-    </>
+      <div className="auth">
+        <Auth usage="login" />
+      </div>
+      {/* <img src={join} className="join" alt="join" />
+      <img src={freeMember} className="freeMember" alt="freeMember" /> */}
+    </div>
   )
 }

@@ -9,7 +9,7 @@ main{
     border: var(--border-thickness) solid var(--darker);
     padding: var(--padding);
     border-radius: var(--border-radius);
-    background-color: var(--middledark);
+    /* background-color: var(--middledark); */
 }
 
 
@@ -43,7 +43,8 @@ main{
 
 button {
     border-radius: var(--border-radius);
-    background-color: var(--dark);
+    background-color: var(--middledark);
+    border: none;
 }
 
 .form-control{

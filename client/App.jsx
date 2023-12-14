@@ -14,8 +14,10 @@ export default function App() {
     <AppProvider>
       <BrowserRouter>
       <>
-        <Header />
-        <div className=" p-3">
+        <div className="">
+          <div className='header-container'>
+            <Header className="header"/>
+          </div>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/auth" element={<AuthPage />} />

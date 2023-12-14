@@ -14,3 +14,13 @@
     margin-left: 500px;
     margin-top: 50px;
 }
+.auth-content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+   }
+
+.auth {
+    padding: 1rem;
+}

@@ -4,11 +4,10 @@ import DropdownButton from "react-bootstrap/DropdownButton"
 import { useState, useEffect } from "react"
 import { useAppCtx } from "../utils/AppProvider"
 
-export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage }) {
+export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage, setSubmitError }) {
 
   const appCtx = useAppCtx()
 
-  const [submitError, setSubmitError] = useState("");
   const [category, setCategory] = useState(goal.category?.name || null);
   const [categories, setCategories] = useState(null);
 
@@ -172,23 +171,25 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
         </div>
 
         {steps.map(item => (
-          <div key={item.uuid} >
-            <div className="d-flex align-items-center">
+          <div className="step" key={item.uuid} >
+            <button type="button" className="ms-2" id={item.uuid} onClick={handleDeleteStep}>Delete Step</button>
               <div className="form-group">
                 <label htmlFor={item.uuid}>Completed:</label>
                 <input className="checkbox" type="checkbox" checked={item.completed} id={item.uuid} onChange={handleCheck} />
               </div>
-              <div className="form-group col-6">
+            <div className="input-container">
+              <div className="form-group col-12">
                 <label htmlFor={item.uuid}>Step Title:</label>
-                <textarea className="form-control" name="title" value={item.title} id={item.uuid} onChange={handleInputChange} />
+                <textarea className="input form-control" name="title" value={item.title} id={item.uuid} onChange={handleInputChange} />
               </div>
-              <button type="button" className="ms-2" id={item.uuid} onClick={handleDeleteStep}>Delete Step</button>
             </div>
+            {/* <div className="d-flex align-items-center">
+            </div> */}
 
-            <div>
-              <div className="form-group col-6">
+            <div className="input-container">
+              <div className="form-group col-12">
                 <label htmlFor={item.uuid}>Description:</label>
-                <textarea className="form-control" name="text" value={item.text} id={item.uuid} onChange={handleInputChange} />
+                <textarea className="input form-control" name="text" value={item.text} id={item.uuid} onChange={handleInputChange} />
               </div>
             </div>
           </div>
@@ -205,10 +206,6 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
         <div className="d-flex">
           <button type="submit">Save Goal</button>
           <button type="reset" onClick={reset}>Clear All</button>
-        </div>
-
-        <div className="text-danger">
-          {submitError}
         </div>
       </form>
     </>

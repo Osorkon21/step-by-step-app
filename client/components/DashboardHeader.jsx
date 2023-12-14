@@ -2,7 +2,7 @@ import Dropdown from "react-bootstrap/Dropdown"
 import DropdownButton from "react-bootstrap/DropdownButton"
 import { useState, useEffect } from "react"
 
-export default function DashboardHeader({ goals, setInProgress, setInProgressGoals, setCompletedGoals }) {
+export default function DashboardHeader({ goals, setInProgress, setInProgressGoals, setCompletedGoals, setCurrentGoal, setSubmitError }) {
 
   const [currentCategory, setCurrentCategory] = useState(null);
   const [categories, setCategories] = useState(null);
@@ -40,13 +40,9 @@ export default function DashboardHeader({ goals, setInProgress, setInProgressGoa
     }
   }
 
-  async function handleCategoryChange(e) {
-    e.preventDefault();
-
+  function handleCategoryChange(e) {
     const categoryId = categories.find((category) => category.name === e.target.text).id
     const filteredGoals = goals.filter((goal) => goal.category._id === categoryId);
-
-    console.log(filteredGoals);
 
     setCurrentCategory(e.target.text);
 
@@ -66,10 +62,11 @@ export default function DashboardHeader({ goals, setInProgress, setInProgressGoa
   }, [categories])
 
   return (
-    <>
-      <div>
-        <button type="button" onClick={() => setInProgress(true)}>In Progress Goals</button>
-        <button type="button" onClick={() => setInProgress(false)}>Completed Goals</button>
+    <div className="dashboard-header ">
+      <h1>Dashboard</h1>
+      <div className="tabs">
+        <button className="dashboard-tab col" type="button" onClick={() => { setCurrentGoal(null); setInProgress(true); setSubmitError(""); }}>In Progress Goals</button>
+        <button className="dashboard-tab col" type="button" onClick={() => { setCurrentGoal(null); setInProgress(false); setSubmitError(""); }}>Completed Goals</button>
       </div>
       Filter by category:
       <div className="mt-1">
@@ -79,6 +76,6 @@ export default function DashboardHeader({ goals, setInProgress, setInProgressGoa
           ))}
         </DropdownButton>
       </div>
-    </>
+    </div>
   );
 }

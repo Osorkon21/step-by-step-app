@@ -8,12 +8,14 @@ export default function AddGoal() {
   const [goal, setGoal] = useState({ name: "" });
   const [goalSelected, setGoalSelected] = useState(false);
   const [steps, setSteps] = useState(null);
+  const [submitError, setSubmitError] = useState("");
 
   // clear all fields, go to goal create screen
   function reset() {
     setGoal({ name: "" });
     setGoalSelected(false);
     setSteps(null);
+    setSubmitError("");
   }
 
   return (
@@ -37,6 +39,7 @@ export default function AddGoal() {
               setGoal={setGoal}
               setGoalSelected={setGoalSelected}
               setSteps={setSteps}
+              setSubmitError={setSubmitError}
             ></GoalCreate>
           </>
         ) :
@@ -50,6 +53,7 @@ export default function AddGoal() {
                 reset={reset}
                 goal={goal}
                 setGoal={setGoal}
+                setSubmitError={setSubmitError}
                 usage="createGoal"
               ></GoalSteps>
             ) : (
@@ -60,6 +64,10 @@ export default function AddGoal() {
               </div></div>
             )}
           </>
+        }
+        {submitError && (<div className="text-danger ms-2">
+          {submitError}
+        </div>)
         }
       </div>
     </>

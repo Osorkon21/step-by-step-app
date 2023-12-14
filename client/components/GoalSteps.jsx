@@ -4,11 +4,10 @@ import DropdownButton from "react-bootstrap/DropdownButton"
 import { useState, useEffect } from "react"
 import { useAppCtx } from "../utils/AppProvider"
 
-export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage }) {
+export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage, setSubmitError }) {
 
   const appCtx = useAppCtx()
 
-  const [submitError, setSubmitError] = useState("");
   const [category, setCategory] = useState(goal.category?.name || null);
   const [categories, setCategories] = useState(null);
 
@@ -205,10 +204,6 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
         <div className="d-flex">
           <button type="submit">Save Goal</button>
           <button type="reset" onClick={reset}>Clear All</button>
-        </div>
-
-        <div className="text-danger">
-          {submitError}
         </div>
       </form>
     </>

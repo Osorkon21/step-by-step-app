@@ -19,10 +19,13 @@ export default function Dashboard() {
   // display inProgress (true) or completed (false) goals
   const [inProgress, setInProgress] = useState(true);
 
+  const [submitError, setSubmitError] = useState("");
+
   // clear goal currently displayed
   function reset() {
     const emptyStep = [{ uuid: uuidv4(), title: "", text: "", completed: false }];
     setCurrentGoal({ ...currentGoal, name: "", completed: false, category: null, steps: emptyStep });
+    setSubmitError("");
   }
 
   async function getUserGoals() {
@@ -75,6 +78,8 @@ export default function Dashboard() {
         setInProgress={setInProgress}
         setInProgressGoals={setInProgressGoals}
         setCompletedGoals={setCompletedGoals}
+        setCurrentGoal={setCurrentGoal}
+        setSubmitError={setSubmitError}
       ></DashboardHeader>
 
       {/* display in progress goals */}
@@ -89,15 +94,21 @@ export default function Dashboard() {
               ></GoalBar>
 
               {(currentGoal && goal._id === currentGoal._id) &&
-                <GoalSteps
-                  steps={currentGoal.steps}
-                  setSteps={setSteps}
-                  reset={reset}
-                  goal={currentGoal}
-                  setGoal={setCurrentGoal}
-                  deleteGoal={deleteGoal}
-                  usage="updateGoal"
-                ></GoalSteps>
+                <>
+                  <GoalSteps
+                    steps={currentGoal.steps}
+                    setSteps={setSteps}
+                    reset={reset}
+                    goal={currentGoal}
+                    setGoal={setCurrentGoal}
+                    setSubmitError={setSubmitError}
+                    usage="updateGoal"
+                  ></GoalSteps>
+                  {submitError && (<div className="text-danger ms-2">
+                    {submitError}
+                  </div>)
+                  }
+                </>
               }
             </div>
           ))}
@@ -116,17 +127,25 @@ export default function Dashboard() {
               <GoalBar
                 goal={goal}
                 setCurrentGoal={setCurrentGoal}
+                deleteGoal={deleteGoal}
               ></GoalBar>
 
               {(currentGoal && goal._id === currentGoal._id) &&
-                <GoalSteps
-                  steps={currentGoal.steps}
-                  setSteps={setSteps}
-                  reset={reset}
-                  goal={currentGoal}
-                  setGoal={setCurrentGoal}
-                  usage="updateGoal"
-                ></GoalSteps>
+                <>
+                  <GoalSteps
+                    steps={currentGoal.steps}
+                    setSteps={setSteps}
+                    reset={reset}
+                    goal={currentGoal}
+                    setGoal={setCurrentGoal}
+                    setSubmitError={setSubmitError}
+                    usage="updateGoal"
+                  ></GoalSteps>
+                  {submitError && (<div className="text-danger ms-2">
+                    {submitError}
+                  </div>)
+                  }
+                </>
               }
             </div>
           ))}

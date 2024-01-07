@@ -1,5 +1,8 @@
 const { Schema, model, Types } = require('mongoose');
 const bcrypt = require("bcrypt")
+import { v4 as uuidv4 } from "uuid"
+
+// for future data gathering: birthday? phone numbers? photo/avatar?
 
 const userSchema = new Schema({
   email: {
@@ -8,6 +11,24 @@ const userSchema = new Schema({
     trimmed: true,
     required: true,
     match: [/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/, "Invalid email address! Please try again."]
+  },
+  isVerified: {
+    type: Boolean,
+    default: false
+  },
+  emailToken: {
+    // confirm email, will create and store uuid
+    type: String,
+    default: uuidv4()
+  },
+  username: {
+    type: String,
+    required: true, // may need to omit to avoid glitches w prev accounts
+    unique: true,
+    trimmed: true,
+    match: [/^([A-Za-z0-9]+)$/, "Username can only contain letters or numbers! Please try again."],
+    maxLength: [25, "Username cannot exceed 25 characters!"]
+    // later: filter out inappropriate words/censoring
   },
   password: {
     type: String,

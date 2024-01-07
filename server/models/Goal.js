@@ -1,6 +1,8 @@
 const { Schema, model, Types } = require('mongoose');
 const stepSchema = require("./stepSchema")
 
+// will need to add: username option (for display on public dash)
+
 const goalSchema = new Schema({
   name: {
     type: String,
@@ -52,5 +54,7 @@ module.exports = Goal;
 //user id, then will need to populate it (if we want to display all user info)
 
 // No huge notes on this model- let me know if I should add/omit anything. -LT
-// Info attached with thread is stored with an Id, assistant can refer back to an Id
+// Info attached with thread is stored with an Id, assistant can refer back to an Id\
+
+
 

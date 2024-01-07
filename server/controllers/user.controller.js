@@ -18,7 +18,11 @@ function createToken(email, id) {
 async function authenticate(data) {
   let user
   try {
-    user = await Model.findOne({ email: data.email })
+    if (data.email) {
+      user = await Model.findOne({ email: data.email })
+    } else if (data.username) {
+      user = await Model.findOne({ username: data.username })
+    }
   } catch (err) {
     console.log(err)
     throw new Error(err)

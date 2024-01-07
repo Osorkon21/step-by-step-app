@@ -13,34 +13,30 @@ export default function App() {
   return (
     <AppProvider>
       <BrowserRouter>
-      <>
-        <div className="">
-          <div className='header-container'>
-            <Header className="header"/>
+        <>
+          <div className="">
+            <div className='header-container'>
+              <Header className="header" />
+            </div>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/auth" element={<AuthPage />} />
+
+              <Route path="/dashboard" element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              } />
+
+              <Route path="/addgoal" element={<AddGoal />} />
+
+              <Route path="/logout" element={<Logout />} />
+
+              <Route path="*" element={<NotFound />} />
+            </Routes>
           </div>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/auth" element={<AuthPage />} />
 
-            <Route path="/dashboard" element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            } />
-
-            <Route path="/addgoal" element={
-              <ProtectedRoute>
-                <AddGoal />
-              </ProtectedRoute>
-            } />
-
-            <Route path="/logout" element={<Logout />} />
-
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </div>
-        
-      </>
+        </>
       </BrowserRouter>
     </AppProvider>
   )

@@ -19,9 +19,7 @@ export default function Header() {
               <Nav.Link href="/dashboard">Dashboard</Nav.Link>
             )}
 
-            {user?._id !== undefined && (
-              < Nav.Link href="/addgoal">Add Goal</Nav.Link>
-            )}
+            <Nav.Link href="/addgoal">Add Goal</Nav.Link>
 
             {user?._id !== undefined ? (
               <Nav.Link href="/logout">Logout</Nav.Link>

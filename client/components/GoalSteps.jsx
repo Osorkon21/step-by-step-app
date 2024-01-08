@@ -3,6 +3,7 @@ import Dropdown from "react-bootstrap/Dropdown"
 import DropdownButton from "react-bootstrap/DropdownButton"
 import { useState, useEffect } from "react"
 import { useAppCtx } from "../utils/AppProvider"
+import { Button, Dialog, DialogTrigger, Heading, Input, Label, Modal, TextField } from 'react-aria-components';
 
 export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage, setSubmitError }) {
 
@@ -175,10 +176,10 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
         {steps.map(item => (
           <div className="step" key={item.uuid} >
             <button type="button" className="ms-2" id={item.uuid} onClick={handleDeleteStep}>Delete Step</button>
-              <div className="form-group">
-                <label htmlFor={item.uuid}>Completed:</label>
-                <input className="checkbox" type="checkbox" checked={item.completed} id={item.uuid} onChange={handleCheck} />
-              </div>
+            <div className="form-group">
+              <label htmlFor={item.uuid}>Completed:</label>
+              <input className="checkbox" type="checkbox" checked={item.completed} id={item.uuid} onChange={handleCheck} />
+            </div>
             <div className="input-container">
               <div className="form-group col-12">
                 <label htmlFor={item.uuid}>Step Title:</label>
@@ -206,7 +207,35 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
         </DropdownButton>
 
         <div className=" ">
-          <button className="update-goal-btn m-2" type="submit">Save Goal</button>
+          {appCtx.user?._id !== undefined ? (
+            <button className="update-goal-btn m-2" type="submit">Save Goal</button>
+          )
+            : (
+              <DialogTrigger>
+                <Button>Sign up…</Button>
+                <Modal isDismissable>
+                  <Dialog>
+                    {({ close }) => (
+                      <form>
+                        <Heading slot="title">Sign up</Heading>
+                        <TextField autoFocus>
+                          <Label>First Name:</Label>
+                          <Input />
+                        </TextField>
+                        <TextField>
+                          <Label>Last Name:</Label>
+                          <Input />
+                        </TextField>
+                        <Button onPress={close}>
+                          Submit
+                        </Button>
+                      </form>
+                    )}
+                  </Dialog>
+                </Modal>
+              </DialogTrigger>
+            )}
+
           <button className="update-goal-btn m-2" type="reset" onClick={reset}>Clear All</button>
         </div>
       </form>

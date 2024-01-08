@@ -6,7 +6,7 @@ export default function Auth({ usage = "signup" }) {
 
   const appCtx = useAppCtx()
 
-  const [userData, setUserData] = useState({ email: "", username: "", password: "" })
+  const [userData, setUserData] = useState({ email: "", username: "", uservalue: "", password: "" })
 
   const [submitError, setSubmitError] = useState("");
 
@@ -75,7 +75,7 @@ export default function Auth({ usage = "signup" }) {
               :
               <>
                 <div>
-                  <input type="text" name="username" placeholder="email or username" value={userData.username} onChange={handleInputChange} />
+                  <input type="text" name="uservalue" placeholder="email or username" value={userData.uservalue} onChange={handleInputChange} />
                 </div>
               </>
             }

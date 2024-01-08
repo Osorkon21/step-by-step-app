@@ -6,7 +6,7 @@ export default function Auth({ usage = "signup" }) {
 
   const appCtx = useAppCtx()
 
-  const [userData, setUserData] = useState({ email: "", password: "" })
+  const [userData, setUserData] = useState({ email: "", username: "", uservalue: "", password: "" })
 
   const [submitError, setSubmitError] = useState("");
 
@@ -49,7 +49,7 @@ export default function Auth({ usage = "signup" }) {
   }
 
   useEffect(() => {
-    setUserData({ ...userData, email: appCtx.user?.email || "" })
+    setUserData({ ...userData, email: appCtx.user?.email || "", username: appCtx.user?.username || "" });
   }, [appCtx])
 
   useEffect(() => {
@@ -61,14 +61,27 @@ export default function Auth({ usage = "signup" }) {
         <div>
           <h2>{usage === "signup" ? "Signup" : "Login"}</h2>
           <div>
-            <div>
-              <label className="d-block">Email Address</label>
-              <input type="text" name="email" value={userData.email} onChange={handleInputChange} />
-            </div>
+            {usage === "signup" ? (
+              <>
+                <div>
+                  <input type="text" name="email" placeholder="email" value={userData.email} onChange={handleInputChange} />
+                </div>
+
+                <div>
+                  <input type="text" name="username" placeholder="username" value={userData.username} onChange={handleInputChange} />
+                </div>
+              </>
+            )
+              :
+              <>
+                <div>
+                  <input type="text" name="uservalue" placeholder="email or username" value={userData.uservalue} onChange={handleInputChange} />
+                </div>
+              </>
+            }
 
             <div>
-              <label className="d-block">Password</label>
-              <input type="password" name="password" value={userData.password} onChange={handleInputChange} />
+              <input type="password" name="password" placeholder="password" value={userData.password} onChange={handleInputChange} />
             </div>
           </div>
 

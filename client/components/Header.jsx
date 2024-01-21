@@ -3,9 +3,11 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useAppCtx } from "../utils/AppProvider"
+import { useModalCtx } from '../utils/ModalProvider';
 
 export default function Header() {
-  const { user } = useAppCtx()
+  const { user } = useAppCtx();
+  const modalCtx = useModalCtx();
 
   return (
     <Navbar expand="lg" bg='dark' variant="light" className=" bg-body-tertiary">
@@ -24,7 +26,9 @@ export default function Header() {
             {user?._id !== undefined ? (
               <Nav.Link href="/logout">Logout</Nav.Link>
             ) : (
-              <Nav.Link href="/auth">Login</Nav.Link>
+              <>
+                {modalCtx.signupModal}
+              </>
             )}
 
           </Nav>

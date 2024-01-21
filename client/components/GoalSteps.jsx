@@ -3,11 +3,12 @@ import Dropdown from "react-bootstrap/Dropdown"
 import DropdownButton from "react-bootstrap/DropdownButton"
 import { useState, useEffect } from "react"
 import { useAppCtx } from "../utils/AppProvider"
-import { Button, Dialog, DialogTrigger, Heading, Input, Label, Modal, TextField } from 'react-aria-components';
+import { useModalCtx } from "../utils/ModalProvider"
 
 export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage, setSubmitError }) {
 
   const appCtx = useAppCtx()
+  const modalCtx = useModalCtx();
 
   const [category, setCategory] = useState(goal.category?.name || null);
   const [categories, setCategories] = useState(null);
@@ -211,29 +212,9 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
             <button className="update-goal-btn m-2" type="submit">Save Goal</button>
           )
             : (
-              <DialogTrigger>
-                <Button>Sign up…</Button>
-                <Modal isDismissable>
-                  <Dialog>
-                    {({ close }) => (
-                      <form>
-                        <Heading slot="title">Sign up</Heading>
-                        <TextField autoFocus>
-                          <Label>First Name:</Label>
-                          <Input />
-                        </TextField>
-                        <TextField>
-                          <Label>Last Name:</Label>
-                          <Input />
-                        </TextField>
-                        <Button onPress={close}>
-                          Submit
-                        </Button>
-                      </form>
-                    )}
-                  </Dialog>
-                </Modal>
-              </DialogTrigger>
+              <>
+                {modalCtx.signupModal}
+              </>
             )}
 
           <button className="update-goal-btn m-2" type="reset" onClick={reset}>Clear All</button>

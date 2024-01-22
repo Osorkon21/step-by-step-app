@@ -146,8 +146,8 @@ export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps, s
           </div>
         </div>
         <div className="btn-container d-flex flex-row justify-content-center m-2">
-          <button type="button" className="m-2" name="no-generate">Don't Generate AI Steps</button>
-          <button type="button" className="m-2" name="random-goal">Generate Random Goal</button>
+          <button className="m-2" name="no-generate">Add Steps manually</button>
+          <button className="m-2" name="random-goal">Generate Random Goal</button>
         </div>
       </div>
     </form>

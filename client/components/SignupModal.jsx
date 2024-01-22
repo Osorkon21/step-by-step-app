@@ -1,26 +1,19 @@
-import { Button, Dialog, DialogTrigger, Heading, Input, Label, Modal, TextField } from 'react-aria-components';
+import { Button, Dialog, DialogTrigger, Modal } from 'react-aria-components';
+import { Auth } from "./"
 
-export default function SignupModal({ buttonText }) {
+export default function SignupModal({ buttonText, changed, setChanged }) {
   return (
     <DialogTrigger>
       <Button>{buttonText}</Button>
       <Modal isDismissable>
         <Dialog>
           {({ close }) => (
-            <form>
-              <Heading slot="title">Sign up</Heading>
-              <TextField autoFocus>
-                <Label>First Name:</Label>
-                <Input />
-              </TextField>
-              <TextField>
-                <Label>Last Name:</Label>
-                <Input />
-              </TextField>
-              <Button onPress={close}>
-                Submit
-              </Button>
-            </form>
+            <Auth
+              usage="login"
+              close={close}
+              changed={changed}
+              setChanged={setChanged}
+            ></Auth>
           )}
         </Dialog>
       </Modal>

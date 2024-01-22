@@ -2,12 +2,18 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { useState, useEffect } from "react"
 import { useAppCtx } from "../utils/AppProvider"
-import { useModalCtx } from '../utils/ModalProvider';
+import { SignupModal } from './';
 
 export default function Header() {
-  const { user } = useAppCtx();
-  const modalCtx = useModalCtx();
+  const appCtx = useAppCtx();
+
+  const [changed, setChanged] = useState(false);
+
+  useEffect(() => {
+    appCtx.verifyUser();
+  }, [changed])
 
   return (
     <Navbar expand="lg" bg='dark' variant="light" className=" bg-body-tertiary">
@@ -17,18 +23,20 @@ export default function Header() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
 
-            {user?._id !== undefined && (
+            {appCtx.user?._id !== undefined && (
               <Nav.Link href="/dashboard">Dashboard</Nav.Link>
             )}
 
             <Nav.Link href="/addgoal">Add Goal</Nav.Link>
 
-            {user?._id !== undefined ? (
+            {appCtx.user?._id !== undefined ? (
               <Nav.Link href="/logout">Logout</Nav.Link>
             ) : (
-              <>
-                {modalCtx.signupModal}
-              </>
+              <SignupModal
+                buttonText={"Login"}
+                changed={changed}
+                setChanged={setChanged}
+              ></SignupModal>
             )}
 
           </Nav>

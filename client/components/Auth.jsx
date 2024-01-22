@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useAppCtx } from "../utils/AppProvider"
 
 
-export default function Auth({ usage = "signup" }) {
+export default function Auth({ usage = "signup", close, changed, setChanged }) {
 
   const appCtx = useAppCtx()
 
@@ -29,12 +29,11 @@ export default function Auth({ usage = "signup" }) {
       const response = await query.json()
       if (response.result === "success") {
         setSubmitError("");
-        window.location.href = "/dashboard"
+        setChanged(!changed);
+        close();
       }
       else if (response.result === "error") {
         if (response.payload.includes("duplicate key"))
-
-          // not very secure - it gives out a user's email, but I don't see a way around this right now
           setSubmitError("User already exists!");
         else {
           const errArr = response.payload.split(":");

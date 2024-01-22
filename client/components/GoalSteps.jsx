@@ -3,12 +3,13 @@ import Dropdown from "react-bootstrap/Dropdown"
 import DropdownButton from "react-bootstrap/DropdownButton"
 import { useState, useEffect } from "react"
 import { useAppCtx } from "../utils/AppProvider"
-import { useModalCtx } from "../utils/ModalProvider"
+import { SignupModal } from "./"
 
 export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage, setSubmitError }) {
 
   const appCtx = useAppCtx()
-  const modalCtx = useModalCtx();
+
+  const [changed, setChanged] = useState(false);
 
   const [category, setCategory] = useState(goal.category?.name || null);
   const [categories, setCategories] = useState(null);
@@ -155,6 +156,10 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
   }
 
   useEffect(() => {
+    appCtx.verifyUser();
+  }, [changed])
+
+  useEffect(() => {
     if (!categories)
       getCategories();
   }, [categories])
@@ -212,9 +217,11 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
             <button className="update-goal-btn m-2" type="submit">Save Goal</button>
           )
             : (
-              <>
-                {modalCtx.signupModal}
-              </>
+              <SignupModal
+                buttonText={"Sign up to save goal!"}
+                changed={changed}
+                setChanged={setChanged}
+              ></SignupModal>
             )}
 
           <button className="update-goal-btn m-2" type="reset" onClick={reset}>Clear All</button>

@@ -9,8 +9,6 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
 
   const appCtx = useAppCtx()
 
-  const [changed, setChanged] = useState(false);
-
   const [category, setCategory] = useState(goal.category?.name || null);
   const [categories, setCategories] = useState(null);
 
@@ -156,10 +154,6 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
   }
 
   useEffect(() => {
-    appCtx.verifyUser();
-  }, [changed])
-
-  useEffect(() => {
     if (!categories)
       getCategories();
   }, [categories])
@@ -219,8 +213,6 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
             : (
               <SignupModal
                 buttonText={"Sign up to save goal!"}
-                changed={changed}
-                setChanged={setChanged}
               ></SignupModal>
             )}
 

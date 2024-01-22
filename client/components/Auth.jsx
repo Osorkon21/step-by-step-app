@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useAppCtx } from "../utils/AppProvider"
 
 
-export default function Auth({ usage = "signup", close, changed, setChanged }) {
+export default function Auth({ usage = "signup", close }) {
 
   const appCtx = useAppCtx()
 
@@ -29,8 +29,8 @@ export default function Auth({ usage = "signup", close, changed, setChanged }) {
       const response = await query.json()
       if (response.result === "success") {
         setSubmitError("");
-        setChanged(!changed);
         close();
+        appCtx.updateUser();
       }
       else if (response.result === "error") {
         if (response.payload.includes("duplicate key"))

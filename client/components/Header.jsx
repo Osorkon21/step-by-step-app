@@ -1,19 +1,16 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import { useState, useEffect } from "react"
 import { useAppCtx } from "../utils/AppProvider"
 import { SignupModal } from './';
+import Cookie from "js-cookie";
 
 export default function Header() {
   const appCtx = useAppCtx();
 
-  const [changed, setChanged] = useState(false);
-
-  useEffect(() => {
-    appCtx.verifyUser();
-  }, [changed])
+  function logout() {
+    Cookie.remove("auth-cookie");
+  }
 
   return (
     <Navbar expand="lg" bg='dark' variant="light" className=" bg-body-tertiary">
@@ -30,12 +27,13 @@ export default function Header() {
             <Nav.Link href="/addgoal">Add Goal</Nav.Link>
 
             {appCtx.user?._id !== undefined ? (
-              <Nav.Link href="/logout">Logout</Nav.Link>
+              <button className="logout-btn" type="button" onClick={() => {
+                logout();
+                appCtx.updateUser();
+              }}>Logout</button>
             ) : (
               <SignupModal
                 buttonText={"Login"}
-                changed={changed}
-                setChanged={setChanged}
               ></SignupModal>
             )}
 

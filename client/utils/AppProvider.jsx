@@ -1,22 +1,25 @@
-import Cookie from "js-cookie"
-import { createContext, useContext, useEffect, useState } from "react"
+import Cookie from "js-cookie";
+import { createContext, useContext, useEffect, useState } from "react";
 
 // Create the context itself
-const AppContext = createContext({})
+const AppContext = createContext({});
 
 // Create a React hook that will allow other components to use the context 
-export const useAppCtx = () => useContext(AppContext)
+export const useAppCtx = () => useContext(AppContext);
 
 export default function AppProvider(props) {
 
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState({});
+
+  function updateUser() {
+    verifyUser();
+  }
 
   async function verifyUser() {
-    const cookie = Cookie.get("auth-cookie")
+    const cookie = Cookie.get("auth-cookie");
 
-    if (!cookie && window.location.pathname !== "/" && !window.location.pathname.includes("/auth") && !window.location.pathname.includes("/addgoal")) {
-      window.location.href = "/auth"
-    }
+    if (!cookie && window.location.pathname !== "/" && window.location.pathname.includes("/dashboard"))
+      window.location.href = "/";
 
     try {
       const query = await fetch("/api/users/verify", {
@@ -25,30 +28,31 @@ export default function AppProvider(props) {
         headers: {
           "Content-Type": "application/json"
         }
-      })
+      });
 
 
-      const response = await query.json()
+      const response = await query.json();
 
-      if (response.result === "success") {
-        setUser(response.payload)
-      }
+      if (response.result === "success")
+        setUser(response.payload);
+      else
+        setUser({});
+
     } catch (err) {
-      console.log(err.message)
-      if (window.location.pathname !== "" && !window.location.pathname.includes("/auth")) {
-        window.location.href = "/auth"
-      }
+      console.log(err.message);
+      if (window.location.pathname !== "" && window.location.pathname.includes("/dashboard"))
+        window.location.href = "/";
     }
   }
 
   useEffect(() => {
-    verifyUser()
-  }, [])
+    verifyUser();
+  }, []);
 
 
   return (
-    <AppContext.Provider value={{ user, verifyUser }}>
+    <AppContext.Provider value={{ user, verifyUser, updateUser }}>
       {props.children}
     </AppContext.Provider>
-  )
+  );
 }

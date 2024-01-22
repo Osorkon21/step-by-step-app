@@ -1,7 +1,7 @@
 import { Button, Dialog, DialogTrigger, Modal } from 'react-aria-components';
 import { Auth } from "./"
 
-export default function SignupModal({ buttonText, changed, setChanged }) {
+export default function SignupModal({ usage = "login", buttonText }) {
   return (
     <DialogTrigger>
       <Button>{buttonText}</Button>
@@ -9,10 +9,8 @@ export default function SignupModal({ buttonText, changed, setChanged }) {
         <Dialog>
           {({ close }) => (
             <Auth
-              usage="login"
+              usage={usage}
               close={close}
-              changed={changed}
-              setChanged={setChanged}
             ></Auth>
           )}
         </Dialog>

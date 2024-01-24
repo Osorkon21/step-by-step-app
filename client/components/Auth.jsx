@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useAppCtx } from "../utils/AppProvider"
 
 
-export default function Auth({ usage = "signup", close }) {
+export default function Auth({ usage = "signup", close, setGoalStepsSubmitError = null }) {
 
   const appCtx = useAppCtx()
 
@@ -31,6 +31,9 @@ export default function Auth({ usage = "signup", close }) {
         setSubmitError("");
         close();
         appCtx.updateUser();
+
+        if (setGoalStepsSubmitError !== null)
+          setGoalStepsSubmitError("");
       }
       else if (response.result === "error") {
         if (response.payload.includes("duplicate key"))

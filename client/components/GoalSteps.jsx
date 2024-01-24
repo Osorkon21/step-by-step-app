@@ -17,6 +17,9 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
     e.preventDefault();
     setSubmitError("");
 
+    if (appCtx.user?._id === undefined)
+      return;
+
     // remove all steps without a title
     const filteredSteps = steps.filter(step => step.title);
 
@@ -213,6 +216,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
             : (
               <SignupModal
                 buttonText={"Sign up to save goal!"}
+                setGoalStepsSubmitError={setSubmitError}
               ></SignupModal>
             )}
 

@@ -38,6 +38,12 @@
     }
 }
 
+.signup_login {
+    background-color: #dddddd;
+    padding: 30px;
+    border-radius: 2rem;
+    border: 0;
+}
 @keyframes modal-fade {
     from {
         opacity: 0;

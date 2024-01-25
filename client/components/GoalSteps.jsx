@@ -167,20 +167,31 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
           </div>
         </div>
 
-        {steps.map(item => (
-          <div className="step" key={item.uuid} >
-            <div className="input-container">
-              <div className="form-group col-12">
-                <textarea className="input form-control" name="title" value={item.title} id={item.uuid} onChange={handleInputChange} />
-              </div>
-            </div>
+        {steps.map(step => (
+          <div key={step._id}>
+            {(currentStep && step._id === currentStep._id) ?
+              <div className="step" key={step.uuid} >
+                <div className="input-container">
+                  <div className="form-group col-12">
+                    <textarea className="input form-control" name="title" value={step.title} id={step.uuid} onChange={handleInputChange} />
+                  </div>
+                </div>
 
-            <div className="input-container">
-              <div className="form-group col-12">
-                <label htmlFor={item.uuid}>Description:</label>
-                <textarea className="input form-control" name="text" value={item.text} id={item.uuid} onChange={handleInputChange} />
+                <div className="input-container">
+                  <div className="form-group col-12">
+                    <label htmlFor={step.uuid}>Description:</label>
+                    <textarea className="input form-control" name="text" value={step.text} id={step.uuid} onChange={handleInputChange} />
+                  </div>
+                </div>
               </div>
-            </div>
+              :
+              <StepBar
+                step={step}
+                currentStep={currentStep}
+                setCurrentStep={setCurrentStep}
+                handleDeleteStep={handleDeleteStep}
+              ></StepBar>
+            }
           </div>
         ))}
 

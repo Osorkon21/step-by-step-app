@@ -2,7 +2,7 @@ import trashCan from "../assets/icons/trash-can.svg"
 
 export default function StepBar({ step, currentStep, setCurrentStep, deleteStep }) {
 
-  function handleStepBarClick(step) {
+  function handleStepBarClick(e) {
     if (currentStep && step._id === currentStep._id)
       setCurrentStep(null);
     else
@@ -12,7 +12,7 @@ export default function StepBar({ step, currentStep, setCurrentStep, deleteStep 
   return (
     <>
       <div className="article-container mx-4 d-flex">
-        <button className="btn btn-secondary mt-3 w-100 d-flex align-items-center" type="button" onClick={() => handleStepBarClick(step)}>
+        <button className="btn btn-secondary mt-3 w-100 d-flex align-items-center" type="button" onClick={(e) => handleStepBarClick(e)}>
           {step.name}
         </button>
 

@@ -5,7 +5,7 @@ import { useState, useEffect } from "react"
 import { useAppCtx } from "../utils/AppProvider"
 import { SignupModal, StepBar } from "./"
 
-export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage, setSubmitError }) {
+export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage, setSubmitError, defaultChecked }) {
 
   const appCtx = useAppCtx()
 
@@ -161,18 +161,14 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
       <form onSubmit={handleFormSubmit} className="form">
         <div className="add-goal-items">
           <div className="col-sm m-1">
-            <label htmlFor="complete-all">Complete All:</label>
-            <input className="checkbox" type="checkbox" defaultChecked={false} id="complete-all" onChange={handleCheck} />
+            <label htmlFor="complete-all">Check/Uncheck All:</label>
+            <input className="checkbox" type="checkbox" defaultChecked={defaultChecked} id="complete-all" onChange={handleCheck} />
             <button className="col-sm update-goal-btn" type="reset" onClick={reset}>Clear All</button>
           </div>
         </div>
 
         {steps.map(item => (
           <div className="step" key={item.uuid} >
-            {/* <div className="form-group">
-              <label htmlFor={item.uuid}>Completed:</label>
-              <input className="checkbox" type="checkbox" checked={item.completed} id={item.uuid} onChange={handleCheck} />
-            </div> */}
             <div className="input-container">
               <div className="form-group col-12">
                 <textarea className="input form-control" name="title" value={item.title} id={item.uuid} onChange={handleInputChange} />

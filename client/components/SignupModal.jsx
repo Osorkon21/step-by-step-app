@@ -21,7 +21,7 @@ export default function SignupModal({ buttonText, setGoalStepsSubmitError = null
   return (
     <DialogTrigger>
       <Button>{buttonText}</Button>
-      <Modal isDismissable>
+      <Modal isDismissable className="signup_login">
         <Dialog>
           {({ close }) => (
             <>

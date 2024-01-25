@@ -3,7 +3,7 @@ import Dropdown from "react-bootstrap/Dropdown"
 import DropdownButton from "react-bootstrap/DropdownButton"
 import { useState, useEffect } from "react"
 import { useAppCtx } from "../utils/AppProvider"
-import { SignupModal } from "./"
+import { SignupModal, StepBar } from "./"
 
 export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage, setSubmitError }) {
 
@@ -11,6 +11,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
 
   const [category, setCategory] = useState(goal.category?.name || null);
   const [categories, setCategories] = useState(null);
+  const [currentStep, setCurrentStep] = useState(null);
 
   // format goal and step items, add them to database
   async function handleFormSubmit(e) {
@@ -80,22 +81,16 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
   // handle text input
   function handleInputChange(e) {
 
-    // change goal title
-    if (e.target.name === "goal")
-      setGoal({ ...goal, name: e.target.value });
-
     // change step title/text
-    else {
-      setSteps(steps.map(item => {
-        if (item.uuid != e.target.id)
-          return item;
+    setSteps(steps.map(item => {
+      if (item.uuid != e.target.id)
+        return item;
 
-        return {
-          ...item,
-          [e.target.name]: e.target.value
-        }
-      }));
-    }
+      return {
+        ...item,
+        [e.target.name]: e.target.value
+      }
+    }));
   }
 
   // marks steps as completed or not completed
@@ -166,31 +161,23 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
       <form onSubmit={handleFormSubmit} className="form">
         <div className="add-goal-items">
           <div className="col-sm m-1">
-            <label htmlFor="complete-all">Mark All Completed:</label>
+            <label htmlFor="complete-all">Complete All:</label>
             <input className="checkbox" type="checkbox" defaultChecked={false} id="complete-all" onChange={handleCheck} />
+            <button className="col-sm update-goal-btn" type="reset" onClick={reset}>Clear All</button>
           </div>
-          <div className="col-sm m-1">
-            <label htmlFor="goal">Goal Title:</label>
-            <input type="text" name="goal" id="goal" className="form-control" value={goal.name} onChange={handleInputChange} />
-          </div>
-          <button className="col-sm update-goal-btn" type="reset" onClick={reset}>Clear All</button>
         </div>
 
         {steps.map(item => (
           <div className="step" key={item.uuid} >
-            <button type="button" className="ms-2" id={item.uuid} onClick={handleDeleteStep}>Delete Step</button>
-            <div className="form-group">
+            {/* <div className="form-group">
               <label htmlFor={item.uuid}>Completed:</label>
               <input className="checkbox" type="checkbox" checked={item.completed} id={item.uuid} onChange={handleCheck} />
-            </div>
+            </div> */}
             <div className="input-container">
               <div className="form-group col-12">
-                <label htmlFor={item.uuid}>Step Title:</label>
                 <textarea className="input form-control" name="title" value={item.title} id={item.uuid} onChange={handleInputChange} />
               </div>
             </div>
-            {/* <div className="d-flex align-items-center">
-            </div> */}
 
             <div className="input-container">
               <div className="form-group col-12">

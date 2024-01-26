@@ -1,42 +1,4 @@
-html {
-  --lightest: #eef5f9;
-  --lightestblur: #eef5f982;
-  --light: #d1eefb;
-  --lightblur: #d1eefb4b;
-  --middle: #bbeafb;
-  --middleblur: #bbeafb78;
-  --middledark: #76d0e3;
-  --middledarkblur: #76d1e37a;
-  --dark: #32c4e3;
-  --darkblur: #32c2e37b;
-  --darker: teal;
-  --darkerblur: rgba(0, 128, 128, 0.055);
-  --background: linear-gradient(180deg, rgba(187,234,251,1) 0%, rgba(236,217,217,1) 35%, rgba(118,208,227,1) 100%);
-  --purple: #ad90c1;
-  --lightpurple: #c7b7cf;
 
-  --mutedlight: #eaeaea;
-  --mutedgray: #dddddd;
-  --mutedpink: #ecd9d9;
-  --mutedblue: #d5e1ea;
-  --mutedgreen: #e8f0d1;
-
-  --waterlight:#eef5f9;
-  --waterpale: #d1eefb;
-  --watermedium: #bbeafb;
-  --wateraqua: #76d0e3;
-  --waterteal: #32c4e3;
-  
-  --dreamslightest:#ddfbff;
-  --dreamslightaqua: #c7ebf0;
-  --dreamsgray: #bfd5e2;
-  --dreamspurple: #b1b5c8;
-  --dreamsmauve: #b2abbf;
-
-  --border-radius: .5rem;
-  --border-thickness: .1rem;
-  --padding: 1rem;
-}
 
 #root {
   color: black;
@@ -81,7 +43,7 @@ body{
   border: 2px solid red;
 } */
 
-.header-dreams{
+.home {
   text-align: center;
   /* background-color: var(--middledark); */
   flex-direction: column;
@@ -117,9 +79,9 @@ body{
 }
 
 .benefits {
-  padding: 0px;
+  /* padding: 0px;
   height: 100%;
-  margin-top: 2rem;
+  margin-top: 2rem; */
   /* border-top: 2rem solid var(--light); */
   /* border: purple 1rem solid; */
 }
@@ -131,26 +93,13 @@ h2 {
   font-size: 3em;
 }
 
-.AiImage {
+.home-img {
   height: 200px;
   width: 200px;
   margin: 1rem;
   border-radius: 2rem;
 }
 
-.HealthyImage {
-  height: 200px;
-  width: 200px;
-  margin: 1rem;
-  border-radius: 2rem;
-}
-
-.MembershipImage {
-  height: 200px;
-  width: 200px;
-  margin: 1rem;
-  border-radius: 2rem;
-}
 
 h1 {
   color: var(--purple);

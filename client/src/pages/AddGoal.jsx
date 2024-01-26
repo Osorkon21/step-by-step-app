@@ -1,8 +1,5 @@
 import { useState } from "react"
 import { GoalCreate, GoalSteps } from "../components";
-import stepImage from '../image/pic5.png'
-import assistStep from '../image/pic6.png'
-import stepAi from '../image/pic7.png'
 
 export default function AddGoal() {
   const [goal, setGoal] = useState({ name: "" });

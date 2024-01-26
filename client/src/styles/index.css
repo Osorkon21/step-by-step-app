@@ -1,0 +1,13 @@
+@import "tailwindcss/base";
+@import "./customizations/custom-base-styles.css";
+
+@import "tailwindcss/components";
+@import "./customizations/custom-components.css";
+
+@import "tailwindcss/utilities";
+@import "./customizations/custom-utilities.css";
+
+@import './pages/AddGoal.css';
+@import './pages/Dashboard.css';
+@import './pages/AuthPage.css';
+@import './pages/Homepage.css';

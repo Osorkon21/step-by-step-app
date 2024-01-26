@@ -105,6 +105,7 @@ export default function Dashboard() {
                     setGoal={setCurrentGoal}
                     setSubmitError={setSubmitError}
                     usage="updateGoal"
+                    defaultChecked={false}
                   ></GoalSteps>
                   {submitError && (<div className="text-danger ms-2">
                     {submitError}
@@ -144,6 +145,7 @@ export default function Dashboard() {
                     setGoal={setCurrentGoal}
                     setSubmitError={setSubmitError}
                     usage="updateGoal"
+                    defaultChecked={true}
                   ></GoalSteps>
                   {submitError && (<div className="text-danger ms-2">
                     {submitError}

@@ -1,0 +1,17 @@
+/* EXAMPLE BEGINING */
+
+/* custom-utilities.css */
+.bg-hero {
+  background-image: url('/path/to/your/image.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.text-shadow {
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.border-accent {
+  border-color: #f6ad55; /* A custom accent color */
+}
+/* EXAMPLE END */

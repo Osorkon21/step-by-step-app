@@ -67,10 +67,10 @@
 /* END OF REACT ARIA MODAL STYLING */
 
 .goal-body {
-    border: var(--border-thickness) solid var(--darker);
+    /* border: var(--border-thickness) solid var(--darker);
     padding: var(--padding);
     border-radius: 2rem;
-    background-color: var(--middledark);
+    background-color: var(--middledark); */
 }
 
 

@@ -45,8 +45,8 @@
 
 .goal-container {
   margin-top: var(--padding);
-  border: 2px solid var(--darkblur);
-  background-color: var(--middledark);
+  /* border: 2px solid var(--darkblur); */
+  background-color: var(--middleblur);
   padding: var(--padding);
   border-radius: 2rem;
 }

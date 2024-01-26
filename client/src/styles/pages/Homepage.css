@@ -20,10 +20,10 @@ body{
   /* border: var(--border-thickness) solid var(--dark); */
   background-color: var(--lightblur);
   /* padding: var(--padding); */
-  min-height: 100vh;
-  display: flex;
+  /* min-height: 100vh; */
+  /* display: flex;
   flex-direction: column;
-  text-align: center;
+  text-align: center; */
 }
 
 .header-container {

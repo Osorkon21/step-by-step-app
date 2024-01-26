@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import AppProvider from './utils/AppProvider';
 import { Header, HelloUser, ProtectedRoute } from './components';
 import { HomePage, Dashboard, AddGoal, NotFound } from './pages/'
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 // import './css/Homepage.css'
 // import './css/AddGoal.css'
 // import './css/AuthPage.css'

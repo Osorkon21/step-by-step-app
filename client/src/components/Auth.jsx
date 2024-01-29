@@ -91,7 +91,7 @@ export default function Auth({ usage = "signup", close, setGoalStepsSubmitError 
         </div>
       </form>
 
-      <div className="text-danger">
+      <div className="text-red-600">
         {submitError}
       </div>
     </div>

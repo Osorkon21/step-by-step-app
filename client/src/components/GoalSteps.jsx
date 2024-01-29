@@ -161,27 +161,27 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
     <>
       <form onSubmit={handleFormSubmit} className="form">
         <div className="add-goal-items">
-          <div className="col-sm m-1">
+          <div className="m-1">
             <label htmlFor="complete-all">Check/Uncheck All:</label>
             <input className="checkbox" type="checkbox" defaultChecked={defaultChecked} id="complete-all" onChange={handleCheck} />
-            <button className="col-sm update-goal-btn" type="reset" onClick={reset}>Clear All</button>
+            <button className="update-goal-btn" type="reset" onClick={reset}>Clear All</button>
           </div>
         </div>
 
         {steps.map(step => (
-          <div key={step._id}>
+          <div className='step' key={step._id}>
             {(currentStep && step._id === currentStep._id) ?
-              <div className="step" key={step.uuid} >
+              <div className="" key={step.uuid} >
                 <div className="input-container">
-                  <div className="form-group col-12">
-                    <textarea className="input form-control" name="title" value={step.title} id={step.uuid} onChange={handleInputChange} />
+                  <div className="">
+                    <textarea className="input" name="title" value={step.title} id={step.uuid} onChange={handleInputChange} />
                   </div>
                 </div>
 
                 <div className="input-container">
-                  <div className="form-group col-12">
+                  <div className="">
                     <label htmlFor={step.uuid}>Description:</label>
-                    <textarea className="input form-control" name="text" value={step.text} id={step.uuid} onChange={handleInputChange} />
+                    <textarea className="input" name="text" value={step.text} id={step.uuid} onChange={handleInputChange} />
                   </div>
                 </div>
               </div>

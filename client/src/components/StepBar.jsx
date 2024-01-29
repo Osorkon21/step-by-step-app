@@ -1,9 +1,7 @@
-import trashCan from "../assets/icons/trash-can.svg"
-
-export default function StepBar({ step, currentStep, setCurrentStep, handleDeleteStep }) {
+export default function StepBar({ step, currentStep, setCurrentStep }) {
 
   function handleStepBarClick(e) {
-    if (currentStep && step._id === currentStep._id)
+    if (currentStep && (step.uuid === currentStep.uuid))
       setCurrentStep(null);
     else
       setCurrentStep(step);

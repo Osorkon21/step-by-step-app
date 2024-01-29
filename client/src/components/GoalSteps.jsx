@@ -5,6 +5,7 @@ import DropdownButton from "react-bootstrap/DropdownButton"
 import { useState, useEffect } from "react"
 import { useAppCtx } from "../utils/AppProvider"
 import { SignupModal, StepBar } from "./"
+import trashCan from "../assets/icons/trash-can.svg"
 
 export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage, setSubmitError, defaultChecked }) {
 
@@ -83,12 +84,12 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
   function handleInputChange(e) {
 
     // change step title/text
-    setSteps(steps.map(item => {
-      if (item.uuid != e.target.id)
-        return item;
+    setSteps(steps.map(step => {
+      if (!e.target.className.includes(step.uuid))
+        return step;
 
       return {
-        ...item,
+        ...step,
         [e.target.name]: e.target.value
       }
     }));
@@ -104,12 +105,12 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
 
     // checks/unchecks one checkbox
     else {
-      setSteps(steps.map(item => {
-        if (item.uuid != e.target.id)
-          return item;
+      setSteps(steps.map(step => {
+        if (!e.target.className.includes(step.uuid))
+          return step;
 
         return {
-          ...item,
+          ...step,
           completed: e.target.checked
         }
       }));
@@ -118,20 +119,41 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
 
   // remove step item from steps array
   function handleDeleteStep(e) {
-    setSteps(steps.filter(item => item.uuid != e.target.id));
+    const newSteps = steps.filter(step => !e.target.className.includes(step.uuid));
+
+    setSteps(newSteps);
+
+    // if all steps have been deleted, create new blank step, open it for editing
+    if (!newSteps.length)
+      addStartingStep();
   }
 
-  // add new blank step
+  function createBlankStep() {
+    return {
+      uuid: uuidv4(),
+      title: "",
+      text: "",
+      completed: false
+    };
+  }
+
+  // add new blank step, open it for editing
   function handleAddStep(e) {
+    const newStep = createBlankStep();
+
     setSteps([
       ...steps,
-      {
-        uuid: uuidv4(),
-        title: "",
-        text: "",
-        completed: false
-      }
+      newStep
     ]);
+
+    setCurrentStep(newStep);
+  }
+
+  function addStartingStep() {
+    const newStep = createBlankStep();
+
+    setSteps([newStep]);
+    setCurrentStep(newStep);
   }
 
   async function getCategories() {
@@ -155,7 +177,9 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
   useEffect(() => {
     if (!categories)
       getCategories();
-  }, [categories])
+  }, [categories]);
+
+
 
   return (
     <>
@@ -169,19 +193,22 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
         </div>
 
         {steps.map(step => (
-          <div key={step._id}>
-            {(currentStep && step._id === currentStep._id) ?
-              <div className="step" key={step.uuid} >
+          <div key={step.uuid}>
+            <div className="form-group">
+              <input className={`checkbox ${step.uuid}`} type="checkbox" checked={step.completed} onChange={handleCheck} />
+            </div>
+
+            {(currentStep && (step.uuid === currentStep.uuid)) ?
+              <div className="step">
                 <div className="input-container">
                   <div className="form-group col-12">
-                    <textarea className="input form-control" name="title" value={step.title} id={step.uuid} onChange={handleInputChange} />
+                    <textarea className={`input form-control ${step.uuid}`} name="title" value={step.title} placeholder="Step title" onChange={handleInputChange} />
                   </div>
                 </div>
 
                 <div className="input-container">
                   <div className="form-group col-12">
-                    <label htmlFor={step.uuid}>Description:</label>
-                    <textarea className="input form-control" name="text" value={step.text} id={step.uuid} onChange={handleInputChange} />
+                    <textarea className={`input form-control ${step.uuid}`} name="text" value={step.text} placeholder="Step description" onChange={handleInputChange} />
                   </div>
                 </div>
               </div>
@@ -190,9 +217,12 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
                 step={step}
                 currentStep={currentStep}
                 setCurrentStep={setCurrentStep}
-                handleDeleteStep={handleDeleteStep}
               ></StepBar>
             }
+
+            {/* <img className={`edit-pencil mt-3 ms-2 ${step.uuid}`} src={editPencil} alt="edit pencil" width="24" height="24" onClick={(e) => handleStepBarClick(e)} */}
+
+            <img className={`trash-can mt-3 ms-2 ${step.uuid}`} src={trashCan} alt="trash can" width="24" height="24" onClick={(e) => handleDeleteStep(e)} />
           </div>
         ))}
 

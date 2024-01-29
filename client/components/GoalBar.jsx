@@ -25,7 +25,7 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal,
 
   return (
     <>
-      <div className="article-container mx-4 d-flex">
+      <div className="article-container mx-4 d-flex align-items-center">
         <div className="btn btn-secondary mt-3 w-100 d-flex justify-content-between align-items-center" type="button" onClick={(e) => handleGoalBarClick(e)}>
 
           {(currentGoal && goal._id === currentGoal._id) ?

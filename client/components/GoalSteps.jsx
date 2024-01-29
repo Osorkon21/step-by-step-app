@@ -82,12 +82,12 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
   function handleInputChange(e) {
 
     // change step title/text
-    setSteps(steps.map(item => {
-      if (item.uuid != e.target.id)
-        return item;
+    setSteps(steps.map(step => {
+      if (!e.target.className.includes(step.uuid))
+        return step;
 
       return {
-        ...item,
+        ...step,
         [e.target.name]: e.target.value
       }
     }));
@@ -103,12 +103,12 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
 
     // checks/unchecks one checkbox
     else {
-      setSteps(steps.map(item => {
-        if (item.uuid != e.target.id)
-          return item;
+      setSteps(steps.map(step => {
+        if (!e.target.className.includes(step.uuid))
+          return step;
 
         return {
-          ...item,
+          ...step,
           completed: e.target.checked
         }
       }));
@@ -117,20 +117,24 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
 
   // remove step item from steps array
   function handleDeleteStep(e) {
-    setSteps(steps.filter(item => item.uuid != e.target.id));
+    setSteps(steps.filter(step => !e.target.className.includes(step.uuid)));
   }
 
-  // add new blank step
+  // add new blank step, open it for editing
   function handleAddStep(e) {
+    const newStep = {
+      uuid: uuidv4(),
+      title: "",
+      text: "",
+      completed: false
+    };
+
     setSteps([
       ...steps,
-      {
-        uuid: uuidv4(),
-        title: "",
-        text: "",
-        completed: false
-      }
+      newStep
     ]);
+
+    setCurrentStep(newStep);
   }
 
   async function getCategories() {
@@ -154,7 +158,9 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
   useEffect(() => {
     if (!categories)
       getCategories();
-  }, [categories])
+  }, [categories]);
+
+
 
   return (
     <>
@@ -168,19 +174,18 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
         </div>
 
         {steps.map(step => (
-          <div key={step._id}>
-            {(currentStep && step._id === currentStep._id) ?
-              <div className="step" key={step.uuid} >
+          <div key={step.uuid}>
+            {(currentStep && (step.uuid === currentStep.uuid)) ?
+              <div className="step">
                 <div className="input-container">
                   <div className="form-group col-12">
-                    <textarea className="input form-control" name="title" value={step.title} id={step.uuid} onChange={handleInputChange} />
+                    <textarea className={`input form-control ${step.uuid}`} name="title" value={step.title} placeholder="Step title" onChange={handleInputChange} />
                   </div>
                 </div>
 
                 <div className="input-container">
                   <div className="form-group col-12">
-                    <label htmlFor={step.uuid}>Description:</label>
-                    <textarea className="input form-control" name="text" value={step.text} id={step.uuid} onChange={handleInputChange} />
+                    <textarea className={`input form-control ${step.uuid}`} name="text" value={step.text} placeholder="Step description" onChange={handleInputChange} />
                   </div>
                 </div>
               </div>

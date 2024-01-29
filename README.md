@@ -35,6 +35,4 @@ Below: image of the homepage for step-by-step app that was created.
 
 ![README.file](./client/image/pic12.png)
 
-## Creators
-
 &copy; 2023-2024 SBS Development Group

@@ -4,6 +4,7 @@ import DropdownButton from "react-bootstrap/DropdownButton"
 import { useState, useEffect } from "react"
 import { useAppCtx } from "../utils/AppProvider"
 import { SignupModal, StepBar } from "./"
+import trashCan from "../assets/icons/trash-can.svg"
 
 export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage, setSubmitError, defaultChecked }) {
 
@@ -117,23 +118,40 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
 
   // remove step item from steps array
   function handleDeleteStep(e) {
-    setSteps(steps.filter(step => !e.target.className.includes(step.uuid)));
+    const newSteps = steps.filter(step => !e.target.className.includes(step.uuid));
+
+    setSteps(newSteps);
+
+    // if all steps have been deleted, create new blank step, open it for editing
+    if (!newSteps.length)
+      addStartingStep();
   }
 
-  // add new blank step, open it for editing
-  function handleAddStep(e) {
-    const newStep = {
+  function createBlankStep() {
+    return {
       uuid: uuidv4(),
       title: "",
       text: "",
       completed: false
     };
+  }
+
+  // add new blank step, open it for editing
+  function handleAddStep(e) {
+    const newStep = createBlankStep();
 
     setSteps([
       ...steps,
       newStep
     ]);
 
+    setCurrentStep(newStep);
+  }
+
+  function addStartingStep() {
+    const newStep = createBlankStep();
+
+    setSteps([newStep]);
     setCurrentStep(newStep);
   }
 
@@ -175,6 +193,10 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
 
         {steps.map(step => (
           <div key={step.uuid}>
+            <div className="form-group">
+              <input className={`checkbox ${step.uuid}`} type="checkbox" checked={step.completed} onChange={handleCheck} />
+            </div>
+
             {(currentStep && (step.uuid === currentStep.uuid)) ?
               <div className="step">
                 <div className="input-container">
@@ -194,9 +216,12 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
                 step={step}
                 currentStep={currentStep}
                 setCurrentStep={setCurrentStep}
-                handleDeleteStep={handleDeleteStep}
               ></StepBar>
             }
+
+            {/* <img className={`edit-pencil mt-3 ms-2 ${step.uuid}`} src={editPencil} alt="edit pencil" width="24" height="24" onClick={(e) => handleStepBarClick(e)} */}
+
+            <img className={`trash-can mt-3 ms-2 ${step.uuid}`} src={trashCan} alt="trash can" width="24" height="24" onClick={(e) => handleDeleteStep(e)} />
           </div>
         ))}
 

@@ -181,6 +181,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
 
 
 
+
   return (
     <>
       <form onSubmit={handleFormSubmit} className="form">
@@ -188,27 +189,27 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
           <div className="col-sm m-1">
             <label htmlFor="complete-all">Check/Uncheck All:</label>
             <input className="checkbox" type="checkbox" defaultChecked={defaultChecked} id="complete-all" onChange={handleCheck} />
-            <button className="col-sm update-goal-btn" type="reset" onClick={reset}>Clear All</button>
+            <button className="update-goal-btn" type="reset" onClick={reset}>Clear All</button>
           </div>
         </div>
 
         {steps.map(step => (
           <div key={step.uuid}>
-            <div className="form-group">
+            <div className="">
               <input className={`checkbox ${step.uuid}`} type="checkbox" checked={step.completed} onChange={handleCheck} />
             </div>
 
             {(currentStep && (step.uuid === currentStep.uuid)) ?
               <div className="step">
                 <div className="input-container">
-                  <div className="form-group col-12">
-                    <textarea className={`input form-control ${step.uuid}`} name="title" value={step.title} placeholder="Step title" onChange={handleInputChange} />
+                  <div className="">
+                    <textarea className={`input ${step.uuid}`} name="title" value={step.title} placeholder="Step title" onChange={handleInputChange} />
                   </div>
                 </div>
 
                 <div className="input-container">
-                  <div className="form-group col-12">
-                    <textarea className={`input form-control ${step.uuid}`} name="text" value={step.text} placeholder="Step description" onChange={handleInputChange} />
+                  <div className="">
+                    <textarea className={`input ${step.uuid}`} name="text" value={step.text} placeholder="Step description" onChange={handleInputChange} />
                   </div>
                 </div>
               </div>
@@ -221,7 +222,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
             }
 
             {/* <img className={`edit-pencil mt-3 ms-2 ${step.uuid}`} src={editPencil} alt="edit pencil" width="24" height="24" onClick={(e) => handleStepBarClick(e)} */}
-
+            ```
             <img className={`trash-can mt-3 ms-2 ${step.uuid}`} src={trashCan} alt="trash can" width="24" height="24" onClick={(e) => handleDeleteStep(e)} />
           </div>
         ))}
@@ -249,5 +250,4 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
         </div>
       </form>
     </>
-  )
-}
+  )}

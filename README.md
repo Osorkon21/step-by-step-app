@@ -35,14 +35,6 @@ Below: image of the homepage for step-by-step app that was created.
 
 ![README.file](./client/image/pic12.png)
 
-## Team Members
+## Creators
 
-Kurt Wensmann - napoleondd86 (Github username)
-
-Leah Tillman - lrltillman (Github username)
-
-Peter Krause - Osorkon21 (Github username)
-
-Joey Thao - Thaodev23 (Github username)
-
-
+&copy; 2023-2024 SBS Development Group

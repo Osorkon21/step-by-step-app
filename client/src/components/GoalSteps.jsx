@@ -194,20 +194,20 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
         </div>
 
         {steps.map(step => (
-          <div key={step.uuid}>
+          <div className="step flex " key={step.uuid}>
             <div className="">
               <input className={`checkbox ${step.uuid}`} type="checkbox" checked={step.completed} onChange={handleCheck} />
             </div>
 
             {(currentStep && (step.uuid === currentStep.uuid)) ?
-              <div className="step">
-                <div className="input-container">
+              <div className="substep">
+                <div className="">
                   <div className="">
                     <textarea className={`input ${step.uuid}`} name="title" value={step.title} placeholder="Step title" onChange={handleInputChange} />
                   </div>
                 </div>
 
-                <div className="input-container">
+                <div className="">
                   <div className="">
                     <textarea className={`input ${step.uuid}`} name="text" value={step.text} placeholder="Step description" onChange={handleInputChange} />
                   </div>

@@ -222,7 +222,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
             }
 
             {/* <img className={`edit-pencil mt-3 ms-2 ${step.uuid}`} src={editPencil} alt="edit pencil" width="24" height="24" onClick={(e) => handleStepBarClick(e)} */}
-            ```
+
             <img className={`trash-can mt-3 ms-2 ${step.uuid}`} src={trashCan} alt="trash can" width="24" height="24" onClick={(e) => handleDeleteStep(e)} />
           </div>
         ))}
@@ -250,4 +250,5 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
         </div>
       </form>
     </>
-  )}
+  )
+}

@@ -1,5 +1,3 @@
-import trashCan from "../assets/icons/trash-can.svg"
-
 export default function StepBar({ step, currentStep, setCurrentStep }) {
 
   function handleStepBarClick(e) {

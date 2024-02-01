@@ -8,7 +8,7 @@ export default function StepBar({ step, currentStep, setCurrentStep }) {
   }
 
   return (
-    <div className="stepbar">
+    <div className="stepbar"onClick={(e) => handleStepBarClick(e)}>
       <div className="mx-4 ">
         <button className="mt-3 items-center" type="button">
           {step.title}

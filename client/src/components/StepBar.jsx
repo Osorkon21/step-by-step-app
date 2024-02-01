@@ -8,11 +8,11 @@ export default function StepBar({ step, currentStep, setCurrentStep }) {
   }
 
   return (
-    <div className="stepbar"onClick={(e) => handleStepBarClick(e)}>
+    <div className="stepbar cursor-pointer" onClick={(e) => handleStepBarClick(e)}>
       <div className="mx-4 ">
-        <button className="mt-3 items-center" type="button">
-          {step.title}
-        </button>
+        <div className="mt-3 items-center">
+          {step.title || "Select to edit step"}
+        </div>
       </div>
     </div>
   );

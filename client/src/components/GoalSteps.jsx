@@ -184,8 +184,8 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
 
   return (
     <>
-      <form onSubmit={handleFormSubmit} className="form">
-        <div className="add-goal-items">
+      <form onSubmit={handleFormSubmit} className="form gap-2 ">
+        <div className="add-goal-items gap-2">
           <div className="col-sm m-1">
             <label htmlFor="complete-all">Check/Uncheck All:</label>
             <input className="checkbox" type="checkbox" defaultChecked={defaultChecked} id="complete-all" onChange={handleCheck} />
@@ -195,14 +195,14 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
 
         {steps.map(step => (
           <div className="step flex " key={step.uuid}>
-            <div className="">
+            <div className="flex justify-center items-center">
               <input className={`checkbox ${step.uuid}`} type="checkbox" checked={step.completed} onChange={handleCheck} />
             </div>
 
             {(currentStep && (step.uuid === currentStep.uuid)) ?
               <div className="substep">
                 <div className="">
-                  <div className="">
+                  <div className="step-title">
                     <textarea className={`input ${step.uuid}`} name="title" value={step.title} placeholder="Step title" onChange={handleInputChange} />
                   </div>
                 </div>
@@ -223,11 +223,13 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
 
             {/* <img className={`edit-pencil mt-3 ms-2 ${step.uuid}`} src={editPencil} alt="edit pencil" width="24" height="24" onClick={(e) => handleStepBarClick(e)} */}
 
-            <img className={`trash-can mt-3 ms-2 ${step.uuid}`} src={trashCan} alt="trash can" width="24" height="24" onClick={(e) => handleDeleteStep(e)} />
+            <div className="flex justify-center items-center">
+              <img className={`trash-can  ${step.uuid}`} src={trashCan} alt="trash can" width="24" height="24" onClick={(e) => handleDeleteStep(e)} />
+            </div>
           </div>
         ))}
 
-        <button className="update-goal-btn mt-3" type="button" onClick={handleAddStep}>Add Step</button>
+        <button className="update-goal-btn " type="button" onClick={handleAddStep}>Add Step</button>
 
         <DropdownButton id="dropdown-basic-button" title={category ? category : "Goal Category"}>
           {categories?.map((category) => (

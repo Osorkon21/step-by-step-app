@@ -1,6 +1,6 @@
 export default function StepBarOpen({ step, handleInputChange, handleStepBarClick }) {
   return (
-    <div className="substep border-2 border-red-600" onClick={handleStepBarClick}>
+    <div className="substep border-2 border-red-600 cursor-pointer" onClick={handleStepBarClick}>
       <div>
         <textarea className={`input ${step.uuid}`} name="title" value={step.title} placeholder="Step title" onChange={handleInputChange} />
       </div>

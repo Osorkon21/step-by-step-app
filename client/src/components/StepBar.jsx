@@ -1,9 +1,12 @@
 import { StepBarClosed, StepBarOpen } from "./"
 import trashCan from "../assets/icons/trash-can.svg"
 
-export default function StepBar({ step, currentStep, setCurrentStep, handleCheck, handleInputChange }) {
+export default function StepBar({ step, currentStep, setCurrentStep, handleCheck, handleInputChange, handleDeleteStep }) {
 
   function handleStepBarClick(e) {
+    if (e.target.name === "title" || e.target.name === "text")
+      return;
+
     if (currentStep && (step.uuid === currentStep.uuid))
       setCurrentStep(null);
     else
@@ -12,10 +15,9 @@ export default function StepBar({ step, currentStep, setCurrentStep, handleCheck
 
   return (
 
-    <div className="stepbar cursor-pointer">
+    <div className="stepbar">
       <div>
         <input className={`checkbox ${step.uuid}`} type="checkbox" checked={step.completed} onChange={handleCheck} />
-
       </div>
 
       {(currentStep && (step.uuid === currentStep.uuid)) ?
@@ -33,7 +35,7 @@ export default function StepBar({ step, currentStep, setCurrentStep, handleCheck
 
       {/* <img className={`edit-pencil mt-3 ms-2 ${step.uuid}`} src={editPencil} alt="edit pencil" width="24" height="24" onClick={(e) => handleStepBarClick(e)} */}
 
-      <img className={`trash-can mt-3 ms-2 ${step.uuid}`} src={trashCan} alt="trash can" width="24" height="24" onClick={(e) => handleDeleteStep(e)} />
+      <img className={`trash-can mt-3 ms-2 ${step.uuid}`} src={trashCan} alt="trash can" width="24" height="24" onClick={handleDeleteStep} />
     </div>
   );
 }

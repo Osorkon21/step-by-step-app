@@ -202,6 +202,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
               setCurrentStep={setCurrentStep}
               handleCheck={handleCheck}
               handleInputChange={handleInputChange}
+              handleDeleteStep={handleDeleteStep}
             ></StepBar>
 
           </div>

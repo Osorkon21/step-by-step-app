@@ -184,8 +184,8 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
 
   return (
     <>
-      <form onSubmit={handleFormSubmit} className="form">
-        <div className="add-goal-items">
+      <form onSubmit={handleFormSubmit} className="form gap-2 ">
+        <div className="add-goal-items gap-2">
           <div className="col-sm m-1">
             <label htmlFor="complete-all">Check/Uncheck All:</label>
             <input className="checkbox" type="checkbox" defaultChecked={defaultChecked} id="complete-all" onChange={handleCheck} />
@@ -194,6 +194,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
         </div>
 
         {steps.map(step => (
+
           <div className="step flex" key={step.uuid}>
             <StepBar
               step={step}
@@ -202,10 +203,11 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
               handleCheck={handleCheck}
               handleInputChange={handleInputChange}
             ></StepBar>
+
           </div>
         ))}
 
-        <button className="update-goal-btn mt-3" type="button" onClick={handleAddStep}>Add Step</button>
+        <button className="update-goal-btn " type="button" onClick={handleAddStep}>Add Step</button>
 
         <DropdownButton id="dropdown-basic-button" title={category ? category : "Goal Category"}>
           {categories?.map((category) => (

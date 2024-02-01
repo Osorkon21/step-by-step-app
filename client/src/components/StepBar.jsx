@@ -11,9 +11,11 @@ export default function StepBar({ step, currentStep, setCurrentStep, handleCheck
   }
 
   return (
+
     <div className="stepbar cursor-pointer">
       <div>
         <input className={`checkbox ${step.uuid}`} type="checkbox" checked={step.completed} onChange={handleCheck} />
+
       </div>
 
       {(currentStep && (step.uuid === currentStep.uuid)) ?

@@ -1,3 +1,6 @@
+import trashCan from "../assets/icons/trash-can.svg"
+
+
 export default function StepBar({ step, currentStep, setCurrentStep }) {
 
   function handleStepBarClick(e) {
@@ -8,7 +11,7 @@ export default function StepBar({ step, currentStep, setCurrentStep }) {
   }
 
   return (
-    <div className="">
+    <div className="step">
       <div className="mx-4 ">
         <button className="mt-3 items-center" type="button" onClick={(e) => handleStepBarClick(e)}>
           {step.title}

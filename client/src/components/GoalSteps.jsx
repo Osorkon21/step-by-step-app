@@ -5,7 +5,6 @@ import DropdownButton from "react-bootstrap/DropdownButton"
 import { useState, useEffect } from "react"
 import { useAppCtx } from "../utils/AppProvider"
 import { SignupModal, StepBar } from "./"
-import trashCan from "../assets/icons/trash-can.svg"
 
 export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage, setSubmitError, defaultChecked }) {
 
@@ -121,11 +120,11 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
   function handleDeleteStep(e) {
     const newSteps = steps.filter(step => !e.target.className.includes(step.uuid));
 
-    setSteps(newSteps);
-
     // if all steps have been deleted, create new blank step, open it for editing
     if (!newSteps.length)
       addStartingStep();
+    else
+      setSteps(newSteps);
   }
 
   function createBlankStep() {
@@ -153,7 +152,6 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
     const newStep = createBlankStep();
 
     setSteps([newStep]);
-    setCurrentStep(newStep);
   }
 
   async function getCategories() {
@@ -179,8 +177,10 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
       getCategories();
   }, [categories]);
 
-
-
+  useEffect(() => {
+    if (steps.length === 1 && currentStep !== steps[0])
+      setCurrentStep(steps[0]);
+  }, [steps]);
 
   return (
     <>
@@ -194,36 +194,14 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
         </div>
 
         {steps.map(step => (
-          <div className="step flex " key={step.uuid}>
-            <div className="">
-              <input className={`checkbox ${step.uuid}`} type="checkbox" checked={step.completed} onChange={handleCheck} />
-            </div>
-
-            {(currentStep && (step.uuid === currentStep.uuid)) ?
-              <div className="substep">
-                <div className="">
-                  <div className="">
-                    <textarea className={`input ${step.uuid}`} name="title" value={step.title} placeholder="Step title" onChange={handleInputChange} />
-                  </div>
-                </div>
-
-                <div className="">
-                  <div className="">
-                    <textarea className={`input ${step.uuid}`} name="text" value={step.text} placeholder="Step description" onChange={handleInputChange} />
-                  </div>
-                </div>
-              </div>
-              :
-              <StepBar
-                step={step}
-                currentStep={currentStep}
-                setCurrentStep={setCurrentStep}
-              ></StepBar>
-            }
-
-            {/* <img className={`edit-pencil mt-3 ms-2 ${step.uuid}`} src={editPencil} alt="edit pencil" width="24" height="24" onClick={(e) => handleStepBarClick(e)} */}
-
-            <img className={`trash-can mt-3 ms-2 ${step.uuid}`} src={trashCan} alt="trash can" width="24" height="24" onClick={(e) => handleDeleteStep(e)} />
+          <div className="step flex" key={step.uuid}>
+            <StepBar
+              step={step}
+              currentStep={currentStep}
+              setCurrentStep={setCurrentStep}
+              handleCheck={handleCheck}
+              handleInputChange={handleInputChange}
+            ></StepBar>
           </div>
         ))}
 

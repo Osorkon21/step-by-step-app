@@ -1,5 +1,5 @@
-import trashCan from "../assets/icons/trash-can.svg"
 import ProgressBar from 'react-bootstrap/ProgressBar';
+import { MyPopover, TrashCanButton, ConfirmDelete } from "./"
 
 export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal, setSubmitError }) {
 
@@ -36,8 +36,16 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal,
           <ProgressBar striped variant="success" className="" now={now} label={now ? `${now}%` : ""} />
           <span>{new Date(goal.createdAt).toLocaleDateString()}</span>
         </div>
-
-        <img className="trash-can mt-3" src={trashCan} alt="trash can" width="32" height="32" onClick={() => deleteGoal(goal._id)} />
+        <MyPopover
+          button={<TrashCanButton
+            large={true}
+          ></TrashCanButton>}
+          contents={<ConfirmDelete
+            target={"goal"}
+            idToDel={goal._id}
+            deleteFunc={deleteGoal}
+          ></ConfirmDelete>}
+        ></MyPopover>
       </div>
     </div>
   );

@@ -17,10 +17,11 @@ const userSchema = new Schema({
     default: false
   },
   emailToken: {
-    // confirm email, will create and store uuid
+    // confirm email, will create and store uuid - expiration set time
     type: String,
     default: uuidv4()
   },
+  //forgot-pass token needs to be added with expiration set time. 
   username: {
     type: String,
     required: true, // may need to omit to avoid glitches w prev accounts

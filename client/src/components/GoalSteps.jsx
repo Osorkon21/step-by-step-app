@@ -83,12 +83,12 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
   function handleInputChange(e) {
 
     // change step title/text
-    setSteps(steps.map(item => {
-      if (item.uuid != e.target.id)
-        return item;
+    setSteps(steps.map(step => {
+      if (!e.target.className.includes(step.uuid))
+        return step;
 
       return {
-        ...item,
+        ...step,
         [e.target.name]: e.target.value
       }
     }));
@@ -104,12 +104,12 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
 
     // checks/unchecks one checkbox
     else {
-      setSteps(steps.map(item => {
-        if (item.uuid != e.target.id)
-          return item;
+      setSteps(steps.map(step => {
+        if (!e.target.className.includes(step.uuid))
+          return step;
 
         return {
-          ...item,
+          ...step,
           completed: e.target.checked
         }
       }));
@@ -118,20 +118,40 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
 
   // remove step item from steps array
   function handleDeleteStep(e) {
-    setSteps(steps.filter(item => item.uuid != e.target.id));
+    const newSteps = steps.filter(step => !e.target.className.includes(step.uuid));
+
+    // if all steps have been deleted, create new blank step, open it for editing
+    if (!newSteps.length)
+      addStartingStep();
+    else
+      setSteps(newSteps);
   }
 
-  // add new blank step
+  function createBlankStep() {
+    return {
+      uuid: uuidv4(),
+      title: "",
+      text: "",
+      completed: false
+    };
+  }
+
+  // add new blank step, open it for editing
   function handleAddStep(e) {
+    const newStep = createBlankStep();
+
     setSteps([
       ...steps,
-      {
-        uuid: uuidv4(),
-        title: "",
-        text: "",
-        completed: false
-      }
+      newStep
     ]);
+
+    setCurrentStep(newStep);
+  }
+
+  function addStartingStep() {
+    const newStep = createBlankStep();
+
+    setSteps([newStep]);
   }
 
   async function getCategories() {
@@ -155,48 +175,40 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
   useEffect(() => {
     if (!categories)
       getCategories();
-  }, [categories])
+  }, [categories]);
+
+  useEffect(() => {
+    if (steps.length === 1 && currentStep !== steps[0])
+      setCurrentStep(steps[0]);
+  }, [steps]);
 
   return (
     <>
-      <form onSubmit={handleFormSubmit} className="form">
-        <div className="add-goal-items">
+      <form onSubmit={handleFormSubmit} className="form gap-2 ">
+        <div className="add-goal-items gap-2">
           <div className="col-sm m-1">
             <label htmlFor="complete-all">Check/Uncheck All:</label>
             <input className="checkbox" type="checkbox" defaultChecked={defaultChecked} id="complete-all" onChange={handleCheck} />
-            <button className="col-sm update-goal-btn" type="reset" onClick={reset}>Clear All</button>
+            <button className="update-goal-btn" type="reset" onClick={reset}>Clear All</button>
           </div>
         </div>
 
         {steps.map(step => (
-          <div key={step._id}>
-            {(currentStep && step._id === currentStep._id) ?
-              <div className="step" key={step.uuid} >
-                <div className="input-container">
-                  <div className="form-group col-12">
-                    <textarea className="input form-control" name="title" value={step.title} id={step.uuid} onChange={handleInputChange} />
-                  </div>
-                </div>
 
-                <div className="input-container">
-                  <div className="form-group col-12">
-                    <label htmlFor={step.uuid}>Description:</label>
-                    <textarea className="input form-control" name="text" value={step.text} id={step.uuid} onChange={handleInputChange} />
-                  </div>
-                </div>
-              </div>
-              :
-              <StepBar
-                step={step}
-                currentStep={currentStep}
-                setCurrentStep={setCurrentStep}
-                handleDeleteStep={handleDeleteStep}
-              ></StepBar>
-            }
+          <div className="step flex" key={step.uuid}>
+            <StepBar
+              step={step}
+              currentStep={currentStep}
+              setCurrentStep={setCurrentStep}
+              handleCheck={handleCheck}
+              handleInputChange={handleInputChange}
+              handleDeleteStep={handleDeleteStep}
+            ></StepBar>
+
           </div>
         ))}
 
-        <button className="update-goal-btn mt-3" type="button" onClick={handleAddStep}>Add Step</button>
+        <button className="update-goal-btn " type="button" onClick={handleAddStep}>Add Step</button>
 
         <DropdownButton id="dropdown-basic-button" title={category ? category : "Goal Category"}>
           {categories?.map((category) => (

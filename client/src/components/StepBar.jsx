@@ -1,25 +1,41 @@
+import { StepBarClosed, StepBarOpen } from "./"
 import trashCan from "../assets/icons/trash-can.svg"
 
-export default function StepBar({ step, currentStep, setCurrentStep, handleDeleteStep }) {
+export default function StepBar({ step, currentStep, setCurrentStep, handleCheck, handleInputChange, handleDeleteStep }) {
 
   function handleStepBarClick(e) {
-    if (currentStep && step._id === currentStep._id)
+    if (e.target.name === "title" || e.target.name === "text")
+      return;
+
+    if (currentStep && (step.uuid === currentStep.uuid))
       setCurrentStep(null);
     else
       setCurrentStep(step);
   }
 
   return (
-    <>
-      <div className="article-container mx-4 d-flex">
-        <button className="btn btn-secondary mt-3 w-100 d-flex align-items-center" type="button" onClick={(e) => handleStepBarClick(e)}>
-          {step.title}
-        </button>
 
-        {/* <img className="edit-pencil mt-3 ms-2" src={editPencil} alt="edit pencil" width="32" height="32" onClick={() => handleStepBarClick(step)} */}
-
-        <img className="trash-can mt-3 ms-2" src={trashCan} alt="trash can" width="32" height="32" onClick={() => handleDeleteStep(step._id)} />
+    <div className="stepbar">
+      <div>
+        <input className={`checkbox ${step.uuid}`} type="checkbox" checked={step.completed} onChange={handleCheck} />
       </div>
-    </>
+
+      {(currentStep && (step.uuid === currentStep.uuid)) ?
+        <StepBarOpen
+          step={step}
+          handleInputChange={handleInputChange}
+          handleStepBarClick={handleStepBarClick}
+        ></StepBarOpen>
+        :
+        <StepBarClosed
+          step={step}
+          handleStepBarClick={handleStepBarClick}
+        ></StepBarClosed>
+      }
+
+      {/* <img className={`edit-pencil mt-3 ms-2 ${step.uuid}`} src={editPencil} alt="edit pencil" width="24" height="24" onClick={(e) => handleStepBarClick(e)} */}
+
+      <img className={`trash-can mt-3 ms-2 ${step.uuid}`} src={trashCan} alt="trash can" width="24" height="24" onClick={handleDeleteStep} />
+    </div>
   );
 }

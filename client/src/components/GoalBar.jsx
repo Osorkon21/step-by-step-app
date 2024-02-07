@@ -24,22 +24,21 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal,
   const now = Math.floor(goal.completedStepCount / goal.stepsCount * 100);
 
   return (
-    <>
-      <div className="article-container mx-4 d-flex">
-        <div className="btn btn-secondary mt-3 w-100 d-flex justify-content-between align-items-center" type="button" onClick={(e) => handleGoalBarClick(e)}>
+    <div className="step">
+      <div className="mx-4 ">
+        <div className="mt-3 flex justify-between items-center border-2 border-red-600 cursor-pointer" onClick={(e) => handleGoalBarClick(e)}>
 
           {(currentGoal && goal._id === currentGoal._id) ?
-            <>
-              <input className="goal-name-input" type="text" name="title" id="title" value={currentGoal.name} onChange={handleInputChange} />
-            </> :
+            <input className="goal-name-input" type="text" name="title" id="title" value={currentGoal.name} onChange={handleInputChange} />
+            :
             <span>{goal.name}</span>
           }
-          <ProgressBar striped variant="success" className="w-50" now={now} label={now ? `${now}%` : ""} />
+          <ProgressBar striped variant="success" className="" now={now} label={now ? `${now}%` : ""} />
           <span>{new Date(goal.createdAt).toLocaleDateString()}</span>
         </div>
 
-        <img className="trash-can mt-3 ms-2" src={trashCan} alt="trash can" width="32" height="32" onClick={() => deleteGoal(goal._id)} />
+        <img className="trash-can mt-3" src={trashCan} alt="trash can" width="32" height="32" onClick={() => deleteGoal(goal._id)} />
       </div>
-    </>
+    </div>
   );
 }

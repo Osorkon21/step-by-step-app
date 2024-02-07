@@ -36,7 +36,7 @@
   background-color: var(--light);
   padding: var(--padding);
   display: flex;
-  flex-direction: column;
+
   border-radius: 2rem;
 }
 .dashboard-header{

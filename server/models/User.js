@@ -21,7 +21,12 @@ const userSchema = new Schema({
     type: String,
     default: uuidv4()
   },
-  //forgot-pass token needs to be added with expiration set time. 
+  resetToken: {
+    type: String
+  },
+  resetTokenExpiry: {
+    type: Date
+  },
   username: {
     type: String,
     required: true, // may need to omit to avoid glitches w prev accounts
@@ -63,6 +68,11 @@ userSchema.pre("save", async function (next) {
   next()
 })
 
+userSchema.methods.generateResetToken = function () {
+  this.resetToken = crypto.randomBytes(20).toString('hex');
+  this.resetTokenExpiry = Date.now() + 3600000; // Token expires in 1 hour
+  return this.resetToken;
+};
 
 const User = model('User', userSchema);
 module.exports = User;

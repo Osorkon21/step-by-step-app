@@ -26,6 +26,11 @@ router.route("/")
     }
   })
 
+//Backend enpoints for token verification:
+// CREATE NEW ROUTE: VERIFY-EMAIL
+//CREATE NEW ROUTE: FORGOT-PASS
+
+
 
 router.route("/verify")
   .post(async (req, res) => {

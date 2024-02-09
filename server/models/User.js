@@ -17,9 +17,15 @@ const userSchema = new Schema({
     default: false
   },
   emailToken: {
-    // confirm email, will create and store uuid
+    // confirm email, will create and store uuid - expiration set time
     type: String,
     default: uuidv4()
+  },
+  resetToken: {
+    type: String
+  },
+  resetTokenExpiry: {
+    type: Date
   },
   username: {
     type: String,
@@ -62,6 +68,11 @@ userSchema.pre("save", async function (next) {
   next()
 })
 
+userSchema.methods.generateResetToken = function () {
+  this.resetToken = crypto.randomBytes(20).toString('hex');
+  this.resetTokenExpiry = Date.now() + 3600000; // Token expires in 1 hour
+  return this.resetToken;
+};
 
 const User = model('User', userSchema);
 module.exports = User;

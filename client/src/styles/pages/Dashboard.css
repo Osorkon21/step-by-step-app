@@ -20,21 +20,17 @@
   border-radius: 2rem;
 }
 
-.input-container{
-  display: flex;
-  flex-direction: row;
-}
 
 .input{
   background-color: var(--lightest);
-  /* min-width: auto; */
-  /* width: 60vw; */
+  min-width: auto;
+  /* width: 70vw; */
 }
 .step{
   border: .5rem solid var(--darkerblur);
   margin-top: 1rem;
   background-color: var(--light);
-  padding: var(--padding);
+  /* padding: 1rem; */
   display: flex;
 
   border-radius: 2rem;

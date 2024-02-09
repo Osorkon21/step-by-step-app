@@ -26,7 +26,7 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal,
   return (
     <div className="step">
       <div className="mx-4 ">
-        <div className="mt-3  flex justify-between items-center" type="button" onClick={(e) => handleGoalBarClick(e)}>
+        <div className="flex justify-between items-center" type="button" onClick={(e) => handleGoalBarClick(e)}>
 
           {(currentGoal && goal._id === currentGoal._id) ?
             <>
@@ -38,7 +38,7 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal,
           <span>{new Date(goal.createdAt).toLocaleDateString()}</span>
         </div>
 
-        <img className="trash-can mt-3" src={trashCan} alt="trash can" width="32" height="32" onClick={() => deleteGoal(goal._id)} />
+        <img className="trash-can " src={trashCan} alt="trash can" width="24" height="24" onClick={() => deleteGoal(goal._id)} />
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
-import trashCan from "../assets/icons/trash-can.svg"
 import ProgressBar from 'react-bootstrap/ProgressBar';
+import { MyPopover, TrashCanButton, ConfirmDelete } from "./"
 
 export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal, setSubmitError }) {
 
@@ -26,19 +26,26 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal,
   return (
     <div className="step">
       <div className="mx-4 ">
-        <div className="flex justify-between items-center" type="button" onClick={(e) => handleGoalBarClick(e)}>
+        <div className="mt-3 flex justify-between items-center border-2 border-red-600 cursor-pointer" onClick={(e) => handleGoalBarClick(e)}>
 
           {(currentGoal && goal._id === currentGoal._id) ?
-            <>
-              <input className="goal-name-input" type="text" name="title" id="title" value={currentGoal.name} onChange={handleInputChange} />
-            </> :
+            <input className="goal-name-input" type="text" name="title" id="title" value={currentGoal.name} onChange={handleInputChange} />
+            :
             <span>{goal.name}</span>
           }
           <ProgressBar striped variant="success" className="" now={now} label={now ? `${now}%` : ""} />
           <span>{new Date(goal.createdAt).toLocaleDateString()}</span>
         </div>
-
-        <img className="trash-can " src={trashCan} alt="trash can" width="24" height="24" onClick={() => deleteGoal(goal._id)} />
+        <MyPopover
+          button={<TrashCanButton
+            large={true}
+          ></TrashCanButton>}
+          contents={<ConfirmDelete
+            target={"goal"}
+            idToDel={goal._id}
+            deleteFunc={deleteGoal}
+          ></ConfirmDelete>}
+        ></MyPopover>
       </div>
     </div>
   );

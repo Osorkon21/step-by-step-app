@@ -1,9 +1,11 @@
-import { StepBarClosed, StepBarOpen } from "./"
-import trashCan from "../assets/icons/trash-can.svg"
+import { StepBarClosed, StepBarOpen, MyPopover, TrashCanButton, ConfirmDelete } from "./"
 
-export default function StepBar({ step, currentStep, setCurrentStep, handleCheck, handleInputChange }) {
+export default function StepBar({ step, currentStep, setCurrentStep, handleCheck, handleInputChange, deleteStep }) {
 
   function handleStepBarClick(e) {
+    if (e.target.name === "title" || e.target.name === "text")
+      return;
+
     if (currentStep && (step.uuid === currentStep.uuid))
       setCurrentStep(null);
     else
@@ -11,6 +13,7 @@ export default function StepBar({ step, currentStep, setCurrentStep, handleCheck
   }
 
   return (
+
 
     <div className="stepbar cursor-pointer grid gap-2 items-center justify-between">
       <div className="flex justify-center items-center col-span-1 w-6 h-6">
@@ -32,9 +35,20 @@ export default function StepBar({ step, currentStep, setCurrentStep, handleCheck
         }
       </div>
 
-      <div className="w-6 h-6 flex justify-center items-center col-span-1">
-        <img className={`trash-can ${step.uuid}`} src={trashCan} alt="trash can" width="24" height="24" onClick={(e) => handleDeleteStep(e)} />
+
+      <div className="w-6 h-6 flex justify-center items-center col-span-1">  <MyPopover
+        button={<TrashCanButton
+          large={false}
+        ></TrashCanButton>}
+        contents={<ConfirmDelete
+          target={"step"}
+          idToDel={step.uuid}
+          deleteFunc={deleteStep}
+        ></ConfirmDelete>}
+      ></MyPopover>
+
+
       </div>
     </div>
-  );
+      );
 }

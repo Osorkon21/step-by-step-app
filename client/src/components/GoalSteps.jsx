@@ -117,8 +117,8 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
   }
 
   // remove step item from steps array
-  function handleDeleteStep(e) {
-    const newSteps = steps.filter(step => !e.target.className.includes(step.uuid));
+  function deleteStep(uuid) {
+    const newSteps = steps.filter(step => step.uuid !== uuid);
 
     // if all steps have been deleted, create new blank step, open it for editing
     if (!newSteps.length)
@@ -202,6 +202,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
               setCurrentStep={setCurrentStep}
               handleCheck={handleCheck}
               handleInputChange={handleInputChange}
+              deleteStep={deleteStep}
             ></StepBar>
 
           </div>

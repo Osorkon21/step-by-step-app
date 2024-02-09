@@ -13,10 +13,6 @@ export default function HomePage() {
 
     <>
 
-      <ForgotPassword />
-
-      <ChangePassword />
-
 
       <div className='body'>
         <div className='home flex flex-col items-center justify center'>

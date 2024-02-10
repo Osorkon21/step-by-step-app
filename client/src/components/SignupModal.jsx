@@ -1,8 +1,8 @@
-import { Button, Dialog, DialogTrigger, Modal } from 'react-aria-components';
+import { Modal, Dialog } from "react-aria-components"
 import { Auth } from "./"
-import { useState } from "react";
+import { useState } from "react"
 
-export default function SignupModal({ buttonText, setGoalStepsSubmitError = null }) {
+export default function SignupModal({ isOpen = null, onOpenChange = null, setGoalStepsSubmitError = null }) {
   const [usage, setUsage] = useState("login");
 
   const signupStyle = {
@@ -19,22 +19,23 @@ export default function SignupModal({ buttonText, setGoalStepsSubmitError = null
   }
 
   return (
-    <DialogTrigger>
-      <Button>{buttonText}</Button>
-      <Modal isDismissable className="signup_login">
-        <Dialog>
-          {({ close }) => (
-            <>
-              <Auth
-                usage={usage}
-                close={close}
-                setGoalStepsSubmitError={setGoalStepsSubmitError}
-              ></Auth>
-              <p>{usage === "login" ? "No account? " : "Back to "}<span style={signupStyle} onClick={() => flipUsage()}>{usage === "login" ? "Sign up!" : "Login"}</span></p>
-            </>
-          )}
-        </Dialog>
-      </Modal>
-    </DialogTrigger>
+    <Modal
+      isDismissable
+      {...(isOpen !== null ? { isOpen } : {})}
+      {...(onOpenChange !== null ? { onOpenChange } : {})}
+      className="signup-modal">
+      <Dialog>
+        {({ close }) => (
+          <>
+            <Auth
+              usage={usage}
+              close={close}
+              setGoalStepsSubmitError={setGoalStepsSubmitError}
+            ></Auth>
+            <p>{usage === "login" ? "No account? " : "Back to "}<span style={signupStyle} onClick={() => flipUsage()}>{usage === "login" ? "Sign up!" : "Login"}</span></p>
+          </>
+        )}
+      </Dialog>
+    </Modal>
   )
 }

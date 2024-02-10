@@ -4,7 +4,7 @@ import Dropdown from "react-bootstrap/Dropdown"
 import DropdownButton from "react-bootstrap/DropdownButton"
 import { useState, useEffect } from "react"
 import { useAppCtx } from "../utils/AppProvider"
-import { SignupModal, StepBar } from "./"
+import { ModalWithDialogTrigger, StepBar, TriggerButton, SignupModal } from "./"
 
 export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage, setSubmitError, defaultChecked }) {
 
@@ -221,10 +221,14 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
             <button className="update-goal-btn m-2" type="submit">Save Goal</button>
           )
             : (
-              <SignupModal
-                buttonText={"Sign up to save goal!"}
-                setGoalStepsSubmitError={setSubmitError}
-              ></SignupModal>
+              <ModalWithDialogTrigger
+                trigger={<TriggerButton
+                  buttonText={"Sign up to save goal!"}
+                ></TriggerButton>}
+                modal={<SignupModal
+                  setGoalStepsSubmitError={setSubmitError}
+                ></SignupModal>}
+              ></ModalWithDialogTrigger>
             )}
 
           <button className="update-goal-btn m-2" type="reset" onClick={reset}>Clear All</button>

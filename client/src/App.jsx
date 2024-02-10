@@ -2,11 +2,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import AppProvider from './utils/AppProvider';
 import { Header, HelloUser, ProtectedRoute } from './components';
 import { HomePage, Dashboard, AddGoal, NotFound } from './pages/'
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import './css/Homepage.css'
-// import './css/AddGoal.css'
-// import './css/AuthPage.css'
-// import "./css/Dashboard.css"
 
 export default function App() {
 
@@ -31,7 +26,7 @@ export default function App() {
               <Route path="/addgoal" element={<AddGoal />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
-            <footer className="footer flex justify-center p-4 text-center">&copy; 2023 SBS Development Group</footer>
+            <footer className="footer flex justify-center p-4 text-center">&copy; 2023-2024 SBS Development Group</footer>
           </div>
 
         </>

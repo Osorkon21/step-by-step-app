@@ -32,9 +32,9 @@ export default function SmallNavMenu({ logout }) {
             <MenuItem id="add-goal" href="/addgoal">Add Goal</MenuItem>
 
             {appCtx.user?._id !== undefined ? (
-              <MenuItem id="logout">Logout</MenuItem>
+              <MenuItem id="logout" className="cursor-pointer">Logout</MenuItem>
             ) : (
-              <MenuItem id="login-signup">Login</MenuItem>
+              <MenuItem id="login-signup" className="cursor-pointer">Login</MenuItem>
             )}
           </Menu>
         </Popover>

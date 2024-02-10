@@ -24,7 +24,7 @@ export default function SignupModal({ isOpen = null, onOpenChange = null, setGoa
       {...(isOpen !== null ? { isOpen } : {})}
       {...(onOpenChange !== null ? { onOpenChange } : {})}
       className="signup-modal">
-      <Dialog>
+      <Dialog aria-label="login/signup overlay">
         {({ close }) => (
           <>
             <Auth

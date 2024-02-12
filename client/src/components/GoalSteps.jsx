@@ -1,7 +1,6 @@
 // this is a test
 import { v4 as uuidv4 } from "uuid"
-import Dropdown from "react-bootstrap/Dropdown"
-import DropdownButton from "react-bootstrap/DropdownButton"
+import { Button, Label, ListBox, ListBoxItem, Popover, Select, SelectValue } from 'react-aria-components';
 import { useState, useEffect } from "react"
 import { useAppCtx } from "../utils/AppProvider"
 import { ModalWithDialogTrigger, StepBar, TriggerButton, SignupModal } from "./"
@@ -222,11 +221,27 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
 
         <button className="update-goal-btn " type="button" onClick={handleAddStep}>Add Step</button>
 
-        <DropdownButton id="dropdown-basic-button" title={category ? category : "Goal Category"}>
+        <Select placeholder="Goal Category">
+          <Button>
+            <SelectValue />
+            <span aria-hidden="true">▼</span>
+          </Button>
+          <Popover>
+            <ListBox>
+              <ListBoxItem>Aardvark</ListBoxItem>
+              <ListBoxItem>Cat</ListBoxItem>
+              <ListBoxItem>Dog</ListBoxItem>
+              <ListBoxItem>Kangaroo</ListBoxItem>
+              <ListBoxItem>Panda</ListBoxItem>
+              <ListBoxItem>Snake</ListBoxItem>
+            </ListBox>
+          </Popover>
+        </Select>
+        {/* <DropdownButton id="dropdown-basic-button" title={category ? category : "Goal Category"}>
           {categories?.map((category) => (
             <Dropdown.Item key={category.id} onClick={(e) => { setCategory(e.target.text) }}>{category.name}</Dropdown.Item>
           ))}
-        </DropdownButton>
+        </DropdownButton> */}
 
         <div className=" ">
           {appCtx.user?._id !== undefined ? (

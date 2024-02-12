@@ -79,6 +79,13 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
     }
   }
 
+  function handleGoalNameChange(e) {
+    setGoal({
+      ...goal,
+      [e.target.name]: e.target.value
+    })
+  }
+
   // handle text input
   function handleInputChange(e) {
 
@@ -186,6 +193,11 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
     <>
       <form onSubmit={handleFormSubmit} className="form gap-2 ">
         <div className="add-goal-items gap-2">
+
+          {usage === "createGoal" &&
+            <input type="text" placeholder="Goal title" name="name" value={goal.name} onChange={handleGoalNameChange} />
+          }
+
           <div className="col-sm m-1">
             <label htmlFor="complete-all">Check/Uncheck All:</label>
             <input className="checkbox" type="checkbox" defaultChecked={defaultChecked} id="complete-all" onChange={handleCheck} />

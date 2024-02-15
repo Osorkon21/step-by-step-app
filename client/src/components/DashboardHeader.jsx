@@ -1,5 +1,4 @@
-import Dropdown from "react-bootstrap/Dropdown"
-import DropdownButton from "react-bootstrap/DropdownButton"
+import { CategorySelect } from "./"
 import { useState, useEffect } from "react"
 
 export default function DashboardHeader({ goals, setInProgress, setInProgressGoals, setCompletedGoals, setCurrentGoal, setSubmitError }) {
@@ -40,13 +39,14 @@ export default function DashboardHeader({ goals, setInProgress, setInProgressGoa
     }
   }
 
-  function handleCategoryChange(e) {
-    const categoryId = categories.find((category) => category.name === e.target.text).id
+  function handleCategoryChange(categoryName) {
+    const categoryId = categories.find((category) => category.name === categoryName).id
     const filteredGoals = goals.filter((goal) => goal.category._id === categoryId);
 
-    setCurrentCategory(e.target.text);
+    setCurrentCategory(categoryName);
+    setCurrentGoal(null);
 
-    if (e.target.text !== "Show All") {
+    if (categoryName !== "Show All") {
       setInProgressGoals(filteredGoals.filter((goal) => !goal.completed));
       setCompletedGoals(filteredGoals.filter((goal) => goal.completed));
     }
@@ -68,14 +68,13 @@ export default function DashboardHeader({ goals, setInProgress, setInProgressGoa
         <button className="dashboard-tab col" type="button" onClick={() => { setCurrentGoal(null); setInProgress(true); setSubmitError(""); }}>In Progress Goals</button>
         <button className="dashboard-tab col" type="button" onClick={() => { setCurrentGoal(null); setInProgress(false); setSubmitError(""); }}>Completed Goals</button>
       </div>
-      Filter by category:
-      <div className="mt-1">
-        <DropdownButton id="dropdown-basic-button" title={currentCategory || ""}>
-          {categories?.map((category) => (
-            <Dropdown.Item key={category.id} onClick={handleCategoryChange}>{category.name}</Dropdown.Item>
-          ))}
-        </DropdownButton>
-      </div>
+
+      <CategorySelect
+        category={currentCategory}
+        categories={categories}
+        label={"Filter by category"}
+        handleSelectionChange={handleCategoryChange}
+      ></CategorySelect>
     </div>
   );
 }

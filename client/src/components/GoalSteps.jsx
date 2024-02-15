@@ -1,9 +1,7 @@
-// this is a test
 import { v4 as uuidv4 } from "uuid"
-import { Button, Label, ListBox, ListBoxItem, Popover, Select, SelectValue } from 'react-aria-components';
 import { useState, useEffect } from "react"
 import { useAppCtx } from "../utils/AppProvider"
-import { ModalWithDialogTrigger, StepBar, TriggerButton, SignupModal } from "./"
+import { ModalWithDialogTrigger, StepBar, TriggerButton, SignupModal, CategorySelect } from "./"
 
 export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage, setSubmitError, defaultChecked }) {
 
@@ -39,6 +37,10 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
     }
 
     const catToUse = categories.find((cat) => cat.name === category);
+
+    console.log(categories)
+    console.log(category)
+    console.log(catToUse)
 
     const newGoal = {
       name: goal.name,
@@ -178,6 +180,10 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
     }
   }
 
+  function handleSelectionChange(key) {
+    setCategory(key);
+  }
+
   useEffect(() => {
     if (!categories)
       getCategories();
@@ -221,27 +227,11 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
 
         <button className="update-goal-btn " type="button" onClick={handleAddStep}>Add Step</button>
 
-        <Select placeholder="Goal Category">
-          <Button>
-            <SelectValue />
-            <span aria-hidden="true">▼</span>
-          </Button>
-          <Popover>
-            <ListBox>
-              <ListBoxItem>Aardvark</ListBoxItem>
-              <ListBoxItem>Cat</ListBoxItem>
-              <ListBoxItem>Dog</ListBoxItem>
-              <ListBoxItem>Kangaroo</ListBoxItem>
-              <ListBoxItem>Panda</ListBoxItem>
-              <ListBoxItem>Snake</ListBoxItem>
-            </ListBox>
-          </Popover>
-        </Select>
-        {/* <DropdownButton id="dropdown-basic-button" title={category ? category : "Goal Category"}>
-          {categories?.map((category) => (
-            <Dropdown.Item key={category.id} onClick={(e) => { setCategory(e.target.text) }}>{category.name}</Dropdown.Item>
-          ))}
-        </DropdownButton> */}
+        <CategorySelect
+          category={category}
+          categories={categories}
+          handleSelectionChange={handleSelectionChange}
+        ></CategorySelect>
 
         <div className=" ">
           {appCtx.user?._id !== undefined ? (

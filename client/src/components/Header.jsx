@@ -1,4 +1,4 @@
-import { LargeNavBar, SmallNavMenu } from './';
+import { LargeNavBar, SmallNavMenu, HelloUser } from './';
 import Cookie from "js-cookie";
 
 export default function Header() {
@@ -15,6 +15,8 @@ export default function Header() {
       <SmallNavMenu
         logout={logout}
       ></SmallNavMenu>
+
+      <HelloUser />
     </nav>
   );
 }

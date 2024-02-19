@@ -2,6 +2,7 @@ const { User } = require('../models');
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 require("dotenv").config();
+const nodemailer = require('nodemailer');
 
 const Model = User;
 
@@ -14,7 +15,7 @@ function createToken(email, id) {
   return jwt.sign({ email: email, id: id }, process.env.JWT_SECRET)
 }
 
-// user authentication
+// user authentication 
 async function authenticate(data) {
   let user
   try {
@@ -104,6 +105,26 @@ async function createItem(data) {
     const user = await Model.create(data) //USER IS CREATED
     const token = createToken(user.email, user._id) // TOKEN CREATED
     const strippedUser = stripPassword(user)
+
+    // ADD EMAIL TRANSPORTER HERE... new try block maybe?:
+    // const transporter = nodemailer.createTransport({
+    //     host: 'your-smtp-server.com', // Replace with \ SMTP server
+    //     port: 587, // Replace with SMTP server port
+    //     secure: false, // true for 465, false for other ports
+    //     auth: {
+    //         user: 'your-email@example.com', //USE ENV
+    //         pass: 'your-email-password',
+    //     },
+    // });
+
+    // const welcomeEmail = {
+    //   from: process.env.EMAIL_USERNAME,
+    //   to: email,
+    //   subject: 'If this fails... I blame Kurt!',
+    //   html: `Click <a href="${resetLink}">here</a> to reset your password, you dummy.`,
+    // };
+
+
     return { user: strippedUser, token }
   } catch (err) {
     throw new Error(err)

@@ -1,10 +1,7 @@
-// this is a test
 import { v4 as uuidv4 } from "uuid"
-import Dropdown from "react-bootstrap/Dropdown"
-import DropdownButton from "react-bootstrap/DropdownButton"
 import { useState, useEffect } from "react"
 import { useAppCtx } from "../utils/AppProvider"
-import { ModalWithDialogTrigger, StepBar, TriggerButton, SignupModal } from "./"
+import { ModalWithDialogTrigger, StepBar, TriggerButton, SignupModal, CategorySelect } from "./"
 
 export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage, setSubmitError, defaultChecked }) {
 
@@ -40,6 +37,10 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
     }
 
     const catToUse = categories.find((cat) => cat.name === category);
+
+    console.log(categories)
+    console.log(category)
+    console.log(catToUse)
 
     const newGoal = {
       name: goal.name,
@@ -77,6 +78,13 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
       console.log(response);
       setSubmitError("Database error - unable to save goal!");
     }
+  }
+
+  function handleGoalNameChange(e) {
+    setGoal({
+      ...goal,
+      [e.target.name]: e.target.value
+    })
   }
 
   // handle text input
@@ -172,6 +180,10 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
     }
   }
 
+  function handleSelectionChange(key) {
+    setCategory(key);
+  }
+
   useEffect(() => {
     if (!categories)
       getCategories();
@@ -186,6 +198,11 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
     <>
       <form onSubmit={handleFormSubmit} className="w-full gap-2 ">
         <div className="add-goal-items gap-2 mt-2">
+
+          {usage === "createGoal" &&
+            <input type="text" placeholder="Goal title" name="name" value={goal.name} onChange={handleGoalNameChange} />
+          }
+
           <div className="gap-2 flex items-center justify-center">
             <label htmlFor="complete-all">Check/Uncheck All:</label>
             <input className="checkbox" type="checkbox" defaultChecked={defaultChecked} id="complete-all" onChange={handleCheck} />
@@ -210,11 +227,11 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
 
         <button className="update-goal-btn " type="button" onClick={handleAddStep}>Add Step</button>
 
-        <DropdownButton id="dropdown-basic-button" title={category ? category : "Goal Category"}>
-          {categories?.map((category) => (
-            <Dropdown.Item key={category.id} onClick={(e) => { setCategory(e.target.text) }}>{category.name}</Dropdown.Item>
-          ))}
-        </DropdownButton>
+        <CategorySelect
+          category={category}
+          categories={categories}
+          handleSelectionChange={handleSelectionChange}
+        ></CategorySelect>
 
         <div className=" ">
           {appCtx.user?._id !== undefined ? (

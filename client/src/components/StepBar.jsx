@@ -15,7 +15,7 @@ export default function StepBar({ step, currentStep, setCurrentStep, handleCheck
   return (
 
 
-    <div className="stepbar cursor-pointer grid gap-2 items-center justify-center w-max text-ellipsis">
+    <div className="stepbar cursor-pointer grid gap-2 items-center justify-center text-ellipsis  w-full">
       <div className="flex justify-center items-center col-span-1 w-6 h-6">
         <input className={`checkbox ${step.uuid}`} type="checkbox" checked={step.completed} onChange={handleCheck} />
       </div>
@@ -31,7 +31,7 @@ export default function StepBar({ step, currentStep, setCurrentStep, handleCheck
       ></MyPopover>
       </div>
 
-      <div className={`step-content flex justify-center items-center col-span-1 text-ellipsis overflow-hidden ${currentStep && (step.uuid === currentStep.uuid) ? 'step-bar-open' : 'step-bar-closed'}`} onClick={handleStepBarClick}>
+      <div className={`step-content flex justify-center items-center col-span-1 truncate w-full ${currentStep && (step.uuid === currentStep.uuid) ? 'step-bar-open' : 'step-bar-closed'}`} onClick={handleStepBarClick}>
         {(currentStep && (step.uuid === currentStep.uuid)) ?
           <StepBarOpen
             step={step}

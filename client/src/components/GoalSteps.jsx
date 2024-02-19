@@ -184,9 +184,9 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
 
   return (
     <>
-      <form onSubmit={handleFormSubmit} className="form gap-2 ">
-        <div className="add-goal-items gap-2">
-          <div className="col-sm m-1">
+      <form onSubmit={handleFormSubmit} className="w-full gap-2 ">
+        <div className="add-goal-items gap-2 mt-2">
+          <div className="gap-2 flex items-center justify-center">
             <label htmlFor="complete-all">Check/Uncheck All:</label>
             <input className="checkbox" type="checkbox" defaultChecked={defaultChecked} id="complete-all" onChange={handleCheck} />
             <button className="update-goal-btn" type="reset" onClick={reset}>Clear All</button>

@@ -112,10 +112,10 @@ button:hover {
     outline: 2px solid #ad90c1;
 }
 
-.form-control {
+/* .form-control {
     color: black;
     background-color: var(--light);
-}
+} */
 
 input {
     background-color: white;

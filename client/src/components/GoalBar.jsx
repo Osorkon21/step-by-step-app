@@ -24,28 +24,32 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal,
   const now = Math.floor(goal.completedStepCount / goal.stepsCount * 100);
 
   return (
-    <div className="step">
-      <div className="mx-4 ">
-        <div className=" flex justify-between items-center border-2 border-red-600 cursor-pointer" onClick={(e) => handleGoalBarClick(e)}>
+    <div className="">
+      <div className="border-2 border-green-500">
+        <div className=" flex justify-between items-center border-2 gap-2 border-red-600 cursor-pointer" onClick={(e) => handleGoalBarClick(e)}>
+          <div>
+            {(currentGoal && goal._id === currentGoal._id) ?
+              <input className="goal-name-input" type="text" name="title" id="title" value={currentGoal.name} onChange={handleInputChange} />
+              :
+              <span>{goal.name}</span>
+            }
+          </div>
 
-          {(currentGoal && goal._id === currentGoal._id) ?
-            <input className="goal-name-input" type="text" name="title" id="title" value={currentGoal.name} onChange={handleInputChange} />
-            :
-            <span>{goal.name}</span>
-          }
           <ProgressBar striped variant="success" className="" now={now} label={now ? `${now}%` : ""} />
-          <span>{new Date(goal.createdAt).toLocaleDateString()}</span>
+          <div>
+            <span>{new Date(goal.createdAt).toLocaleDateString()}</span>
+          </div>
+          <MyPopover
+            button={<TrashCanButton
+              large={true}
+            ></TrashCanButton>}
+            contents={<ConfirmDelete
+              target={"goal"}
+              idToDel={goal._id}
+              deleteFunc={deleteGoal}
+            ></ConfirmDelete>}
+          ></MyPopover>
         </div>
-        <MyPopover
-          button={<TrashCanButton
-            large={true}
-          ></TrashCanButton>}
-          contents={<ConfirmDelete
-            target={"goal"}
-            idToDel={goal._id}
-            deleteFunc={deleteGoal}
-          ></ConfirmDelete>}
-        ></MyPopover>
       </div>
     </div>
   );

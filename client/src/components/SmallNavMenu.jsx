@@ -18,7 +18,7 @@ export default function SmallNavMenu({ logout }) {
   }
 
   return (
-    <div className="block sm:hidden">
+    <div className="flex sm:hidden justify-end items-end">
       <MenuTrigger>
         <Button aria-label="Menu">☰</Button>
         <Popover>

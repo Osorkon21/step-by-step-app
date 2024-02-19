@@ -26,20 +26,29 @@
   min-width: auto;
   /* width: 70vw; */
 }
+
 .step{
   border: .5rem solid var(--darkerblur);
   margin-top: 1rem;
   background-color: var(--light);
   /* padding: 1rem; */
   display: flex;
-
   border-radius: 2rem;
+  width: 100%;
+  
+
 }
 .dashboard-header{
   text-align: center;
 }
 
 .goal-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 2rem;
+  align-items: center;
+  justify-content: center;
   margin-top: var(--padding);
   /* border: 2px solid var(--darkblur); */
   background-color: var(--middleblur);

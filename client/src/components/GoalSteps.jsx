@@ -197,10 +197,10 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
   return (
     <>
       <form onSubmit={handleFormSubmit} className="w-full gap-2 ">
-        <div className="add-goal-items gap-2 mt-2">
+        <div className="add-goal-items gap-2 mt-2 flex flex-col items-center justify-center">
 
           {usage === "createGoal" &&
-            <input type="text" placeholder="Goal title" name="name" value={goal.name} onChange={handleGoalNameChange} />
+            <input className="flex items-center justify-center w-full" type="text" placeholder="Goal title" name="name" value={goal.name} onChange={handleGoalNameChange} />
           }
 
           <div className="gap-2 flex items-center justify-center">
@@ -225,17 +225,19 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
           </div>
         ))}
 
-        <button className="update-goal-btn " type="button" onClick={handleAddStep}>Add Step</button>
+        <button className="update-goal-btn mt-2" type="button" onClick={handleAddStep}>Add Step</button>
+        <div className="ag-cat-drop mt-2 ">
+          <CategorySelect className="mt-2 "
+            category={category}
+            categories={categories}
+            handleSelectionChange={handleSelectionChange}
+          ></CategorySelect>
 
-        <CategorySelect
-          category={category}
-          categories={categories}
-          handleSelectionChange={handleSelectionChange}
-        ></CategorySelect>
+        </div>
 
-        <div className=" ">
+        <div className="mt-2 gap-2 flex">
           {appCtx.user?._id !== undefined ? (
-            <button className="update-goal-btn m-2" type="submit">Save Goal</button>
+            <button className="update-goal-btn" type="submit">Save Goal</button>
           )
             : (
               <ModalWithDialogTrigger
@@ -248,7 +250,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
               ></ModalWithDialogTrigger>
             )}
 
-          <button className="update-goal-btn m-2" type="reset" onClick={reset}>Clear All</button>
+          <button className="update-goal-btn" type="reset" onClick={reset}>Clear All</button>
         </div>
       </form>
     </>

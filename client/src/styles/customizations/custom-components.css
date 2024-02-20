@@ -38,17 +38,11 @@
 /*  EXAMPLE END */
 
 .stepbar {
-  display: grid;
-  grid-template-columns: max-content 1fr max-content; 
-  
-
 
 }
 
 .step-content {
-  overflow: hidden; /* Ensure content doesn't overflow its column */
-  /* white-space: nowrap; Prevent content from wrapping */
-  /* text-overflow: ellipsis; Show ellipsis for overflowed content */
+
 }
 
 

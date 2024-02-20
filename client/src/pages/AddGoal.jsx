@@ -24,7 +24,7 @@ export default function AddGoal() {
         <p className="paragraphStep">
         </p>
 
-      <div className="goal-body ">
+      <div className="goal-container ">
         {/* if no goal has been submitted, display goal create form */}
         {!goalSelected ? (
           <>

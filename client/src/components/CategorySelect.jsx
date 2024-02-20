@@ -2,16 +2,16 @@ import { Button, Label, ListBox, ListBoxItem, Popover, Select, SelectValue } fro
 
 export default function CategorySelect({ category, categories, handleSelectionChange, label = null }) {
   return (
-    <Select placeholder={category ? category : "Goal Category"} aria-label="category select dropdown" onSelectionChange={handleSelectionChange}>
+    <Select className="" placeholder={category ? category : "Goal Category"} aria-label="category select dropdown" onSelectionChange={handleSelectionChange}>
       {label && <Label>{label}</Label>}
-      <Button>
+      <Button className="p-2">
         <SelectValue />
         <span aria-hidden="true">▼</span>
       </Button>
-      <Popover>
-        <ListBox>
+      <Popover className="bg-middle p-4 rounded-lg hover:bg-purple">
+        <ListBox className="">
           {categories?.map((category) => (
-            <ListBoxItem key={category.id} id={category.name}>{category.name}</ListBoxItem>
+            <ListBoxItem className="hover:bg-purple rounded-md p-1" key={category.id} id={category.name}>{category.name}</ListBoxItem>
           ))}
         </ListBox>
       </Popover>

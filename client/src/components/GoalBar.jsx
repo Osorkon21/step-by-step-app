@@ -25,9 +25,9 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal,
 
   return (
     <div className="">
-      <div className="border-2 border-green-500">
-        <div className=" flex justify-between items-center border-2 gap-2 border-red-600 cursor-pointer" onClick={(e) => handleGoalBarClick(e)}>
-          <div>
+      <div className="">
+        <div className=" flex justify-between items-center gap-2 cursor-pointer" onClick={(e) => handleGoalBarClick(e)}>
+          <div className='text-xl'>
             {(currentGoal && goal._id === currentGoal._id) ?
               <input className="goal-name-input" type="text" name="title" id="title" value={currentGoal.name} onChange={handleInputChange} />
               :
@@ -39,7 +39,7 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal,
           <div>
             <span>{new Date(goal.createdAt).toLocaleDateString()}</span>
           </div>
-          <MyPopover
+          <MyPopover className=""
             button={<TrashCanButton
               large={true}
             ></TrashCanButton>}

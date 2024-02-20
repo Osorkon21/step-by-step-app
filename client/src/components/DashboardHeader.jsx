@@ -69,7 +69,7 @@ export default function DashboardHeader({ goals, setInProgress, setInProgressGoa
         <button className="dashboard-tab col" type="button" onClick={() => { setCurrentGoal(null); setInProgress(false); setSubmitError(""); }}>Completed Goals</button>
       </div>
 
-      <CategorySelect
+      <CategorySelect 
         category={currentCategory}
         categories={categories}
         label={"Filter by category"}

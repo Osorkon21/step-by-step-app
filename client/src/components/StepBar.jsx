@@ -17,7 +17,7 @@ export default function StepBar({ step, currentStep, setCurrentStep, handleCheck
 
     <div className="stepbar cursor-pointer flex gap-2 items-center justify-center w-full">
       <div className="flex justify-center items-center w-6 h-6">
-        <input className={`checkbox ${step.uuid}`} type="checkbox" checked={step.completed} onChange={handleCheck} />
+        <input className={`checkbox rounded-full ${step.uuid}`} type="checkbox" checked={step.completed} onChange={handleCheck} />
       </div>
       <div className="w-6 h-6 flex justify-center items-center shrink-0">  <MyPopover
         button={<TrashCanButton

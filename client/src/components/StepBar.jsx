@@ -15,11 +15,11 @@ export default function StepBar({ step, currentStep, setCurrentStep, handleCheck
   return (
 
 
-    <div className="stepbar cursor-pointer grid gap-2 items-center justify-center text-ellipsis  w-full">
-      <div className="flex justify-center items-center col-span-1 w-6 h-6">
+    <div className="stepbar cursor-pointer flex gap-2 items-center justify-center w-full">
+      <div className="flex justify-center items-center w-6 h-6">
         <input className={`checkbox ${step.uuid}`} type="checkbox" checked={step.completed} onChange={handleCheck} />
       </div>
-      <div className="w-6 h-6 flex justify-center items-center col-span-1 ">  <MyPopover
+      <div className="w-6 h-6 flex justify-center items-center shrink-0">  <MyPopover
         button={<TrashCanButton
           large={false}
         ></TrashCanButton>}
@@ -31,7 +31,7 @@ export default function StepBar({ step, currentStep, setCurrentStep, handleCheck
       ></MyPopover>
       </div>
 
-      <div className={`step-content flex justify-center items-center col-span-1 truncate w-full ${currentStep && (step.uuid === currentStep.uuid) ? 'step-bar-open' : 'step-bar-closed'}`} onClick={handleStepBarClick}>
+      <div className={`step-content flex justify-start items-center truncate grow ${currentStep && (step.uuid === currentStep.uuid) ? 'step-bar-open' : 'step-bar-closed'}`} onClick={handleStepBarClick}>
         {(currentStep && (step.uuid === currentStep.uuid)) ?
           <StepBarOpen
             step={step}
@@ -52,5 +52,5 @@ export default function StepBar({ step, currentStep, setCurrentStep, handleCheck
 }
 
 
-
+// max-w-xs md:max-w-2xl lg:max-w-4xl 
 

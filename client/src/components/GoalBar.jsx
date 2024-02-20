@@ -29,7 +29,7 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal,
         <div className=" flex justify-between items-center gap-2 cursor-pointer" onClick={(e) => handleGoalBarClick(e)}>
           <div className='text-xl'>
             {(currentGoal && goal._id === currentGoal._id) ?
-              <input className="goal-name-input" type="text" name="title" id="title" value={currentGoal.name} onChange={handleInputChange} />
+              <input className="goal-name-input shadow-inner" type="text" name="title" id="title" value={currentGoal.name} onChange={handleInputChange} />
               :
               <span>{goal.name}</span>
             }

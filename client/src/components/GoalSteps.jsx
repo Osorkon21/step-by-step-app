@@ -90,37 +90,46 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
   // handle text input
   function handleInputChange(e) {
 
+  //extract UUID from the class name
+  const uuid = e.target.getAttribute('data-uuid');
+  const { name, value } = e.target;
+
     // change step title/text
     setSteps(steps.map(step => {
-      if (!e.target.className.includes(step.uuid))
+      if (step.uuid !== uuid)
         return step;
 
       return {
         ...step,
-        [e.target.name]: e.target.value
+        [name]: value // Dynamically update the property based on the input's name attribute
       }
     }));
   }
 
   // marks steps as completed or not completed
-  function handleCheck(e) {
+  function handleCheck(arg) {
 
     // checks/unchecks all checkboxes
-    if (e.target.id === "complete-all") {
-      setSteps(steps.map((item) => item = { ...item, completed: e.target.checked }));
+    if (typeof arg === "string") {
+      // if arg  is a string,, its assumed to be the UUID for an individual step
+      const uuid = arg;
+      setSteps(steps.map(step => {
+        if (step.uuid !== uuid)
+          return step;
+        return {
+          ...step,
+          completed: !step.completed // Toggle the completed state
+        };
+      }));
     }
 
     // checks/unchecks one checkbox
-    else {
-      setSteps(steps.map(step => {
-        if (!e.target.className.includes(step.uuid))
-          return step;
-
-        return {
-          ...step,
-          completed: e.target.checked
-        }
-      }));
+    else if (arg && arg.target){
+      // if arg is an event, its assumed to be the event object for a checkbox click
+      const e = arg;
+      if (e.target.id === "complete-all") {
+      setSteps(steps.map(item => ({ ...item, completed: e.target.checked })));
+    }
     }
   }
 
@@ -205,7 +214,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
 
           <div className="gap-2 flex items-center justify-center">
             <label htmlFor="complete-all">Check/Uncheck All:</label>
-            <input className="checkbox" type="checkbox" defaultChecked={defaultChecked} id="complete-all" onChange={handleCheck} />
+            <input  className="checkbox" type="checkbox" defaultChecked={defaultChecked} id="complete-all" onChange={handleCheck} />
             <button className="update-goal-btn" type="reset" onClick={reset}>Clear All</button>
           </div>
         </div>

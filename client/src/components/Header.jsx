@@ -7,7 +7,7 @@ export default function Header() {
   }
 
   return (
-    <nav className='navbar_container bg-background text-secondaryOrange font-semibold p-6 fixed top-0 w-screen z-50 text-xl shadow-lg'>
+    <nav className='navbar_container bg-middle font-semibold sm:pt-6 fixed top-0 w-screen z-50 text-xl'>
       <LargeNavBar
         logout={logout}
       ></LargeNavBar>

@@ -16,13 +16,9 @@ export default function AddGoal() {
   }
 
   return (
-    <div className="body">
-      <h1>Add Goal</h1>
-      {/* <img src={assistStep} className="assistStep" alt="assistStep" />
-      <img src={stepAi} className="stepAi" alt="Ai" />
-      <img src={stepImage} className="stepImage" alt="stepImage" /> */}
-        <p className="paragraphStep">
-        </p>
+    <div className="body mt-16">
+      <h1 className="p-4 mt-4">Add Goal</h1>
+        <p className="paragraphStep"></p>
 
       <div className="goal-container ">
         {/* if no goal has been submitted, display goal create form */}

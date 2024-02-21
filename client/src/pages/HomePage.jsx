@@ -14,10 +14,10 @@ export default function HomePage() {
     <>
 
 
-      <div className='body'>
+      <div className='body mt-16'>
         <div className='home flex flex-col items-center justify center'>
           <div className='about'>
-            <h1>Step-By-Step</h1>
+            <h1>Upward Arc</h1>
             <p className='slogan'><strong> Your Dreams & Aspirations Start Here!</strong></p>
           </div>
           <div className=''>
@@ -25,7 +25,7 @@ export default function HomePage() {
               <img src={targetImage} className="targetImage" alt="targetImage" />
             </div>
             <div className="benefits flex flex-col justify-center gap-12">
-              <h2>How <strong>Step-By-Step</strong> Can Help You</h2>
+              <h2>How <strong>Upward Arc</strong> Can Help You</h2>
               <section className="AI items-center flex flex-col" >
                 <h3 className='w-full'>AI Assistance</h3>
                 <img src={AiImage} className="home-img" alt="AiImage" />

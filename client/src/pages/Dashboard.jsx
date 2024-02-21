@@ -71,7 +71,7 @@ export default function Dashboard() {
   }, [appCtx]);
 
   return (
-    <div className="body">
+    <div className="body mt-16">
       {/* buttons at the top that switch between in progress and completed goals */}
       <DashboardHeader
         goals={goals}

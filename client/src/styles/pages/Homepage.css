@@ -1,5 +1,6 @@
 #root {
   color: black;
+  padding: 0;
   /* background-image: linear-gradient(to right, #b43a57, #cfa028, #cc820a) */
 }
 
@@ -26,13 +27,11 @@ body {
 
 .header-container {
   display: flex;
-  /* border-radius: 2rem; */
-  /* color: purple; */
-  background-color: #f8f9f4;
+  background-color: var(--middle);
   /* border: .2rem solid var(--dark); */
   /* max-width: 996px; */
   justify-content: center;
-  height: 120px;
+ 
   /* justify-self: center; */
 }
 
@@ -54,7 +53,7 @@ body {
 
 .about {
   display: flex;
-  padding: var(--padding);
+  padding-top: 1rem;
   flex-direction: column;
   justify-content: center;
   color: black;
@@ -77,13 +76,6 @@ body {
   border-radius: 50%;
 }
 
-.benefits {
-  /* padding: 0px;
-  height: 100%;
-  margin-top: 2rem; */
-  /* border-top: 2rem solid var(--light); */
-  /* border: purple 1rem solid; */
-}
 
 h2 {
   /* background-color: var(--dark); */
@@ -102,7 +94,7 @@ h2 {
 
 h1 {
   color: var(--purple);
-  font-size: 5rem;
+  font-size: 4rem;
 }
 
 h3 {
@@ -119,15 +111,3 @@ h3 {
   color: #ad90c1;
 }
 
-/* .color-nav{
-  background-color: green;
-} */
-
-/* THIS DOESN'T WORK - IDK WHY */
-/* nav.bg-body-tertiary{
-  color: green;
-  background-color: green;
-} */
-/* .navbar-header{
-  background-color: chartreuse;
-} */

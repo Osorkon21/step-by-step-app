@@ -90,37 +90,46 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
   // handle text input
   function handleInputChange(e) {
 
+  //extract UUID from the class name
+  const uuid = e.target.getAttribute('data-uuid');
+  const { name, value } = e.target;
+
     // change step title/text
     setSteps(steps.map(step => {
-      if (!e.target.className.includes(step.uuid))
+      if (step.uuid !== uuid)
         return step;
 
       return {
         ...step,
-        [e.target.name]: e.target.value
+        [name]: value // Dynamically update the property based on the input's name attribute
       }
     }));
   }
 
   // marks steps as completed or not completed
-  function handleCheck(e) {
+  function handleCheck(arg) {
 
     // checks/unchecks all checkboxes
-    if (e.target.id === "complete-all") {
-      setSteps(steps.map((item) => item = { ...item, completed: e.target.checked }));
+    if (typeof arg === "string") {
+      // if arg  is a string,, its assumed to be the UUID for an individual step
+      const uuid = arg;
+      setSteps(steps.map(step => {
+        if (step.uuid !== uuid)
+          return step;
+        return {
+          ...step,
+          completed: !step.completed // Toggle the completed state
+        };
+      }));
     }
 
     // checks/unchecks one checkbox
-    else {
-      setSteps(steps.map(step => {
-        if (!e.target.className.includes(step.uuid))
-          return step;
-
-        return {
-          ...step,
-          completed: e.target.checked
-        }
-      }));
+    else if (arg && arg.target){
+      // if arg is an event, its assumed to be the event object for a checkbox click
+      const e = arg;
+      if (e.target.id === "complete-all") {
+      setSteps(steps.map(item => ({ ...item, completed: e.target.checked })));
+    }
     }
   }
 
@@ -196,16 +205,16 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
 
   return (
     <>
-      <form onSubmit={handleFormSubmit} className="form gap-2 ">
-        <div className="add-goal-items gap-2">
+      <form onSubmit={handleFormSubmit} className="w-full gap-2 ">
+        <div className="add-goal-items gap-2 mt-2 flex flex-col items-center justify-center">
 
           {usage === "createGoal" &&
-            <input type="text" placeholder="Goal title" name="name" value={goal.name} onChange={handleGoalNameChange} />
+            <input className="flex items-center justify-center w-full" type="text" placeholder="Goal title" name="name" value={goal.name} onChange={handleGoalNameChange} />
           }
 
-          <div className="col-sm m-1">
+          <div className="gap-2 flex items-center justify-center">
             <label htmlFor="complete-all">Check/Uncheck All:</label>
-            <input className="checkbox" type="checkbox" defaultChecked={defaultChecked} id="complete-all" onChange={handleCheck} />
+            <input  className="checkbox" type="checkbox" defaultChecked={defaultChecked} id="complete-all" onChange={handleCheck} />
             <button className="update-goal-btn" type="reset" onClick={reset}>Clear All</button>
           </div>
         </div>
@@ -225,17 +234,19 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
           </div>
         ))}
 
-        <button className="update-goal-btn " type="button" onClick={handleAddStep}>Add Step</button>
+        <button className="update-goal-btn mt-2" type="button" onClick={handleAddStep}>Add Step</button>
+        <div className="ag-cat-drop mt-2 ">
+          <CategorySelect className="mt-2 "
+            category={category}
+            categories={categories}
+            handleSelectionChange={handleSelectionChange}
+          ></CategorySelect>
 
-        <CategorySelect
-          category={category}
-          categories={categories}
-          handleSelectionChange={handleSelectionChange}
-        ></CategorySelect>
+        </div>
 
-        <div className=" ">
+        <div className="mt-2 gap-2 flex">
           {appCtx.user?._id !== undefined ? (
-            <button className="update-goal-btn m-2" type="submit">Save Goal</button>
+            <button className="update-goal-btn" type="submit">Save Goal</button>
           )
             : (
               <ModalWithDialogTrigger
@@ -248,7 +259,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
               ></ModalWithDialogTrigger>
             )}
 
-          <button className="update-goal-btn m-2" type="reset" onClick={reset}>Clear All</button>
+          <button className="update-goal-btn" type="reset" onClick={reset}>Clear All</button>
         </div>
       </form>
     </>

@@ -13,7 +13,7 @@ export default function TrashCanButton(props) {
   return (
     <img
       {...buttonProps}
-      className="trash-can mt-3"
+      className="trash-can"
       src={trashCan}
       alt="delete button in the form of a trash can"
       width={props.large ? "32" : "24"}

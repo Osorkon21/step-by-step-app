@@ -1,7 +1,7 @@
 export default function StepBarClosed({ step, handleStepBarClick }) {
   return (
-    <div className="mx-4 border-2 border-red-600 cursor-pointer" onClick={handleStepBarClick}>
-      <div className="mt-3 items-center">
+    <div className="current_step_closed truncate flex  " onClick={handleStepBarClick}>
+      <div className="items-center truncate w-full">
         {step.title || "Select to edit step"}
       </div>
     </div>

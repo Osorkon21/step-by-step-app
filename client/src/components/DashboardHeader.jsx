@@ -1,7 +1,7 @@
 import { CategorySelect } from "./"
 import { useState, useEffect } from "react"
 
-export default function DashboardHeader({ goals, setInProgress, setInProgressGoals, setCompletedGoals, setCurrentGoal, setSubmitError }) {
+export default function DashboardHeader({ goals, inProgress, setInProgress, setInProgressGoals, setCompletedGoals, setCurrentGoal, setSubmitError }) {
 
   const [currentCategory, setCurrentCategory] = useState(null);
   const [categories, setCategories] = useState(null);
@@ -65,8 +65,8 @@ export default function DashboardHeader({ goals, setInProgress, setInProgressGoa
     <div className="dashboard-header p-4 mt-4">
       <h1>Dashboard</h1>
       <div className="tabs">
-        <button className="dashboard-tab col" type="button" onClick={() => { setCurrentGoal(null); setInProgress(true); setSubmitError(""); }}>In Progress Goals</button>
-        <button className="dashboard-tab col" type="button" onClick={() => { setCurrentGoal(null); setInProgress(false); setSubmitError(""); }}>Completed Goals</button>
+        <button className="dashboard-tab col" type="button" style={inProgress ? { border: "2px solid red" } : { border: "" }} onClick={() => { setCurrentGoal(null); setInProgress(true); setSubmitError(""); }}>In Progress Goals</button>
+        <button className="dashboard-tab col" type="button" style={!inProgress ? { border: "2px solid red" } : { border: "" }} onClick={() => { setCurrentGoal(null); setInProgress(false); setSubmitError(""); }}>Completed Goals</button>
       </div>
       <div>
         <h5 className="p-1">Filter by category</h5>

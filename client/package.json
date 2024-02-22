@@ -17,6 +17,7 @@
     "openai": "^4.20.1",
     "postcss-import": "^16.0.0",
     "react": "^18.2.0",
+    "react-aria": "^3.32.1",
     "react-aria-components": "^1.0.0",
     "react-bootstrap": "^2.9.1",
     "react-dom": "^18.2.0",

@@ -18,7 +18,7 @@ export default function AddGoal() {
   return (
     <div className="body mt-16">
       <h1 className="p-4 mt-4">Add Goal</h1>
-        <p className="paragraphStep"></p>
+      <p className="paragraphStep"></p>
 
       <div className="goal-container ">
         {/* if no goal has been submitted, display goal create form */}
@@ -55,7 +55,7 @@ export default function AddGoal() {
             )}
           </>
         }
-        {submitError && (<div className="text-danger ms-2">
+        {submitError && (<div className="text-red-600 ms-2">
           {submitError}
         </div>)
         }

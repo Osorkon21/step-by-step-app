@@ -108,7 +108,7 @@ export default function Dashboard() {
                     usage="updateGoal"
                     defaultChecked={false}
                   ></GoalSteps>
-                  {submitError && (<div className="text-danger ms-2">
+                  {submitError && (<div className="text-red-600 ms-2">
                     {submitError}
                   </div>)
                   }
@@ -148,7 +148,7 @@ export default function Dashboard() {
                     usage="updateGoal"
                     defaultChecked={true}
                   ></GoalSteps>
-                  {submitError && (<div className="text-danger ms-2">
+                  {submitError && (<div className="text-red-600 ms-2">
                     {submitError}
                   </div>)
                   }

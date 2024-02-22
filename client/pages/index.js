@@ -1,6 +1,0 @@
-export { default as AuthPage } from "./AuthPage"
-export { default as HomePage } from "./HomePage"
-export { default as Logout } from "./Logout"
-export { default as Dashboard } from "./Dashboard"
-export { default as AddGoal } from "./AddGoal"
-export { default as NotFound } from "./NotFound"

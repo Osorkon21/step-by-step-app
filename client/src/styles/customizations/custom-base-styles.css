@@ -1,0 +1,74 @@
+
+
+/* EXAMPLE BEGINNING */
+* {
+  padding: 0;
+  margin: 0;
+}
+html {
+  --lightest: #eef5f9;
+  --lightestblur: #eef5f982;
+  --light: #d1eefb;
+  --lightblur: #d1eefb4b;
+  --middle: #bbeafb;
+  --middleblur: #bbeafb78;
+  --middledark: #76d0e3;
+  --middledarkblur: #76d1e37a;
+  --dark: #32c4e3;
+  --darkblur: #32c2e37b;
+  --darker: teal;
+  --darkerblur: rgba(0, 128, 128, 0.055);
+  --background: linear-gradient(180deg, rgba(187,234,251,1) 0%, rgba(236,217,217,1) 35%, rgba(118,208,227,1) 100%);
+  --purple: #ad90c1;
+  --lightpurple: #c7b7cf;
+
+  --mutedlight: #eaeaea;
+  --mutedgray: #dddddd;
+  --mutedpink: #ecd9d9;
+  --mutedblue: #d5e1ea;
+  --mutedgreen: #e8f0d1;
+
+  --waterlight:#eef5f9;
+  --waterpale: #d1eefb;
+  --watermedium: #bbeafb;
+  --wateraqua: #76d0e3;
+  --waterteal: #32c4e3;
+  
+  --dreamslightest:#ddfbff;
+  --dreamslightaqua: #c7ebf0;
+  --dreamsgray: #bfd5e2;
+  --dreamspurple: #b1b5c8;
+  --dreamsmauve: #b2abbf;
+
+  --border-radius: .5rem;
+  --border-thickness: .1rem;
+  --padding: 1rem;
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+}
+
+
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
+
+.username-style {
+  /* Add your custom styles here */
+  font-weight: bold;
+  color: var(--purple); 
+  font-size: 1.5rem;
+}
+
+
+/* EXAMPLE END */

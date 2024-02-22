@@ -19,6 +19,8 @@
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "dotenv": "^16.3.1",
+    "google-auth-library": "^9.6.3",
+    "nodemailer": "^6.9.9",
     "openai": "^4.20.1"
   }
 }

@@ -23,25 +23,26 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal,
   const now = Math.floor(goal.completedStepCount / goal.stepsCount * 100);
 
   return (
+    <div className=" flex flex-col md:flex-row justify-between items-center gap-2 cursor-pointer" onClick={(e) => handleGoalBarClick(e)}>
+      <div className="flex flex-row gap-4">
+        <MyPopover className=""
+          button={<TrashCanButton
+            large={true}
+          ></TrashCanButton>}
+          contents={<ConfirmDelete
+            target={"goal"}
+            idToDel={goal._id}
+            deleteFunc={deleteGoal}
+          ></ConfirmDelete>}
+        ></MyPopover>
+        <div className='text-xl'>
+          {(currentGoal && goal._id === currentGoal._id) ?
+            <input className="goal-name-input shadow-inner" type="text" name="title" id="title" value={currentGoal.name} onChange={handleInputChange} />
+            :
+            <span>{goal.name}</span>
+          }
+        </div>
 
-
-    <div className=" flex justify-between items-center gap-2 cursor-pointer" onClick={(e) => handleGoalBarClick(e)}>
-      <MyPopover className=""
-        button={<TrashCanButton
-          large={true}
-        ></TrashCanButton>}
-        contents={<ConfirmDelete
-          target={"goal"}
-          idToDel={goal._id}
-          deleteFunc={deleteGoal}
-        ></ConfirmDelete>}
-      ></MyPopover>
-      <div className='text-xl'>
-        {(currentGoal && goal._id === currentGoal._id) ?
-          <input className="goal-name-input shadow-inner" type="text" name="title" id="title" value={currentGoal.name} onChange={handleInputChange} />
-          :
-          <span>{goal.name}</span>
-        }
       </div>
 
       <ProgressBar
@@ -52,18 +53,8 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal,
       <div>
         <span>{new Date(goal.createdAt).toLocaleDateString()}</span>
       </div>
-      <MyPopover className=""
-        button={<TrashCanButton
-          large={true}
-        ></TrashCanButton>}
-        contents={<ConfirmDelete
-          target={"goal"}
-          idToDel={goal._id}
-          deleteFunc={deleteGoal}
-        ></ConfirmDelete>}
-      ></MyPopover>
     </div>
-   
+
 
   );
 }

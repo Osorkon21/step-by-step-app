@@ -1,5 +1,4 @@
-import ProgressBar from 'react-bootstrap/ProgressBar';
-import { MyPopover, TrashCanButton, ConfirmDelete } from "./"
+import { MyPopover, TrashCanButton, ConfirmDelete, ProgressBar } from "./"
 
 export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal, setSubmitError }) {
 
@@ -45,12 +44,26 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal,
         }
       </div>
 
-      <ProgressBar striped variant="success" className="" now={now} label={now ? `${now}%` : ""} />
+      <ProgressBar
+        label={"Completed"}
+        value={now}
+      ></ProgressBar>
+
       <div>
         <span>{new Date(goal.createdAt).toLocaleDateString()}</span>
       </div>
-
+      <MyPopover className=""
+        button={<TrashCanButton
+          large={true}
+        ></TrashCanButton>}
+        contents={<ConfirmDelete
+          target={"goal"}
+          idToDel={goal._id}
+          deleteFunc={deleteGoal}
+        ></ConfirmDelete>}
+      ></MyPopover>
     </div>
+   
 
   );
 }

@@ -36,6 +36,24 @@ const userSchema = new Schema({
     maxLength: [25, "Username cannot exceed 25 characters!"]
     // later: filter out inappropriate words/censoring
   },
+  firstName: {
+    type: String,
+    match: [/^([A-Za-z]+)$/, "Username may not contain numbers or special characters! Please try again."],
+    required: false
+  },
+  lastName: {
+    type: String,
+    match: [/^([A-Za-z]+)$/, "Username may not contain numbers or special characters! Please try again."],
+    required: false
+  },
+  userBio: {
+    type: String,
+    required: false
+  },
+  pronouns: {
+    type: String,
+    required: false
+  },
   password: {
     type: String,
     minLength: [8, "Password must be at least 8 characters long!"],

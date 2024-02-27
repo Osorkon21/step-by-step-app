@@ -142,12 +142,12 @@ export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps, s
         <div className="gap-2 flex flex-col border-none sm:flex-row justify-center">
           {/* <label className="">What is your new goal?</label> */}
           <input type="text" placeholder="Enter New Goal Here" className="input w-full goal-input rounded-xl p-1 mb-2 sm:mb-0" name="goal" value={goal.name} onChange={handleInputChange} />
-          <button type="submit" className="rounded-xl bg-middledark p-1" name="generate">Generate Steps with AI</button>
+          <button type="submit" className="rounded-xl bg-middle p-1" name="generate">Generate Steps with AI</button>
         </div>
 
         <div className="flex flex-row justify-between mt-2 gap-2">
-          <button className="p-1 bg-purple" name="no-generate">Add Steps manually</button>
-          <button className="p-1 bg-purple" name="random-goal">Generate Random Goal</button>
+          <button className="p-1 bg-middle" name="no-generate">Add Steps manually</button>
+          <button className="p-1 bg-middle" name="random-goal">Generate Random Goal</button>
         </div>
       </div>
     </form>

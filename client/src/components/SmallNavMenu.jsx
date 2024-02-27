@@ -32,7 +32,10 @@ export default function SmallNavMenu({ logout }) {
             <MenuItem className="hover:bg-purple rounded-md p-1" id="add-goal" href="/addgoal">Add Goal</MenuItem>
 
             {appCtx.user?._id !== undefined ? (
-              <MenuItem id="logout" className="cursor-pointer rounded-md p-1 hover:bg-purple">Logout</MenuItem>
+              <>
+                <MenuItem className="cursor-pointer rounded-md p-1 hover:bg-purple" id="profile" href="/profile">Profile</MenuItem>
+                <MenuItem id="logout" className="cursor-pointer rounded-md p-1 hover:bg-purple">Logout</MenuItem>
+              </>
             ) : (
               <MenuItem id="login-signup" className="cursor-pointer rounded-md p-1 hover:bg-purple">Login</MenuItem>
             )}

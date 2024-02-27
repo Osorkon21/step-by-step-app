@@ -4,10 +4,43 @@ import { useAppCtx } from "../utils/AppProvider";
 export default function Profile() {
   const appCtx = useAppCtx();
 
-  const [userData, setUserData] = useState("");
+  const [userData, setUserData] = useState({});
+  const [submitError, setSubmitError] = useState("");
 
-  function handleSubmit() {
+  const MONGODB_DUPLICATE_KEY_CODE = 11000;
 
+  async function handleSubmit(e) {
+    e.preventDefault()
+
+    try {
+      const query = await fetch(`/api/users/${appCtx.user._id}`, {
+        method: "PUT",
+        body: JSON.stringify(userData),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+
+      const response = await query.json()
+
+      if (response.result === "success!") {
+        setSubmitError("");
+        appCtx.updateUser();
+      }
+      else {
+        if (response.code === MONGODB_DUPLICATE_KEY_CODE)
+          setSubmitError("User by that name already exists!");
+        else {
+          const errArr = response.message.split(":");
+          const formattedMsg = errArr[errArr.length - 1];
+          console.log(formattedMsg)
+          setSubmitError(formattedMsg);
+        }
+      }
+    } catch (err) {
+      console.log(err.message)
+      setSubmitError(err.message);
+    }
   }
 
   function handleInput(e) {
@@ -42,7 +75,10 @@ export default function Profile() {
             <input className="" type="text" placeholder="add username" name="username" onChange={handleInput} value={userData.username || ""} />
           </div>
 
-          <button className="update-goal-btn hover:scale-95 " type="submit">Save Changes</button>
+          <div className="text-red-600">
+            {submitError}
+          </div>
+          <button className="update-goal-btn hover:scale-95" type="submit">Save Changes</button>
         </form>
       )}
     </div>

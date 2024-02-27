@@ -64,9 +64,9 @@ export default function DashboardHeader({ goals, inProgress, setInProgress, setI
   return (
     <div className="dashboard-header p-4 mt-4">
       <h1>Dashboard</h1>
-      <div className="tabs">
-        <button className="dashboard-tab col" type="button" style={inProgress ? { border: "2px solid red" } : { border: "" }} onClick={() => { setCurrentGoal(null); setInProgress(true); setSubmitError(""); }}>In Progress Goals</button>
-        <button className="dashboard-tab col" type="button" style={!inProgress ? { border: "2px solid red" } : { border: "" }} onClick={() => { setCurrentGoal(null); setInProgress(false); setSubmitError(""); }}>Completed Goals</button>
+      <div className="tabs flex gap-2">
+        <button className="dashboard-tab col" type="button" style={inProgress ? { border: "2px solid var(--purple)" } : { border: "" }} onClick={() => { setCurrentGoal(null); setInProgress(true); setSubmitError(""); }}>In Progress Goals</button>
+        <button className="dashboard-tab col" type="button" style={!inProgress ? { border: "2px solid var(--purple)" } : { border: "" }} onClick={() => { setCurrentGoal(null); setInProgress(false); setSubmitError(""); }}>Completed Goals</button>
       </div>
       <div>
         <h5 className="p-1">Filter by category</h5>

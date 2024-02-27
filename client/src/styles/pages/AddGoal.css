@@ -98,7 +98,7 @@
 
 button {
     border-radius: var(--border-radius);
-    background-color: var(--middledark);
+    /* background-color: var(--middledark); */
     
 }
 

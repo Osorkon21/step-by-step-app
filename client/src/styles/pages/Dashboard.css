@@ -8,7 +8,7 @@
 } */
 
 .trash-can:hover {
-  filter: invert(62%) sepia(7%) saturate(1453%) hue-rotate(232deg) brightness(98%) contrast(88%);
+  scale: 1.25;
 }
 
 

@@ -18,7 +18,7 @@ export default function AppProvider(props) {
   async function verifyUser() {
     const cookie = Cookie.get("auth-cookie");
 
-    if (!cookie && window.location.pathname !== "/" && window.location.pathname.includes("/dashboard"))
+    if (!cookie && window.location.pathname !== "/" && (window.location.pathname.includes("/dashboard") || window.location.pathname.includes("/profile")))
       window.location.href = "/";
 
     try {

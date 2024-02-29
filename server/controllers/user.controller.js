@@ -134,9 +134,15 @@ async function createItem(data) {
 // update one user by id
 async function updateItemById(req, res) {
   try {
+    let { body } = req;
+
+    if (body["password"]) {
+      body["password"] = await bcrypt.hash(body["password"], 10)
+    }
+
     const user = await Model.findOneAndUpdate(
       { _id: req.params.userId },
-      { $set: req.body },
+      { $set: body },
       { runValidators: true, new: true }
     )
       .select("-__v -password")

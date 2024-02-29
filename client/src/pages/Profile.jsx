@@ -12,6 +12,10 @@ export default function Profile() {
   const [confirmEmail, setConfirmEmail] = useState("");
   const [emailError, setEmailError] = useState("");
 
+  const [newPwd, setNewPwd] = useState("");
+  const [confirmPwd, setConfirmPwd] = useState("");
+  const [pwdError, setPwdError] = useState("");
+
   const MONGODB_DUPLICATE_KEY_CODE = 11000;
   const pronouns = [
     "He/Him",
@@ -31,6 +35,10 @@ export default function Profile() {
       if (newEmail !== confirmEmail)
         return;
 
+    if (newPwd || confirmPwd)
+      if (newPwd !== confirmPwd)
+        return;
+
     try {
       const query = await fetch(`/api/users/${appCtx.user._id}`, {
         method: "PUT",
@@ -46,6 +54,8 @@ export default function Profile() {
         appCtx.updateUser();
         setNewEmail("");
         setConfirmEmail("");
+        setNewPwd("");
+        setConfirmPwd("");
       }
       else {
         if (response.code === MONGODB_DUPLICATE_KEY_CODE)
@@ -77,9 +87,6 @@ export default function Profile() {
     }
   }, [appCtx]);
 
-  // new password
-  // retype new password
-
   useEffect(() => {
     setEmailError("")
 
@@ -96,6 +103,25 @@ export default function Profile() {
       setUserData({ ...userData, email: appCtx.user.email })
     }
   }, [newEmail, confirmEmail]);
+
+  useEffect(() => {
+    setPwdError("")
+
+    if (newPwd || confirmPwd) {
+      if (newPwd !== confirmPwd) {
+        setPwdError("New passwords do not match!")
+        delete userData.password;
+        setUserData(userData)
+      }
+      else {
+        setUserData({ ...userData, password: newPwd })
+      }
+    }
+    else {
+      delete userData.password;
+      setUserData(userData);
+    }
+  }, [newPwd, confirmPwd]);
 
   return (
     <div className="body mt-16">
@@ -143,21 +169,35 @@ export default function Profile() {
 
           <div className="gap-2 flex flex-col">
             <label htmlFor="email">Current Email</label>
-            <input type="text" name="email" readOnly value={appCtx.user.email || ""} />
+            <input type="email" name="email" disabled value={appCtx.user.email || ""} />
           </div>
 
           <div className="gap-2 flex flex-col">
             <label htmlFor="newEmail">New Email</label>
-            <input type="text" placeholder="What is your new email?" name="newEmail" onChange={(e) => setNewEmail(e.target.value)} value={newEmail || ""} />
+            <input type="email" placeholder="What is your new email?" name="newEmail" onChange={(e) => setNewEmail(e.target.value)} value={newEmail || ""} />
           </div>
 
           <div className="gap-2 flex flex-col">
             <label htmlFor="confirmEmail">Confirm New Email</label>
-            <input type="text" placeholder="Confirm your new email" name="confirmEmail" onChange={(e) => setConfirmEmail(e.target.value)} value={confirmEmail || ""} />
+            <input type="email" placeholder="Confirm new email" name="confirmEmail" onChange={(e) => setConfirmEmail(e.target.value)} value={confirmEmail || ""} />
           </div>
 
           <div className="text-red-600">
             {emailError}
+          </div>
+
+          <div className="gap-2 flex flex-col">
+            <label htmlFor="newPassword">New Password</label>
+            <input type="password" placeholder="What is your new password?" name="newPassword" onChange={(e) => setNewPwd(e.target.value)} value={newPwd || ""} />
+          </div>
+
+          <div className="gap-2 flex flex-col">
+            <label htmlFor="confirmPassword">Confirm New Password</label>
+            <input type="password" placeholder="Confirm new password" name="confirmPassword" onChange={(e) => setConfirmPwd(e.target.value)} value={confirmPwd || ""} />
+          </div>
+
+          <div className="text-red-600">
+            {pwdError}
           </div>
 
           <button className="update-goal-btn hover:scale-95" type="submit">Save Changes</button>

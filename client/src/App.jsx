@@ -32,7 +32,7 @@ export default function App() {
 
             <Route path="*" element={<NotFound />} />
           </Routes>
-          <footer className="flex justify-center items-center p-4 text-center fixed bottom-0">&copy; 2023-2024 SBS Development Group</footer>
+          <footer className="flex ml-72 mr-72 justify-center items-center p-4 text-center fixed bottom-0">&copy; 2023-2024 SBS Development Group</footer>
         </div>
       </BrowserRouter>
     </AppProvider>

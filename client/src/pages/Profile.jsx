@@ -39,6 +39,11 @@ export default function Profile() {
       if (newPwd !== confirmPwd)
         return;
 
+    if (userData.password && userData.password.length < 8) {
+      setSubmitError("New password must be at least 8 characters long!");
+      return;
+    }
+
     try {
       const query = await fetch(`/api/users/${appCtx.user._id}`, {
         method: "PUT",

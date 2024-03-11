@@ -109,7 +109,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
   // marks steps as completed or not completed
   function handleCheck(arg) {
 
-    // checks/unchecks all checkboxes
+    // checks/unchecks one checkbox
     if (typeof arg === "string") {
       // if arg  is a string,, its assumed to be the UUID for an individual step
       const uuid = arg;
@@ -123,7 +123,8 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
       }));
     }
 
-    // checks/unchecks one checkbox
+
+    // checks/unchecks all checkboxes
     else if (arg && arg.target) {
       // if arg is an event, its assumed to be the event object for a checkbox click
       const e = arg;

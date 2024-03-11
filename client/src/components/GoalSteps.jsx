@@ -213,9 +213,8 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
           }
 
           <div className="gap-2 flex items-center justify-center">
-            <label htmlFor="complete-all">Check/Uncheck All:</label>
-            <input  className="checkbox" type="checkbox" defaultChecked={defaultChecked} id="complete-all" onChange={handleCheck} />
-            <button className="update-goal-btn hover:scale-95 " type="reset" onClick={reset}>Clear All</button>
+            <label htmlFor="complete-all">Complete All Steps:</label>
+            <input className="checkbox" type="checkbox" defaultChecked={defaultChecked} id="complete-all" onChange={handleCheck} />
           </div>
         </div>
 
@@ -259,7 +258,9 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
               ></ModalWithDialogTrigger>
             )}
 
-          <button className="update-goal-btn hover:scale-95" type="reset" onClick={reset}>Clear All</button>
+          {usage === "createGoal" &&
+            <button className="update-goal-btn hover:scale-95" type="reset" onClick={reset}>Start Over</button>
+          }
         </div>
       </form>
     </>

@@ -20,9 +20,9 @@ export default function SmallNavMenu({ logout }) {
   return (
     <div className="flex sm:hidden justify-end items-end">
       <MenuTrigger>
-        <Button className="mr-10 mt-4 py-2 px-3 border-2 bg-lightpurple border-purple" aria-label="Menu">☰</Button>
+        <Button className="mr-10 mt-4 py-2 px-3 border-2 bg-purple border-purple" aria-label="Menu">☰</Button>
         <Popover>
-          <Menu className="flex flex-col bg-lightpurple p-2 gap-1 rounded-lg" onAction={handleMenuAction}>
+          <Menu className="flex flex-col bg-purple p-2 gap-1 rounded-lg" onAction={handleMenuAction}>
             <MenuItem className="hover:bg-purple rounded-md p-1" id="home" href="/">Home</MenuItem>
 
             {appCtx.user?._id !== undefined && (
@@ -32,7 +32,10 @@ export default function SmallNavMenu({ logout }) {
             <MenuItem className="hover:bg-purple rounded-md p-1" id="add-goal" href="/addgoal">Add Goal</MenuItem>
 
             {appCtx.user?._id !== undefined ? (
-              <MenuItem id="logout" className="cursor-pointer rounded-md p-1 hover:bg-purple">Logout</MenuItem>
+              <>
+                <MenuItem className="cursor-pointer rounded-md p-1 hover:bg-purple" id="profile" href="/profile">Profile</MenuItem>
+                <MenuItem id="logout" className="cursor-pointer rounded-md p-1 hover:bg-purple">Logout</MenuItem>
+              </>
             ) : (
               <MenuItem id="login-signup" className="cursor-pointer rounded-md p-1 hover:bg-purple">Login</MenuItem>
             )}

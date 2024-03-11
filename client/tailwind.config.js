@@ -9,17 +9,17 @@ export default {
         lightestblur: '#eef5f982',
         light: '#d1eefb',
         lightblur: '#d1eefb4b',
-        middle: '#bbeafb',
-        middleblur: '#bbeafb78',
+        middle: '#bcdbe5', // light blue
+        middleblur: '#76919c', // middle blue
         middledark: '#76d0e3',
-        middledarkblur: '#76d1e37a',
+        middledarkblur: '#76919c',
         dark: '#32c4e3',
         darkblur: '#32c2e37b',
         darker: 'teal',
         darkerblur: 'rgba(0, 128, 128, 0.055)',
         
-        purple: '#ad90c1',
-        lightpurple: '#c7b7cf',
+        purple: '#162e3d',  // dark blue currently
+        lightpurple: '#76919c', // light blue currently
       
         mutedlight: '#eaeaea',
         mutedgray: '#dddddd',

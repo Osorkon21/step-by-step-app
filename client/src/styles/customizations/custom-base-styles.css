@@ -9,8 +9,8 @@ html {
   --lightest: #eef5f9;
   --lightestblur: #eef5f982;
   --light: #d1eefb;
-  --lightblur: #d1eefb4b;
-  --middle: #bbeafb;
+  /* --lightblur: #d1eefb4b; */
+  --middle: #bcdbe5;  /* changeded from #bbeafb; */
   --middleblur: #bbeafb78;
   --middledark: #76d0e3;
   --middledarkblur: #76d1e37a;
@@ -18,9 +18,9 @@ html {
   --darkblur: #32c2e37b;
   --darker: teal;
   --darkerblur: rgba(0, 128, 128, 0.055);
-  --background: linear-gradient(180deg, rgba(187,234,251,1) 0%, rgba(236,217,217,1) 35%, rgba(118,208,227,1) 100%);
-  --purple: #ad90c1;
-  --lightpurple: #c7b7cf;
+  --background: white; /* changed from linear-gradient(180deg, rgba(187,234,251,1) 0%, rgba(236,217,217,1) 35%, rgba(118,208,227,1) 100%) */
+  --purple: #162e3d;  /* changed from #162e3d; */
+  --lightpurple: #76919c; /* changed from #76919c; */
 
   --mutedlight: #eaeaea;
   --mutedgray: #dddddd;

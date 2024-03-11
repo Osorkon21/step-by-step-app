@@ -73,7 +73,7 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal,
       <div className="flex gap-4 items-center">
         <ProgressBar
           label={"Completed"}
-          value={percentComplete}
+          value={(currentGoal && goal._id === currentGoal._id) ? percentComplete : Math.floor(goal.completedStepCount / goal.stepsCount * 100)}
         ></ProgressBar>
 
         <div>

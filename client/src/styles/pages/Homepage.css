@@ -8,12 +8,12 @@
 
 .homegoal {
   display: flex;
-  flex-direction: row;
+  /* flex-direction: row; */
   justify-content: center;
   align-items: center;
-  margin-left: 20%;
-  margin-right: 20%;
-  margin-top: -5em;
+  /* margin-left: 20%;
+  margin-right: 20%; */
+  /* margin-top: -5em; */
 
 }
 

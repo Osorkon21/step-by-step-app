@@ -145,8 +145,8 @@ export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps, s
           <button type="submit" className="rounded-xl bg-middle p-1" name="generate">Generate Steps with AI</button>
         </div>
 
-        <div className="flex flex-row justify-between mt-2 gap-2">
-          <button className="p-1 bg-middle" name="no-generate">Add Steps manually</button>
+        <div className="flex flex-row justify-center mt-2 gap-2">
+          {/* <button className="p-1 bg-middle" name="no-generate">Add Steps manually</button> */}
           <button className="p-1 bg-middle" name="random-goal">Generate Random Goal</button>
         </div>
       </div>

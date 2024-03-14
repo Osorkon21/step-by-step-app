@@ -1,5 +1,7 @@
 import { StepBarClosed, StepBarOpen, MyPopover, TrashCanButton, ConfirmDelete } from "./"
-import { v4 as uuidv4 } from "uuid"
+import downArrow from "../assets/icons/down-arrow.svg"
+import rightArrow from "../assets/icons/right-arrow.svg"
+
 export default function StepBar({ step, currentStep, setCurrentStep, handleCheck, handleInputChange, deleteStep }) {
 
   function handleStepBarClick(e) {
@@ -21,14 +23,35 @@ export default function StepBar({ step, currentStep, setCurrentStep, handleCheck
         <input className={`checkbox ${step.uuid}`} type="checkbox" checked={step.completed} onChange={handleCheck} />
       </div> */}
 
+      {(currentStep && (step.uuid === currentStep.uuid)) ?
+        <img
+          className="right-arrow focus:outline-none hover:scale-150"
+          src={rightArrow}
+          alt="caret pointing right"
+          width={"24"}
+          height={"24"}
+          onClick={handleStepBarClick}
+        />
+        :
+        <img
+          className="down-arrow focus:outline-none hover:scale-150"
+          src={downArrow}
+          alt="caret pointing down"
+          width={"24"}
+          height={"24"}
+          onClick={handleStepBarClick}
+        />
+      }
+
+
       {/* CHECKBOX OVERLAY */}
       <div className="flex justify-center items-center w-6 h-6">
-        <input 
-        id={`customCheckbox-${step.uuid}`} 
-        className={`checkbox sr-only ${step.uuid}`} 
-        type="checkbox" 
-        checked={step.completed} 
-        onChange={() => handleCheck(step.uuid)} />
+        <input
+          id={`customCheckbox-${step.uuid}`}
+          className={`checkbox sr-only ${step.uuid}`}
+          type="checkbox"
+          checked={step.completed}
+          onChange={() => handleCheck(step.uuid)} />
         <label htmlFor={`customCheckbox-${step.uuid}`} className={`block w-5 h-5 rounded-full cursor-pointer ${step.completed ? 'bg-purple' : 'bg-white'}`}>
           {step.completed && (
             <svg className="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -36,21 +59,6 @@ export default function StepBar({ step, currentStep, setCurrentStep, handleCheck
             </svg>
           )}
         </label>
-      </div>
-
-  
-
-
-      <div className="w-6 h-6 flex justify-center items-center shrink-0">  <MyPopover
-        button={<TrashCanButton
-          large={false}
-        ></TrashCanButton>}
-        contents={<ConfirmDelete
-          target={"step"}
-          idToDel={step.uuid}
-          deleteFunc={deleteStep}
-        ></ConfirmDelete>}
-      ></MyPopover>
       </div>
 
       <div className={`step-content flex justify-start items-center truncate grow ${currentStep && (step.uuid === currentStep.uuid) ? 'step-bar-open' : 'step-bar-closed'}`} onClick={handleStepBarClick}>
@@ -68,6 +76,17 @@ export default function StepBar({ step, currentStep, setCurrentStep, handleCheck
         }
       </div>
 
+      <div className="w-6 h-6 flex justify-center items-center shrink-0">  <MyPopover
+        button={<TrashCanButton
+          large={false}
+        ></TrashCanButton>}
+        contents={<ConfirmDelete
+          target={"step"}
+          idToDel={step.uuid}
+          deleteFunc={deleteStep}
+        ></ConfirmDelete>}
+      ></MyPopover>
+      </div>
 
     </div>
   );

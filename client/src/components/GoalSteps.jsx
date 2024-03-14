@@ -109,7 +109,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
   // marks steps as completed or not completed
   function handleCheck(arg) {
 
-    // checks/unchecks all checkboxes
+    // checks/unchecks one checkbox
     if (typeof arg === "string") {
       // if arg  is a string,, its assumed to be the UUID for an individual step
       const uuid = arg;
@@ -123,7 +123,8 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
       }));
     }
 
-    // checks/unchecks one checkbox
+
+    // checks/unchecks all checkboxes
     else if (arg && arg.target) {
       // if arg is an event, its assumed to be the event object for a checkbox click
       const e = arg;
@@ -213,9 +214,8 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
           }
 
           <div className="gap-2 flex items-center justify-center">
-            <label htmlFor="complete-all">Check/Uncheck All:</label>
-            <input  className="checkbox" type="checkbox" defaultChecked={defaultChecked} id="complete-all" onChange={handleCheck} />
-            <button className="update-goal-btn hover:scale-95 " type="reset" onClick={reset}>Clear All</button>
+            <label htmlFor="complete-all">Complete All Steps:</label>
+            <input className="checkbox" type="checkbox" defaultChecked={defaultChecked} id="complete-all" onChange={handleCheck} />
           </div>
         </div>
 
@@ -259,7 +259,9 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
               ></ModalWithDialogTrigger>
             )}
 
-          <button className="update-goal-btn hover:scale-95" type="reset" onClick={reset}>Clear All</button>
+          {usage === "createGoal" &&
+            <button className="update-goal-btn hover:scale-95" type="reset" onClick={reset}>Start Over</button>
+          }
         </div>
       </form>
     </>

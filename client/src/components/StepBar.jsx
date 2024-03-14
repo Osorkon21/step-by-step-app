@@ -17,7 +17,7 @@ export default function StepBar({ usage, step, currentStep, setCurrentStep, hand
   return (
 
 
-    <div className="stepbar cursor-pointer flex gap-2 items-center justify-center w-full">
+    <div className="stepbar cursor-pointer flex gap-2 items-center justify-center w-full hover:border-purple hover:border-2 rounded-2xl p-1">
 
       {/* ORIGINAL CHECKBOX <div className="flex justify-center items-center w-6 h-6">
         <input className={`checkbox ${step.uuid}`} type="checkbox" checked={step.completed} onChange={handleCheck} />
@@ -45,21 +45,23 @@ export default function StepBar({ usage, step, currentStep, setCurrentStep, hand
 
 
       {/* CHECKBOX OVERLAY */}
-      <div className="flex justify-center items-center w-6 h-6">
-        <input
-          id={`customCheckbox-${step.uuid}`}
-          className={`checkbox sr-only ${step.uuid}`}
-          type="checkbox"
-          checked={step.completed}
-          onChange={() => handleCheck(step.uuid)} />
-        <label htmlFor={`customCheckbox-${step.uuid}`} className={`block w-5 h-5 rounded-full cursor-pointer ${step.completed ? 'bg-purple' : 'bg-white'}`}>
-          {step.completed && (
-            <svg className="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-            </svg>
-          )}
-        </label>
-      </div>
+      {usage === "updateGoal" &&
+        <div className="flex justify-center items-center w-6 h-6">
+          <input
+            id={`customCheckbox-${step.uuid}`}
+            className={`checkbox sr-only ${step.uuid}`}
+            type="checkbox"
+            checked={step.completed}
+            onChange={() => handleCheck(step.uuid)} />
+          <label htmlFor={`customCheckbox-${step.uuid}`} className={`block w-5 h-5 rounded-full cursor-pointer ${step.completed ? 'bg-purple' : 'bg-white'}`}>
+            {step.completed && (
+              <svg className="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
+            )}
+          </label>
+        </div>
+      }
 
       <div className={`step-content flex justify-start items-center truncate grow ${currentStep && (step.uuid === currentStep.uuid) ? 'step-bar-open' : 'step-bar-closed'}`} onClick={handleStepBarClick}>
         {(currentStep && (step.uuid === currentStep.uuid)) ?

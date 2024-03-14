@@ -213,10 +213,12 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
             <input className="flex items-center justify-center w-full" type="text" placeholder="Goal title" name="name" value={goal.name} onChange={handleGoalNameChange} />
           }
 
-          <div className="gap-2 flex items-center justify-center">
-            <label htmlFor="complete-all">Complete All Steps:</label>
-            <input className="checkbox" type="checkbox" defaultChecked={defaultChecked} id="complete-all" onChange={handleCheck} />
-          </div>
+          {usage === "updateGoal" &&
+            <div className="gap-2 flex items-center justify-center">
+              <label htmlFor="complete-all">Complete All Steps:</label>
+              <input className="checkbox" type="checkbox" defaultChecked={defaultChecked} id="complete-all" onChange={handleCheck} />
+            </div>
+          }
         </div>
 
         {steps.map(step => (

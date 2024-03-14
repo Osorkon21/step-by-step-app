@@ -2,7 +2,7 @@ import { StepBarClosed, StepBarOpen, MyPopover, TrashCanButton, ConfirmDelete } 
 import downArrow from "../assets/icons/down-arrow.svg"
 import rightArrow from "../assets/icons/right-arrow.svg"
 
-export default function StepBar({ step, currentStep, setCurrentStep, handleCheck, handleInputChange, deleteStep }) {
+export default function StepBar({ usage, step, currentStep, setCurrentStep, handleCheck, handleInputChange, deleteStep }) {
 
   function handleStepBarClick(e) {
     if (e.target.name === "title" || e.target.name === "text")

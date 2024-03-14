@@ -16,7 +16,7 @@ export default function AddGoal() {
   }
 
   return (
-    <div className="body mt-16">
+    <div className="body mt-16 max-w-7xl ">
       <p className="paragraphStep"></p>
 
       <div className="goal-container ">

@@ -13,7 +13,7 @@
 
 
 
-.tabs{
+.tabs {
   height: 3rem;
   display: flex;
   justify-content: center;
@@ -21,30 +21,30 @@
   /* flex-grow: 1; */
 }
 
-.dashboard-tab{
+.dashboard-tab {
   flex-grow: 1;
   border-radius: 2rem;
 }
 
 
-.input{
+.input {
   background-color: var(--lightest);
   min-width: auto;
   /* width: 70vw; */
 }
 
-.step{
-  border: .5rem solid var(--darkerblur);
+.step {
   margin-top: 1rem;
   background-color: var(--light);
   /* padding: 1rem; */
   display: flex;
   border-radius: 2rem;
   width: 100%;
-  
+
 
 }
-.dashboard-header{
+
+.dashboard-header {
   text-align: center;
 }
 
@@ -60,6 +60,7 @@
   padding: var(--padding);
   border-radius: 2rem;
 }
+
 input.checkbox {
   height: 1.5rem;
   width: 1.5rem;
@@ -69,6 +70,7 @@ input.checkbox {
 input.checkbox:hover {
   outline: 2px solid var(--purple);
 }
+
 /* .dropdown {
   margin: 1rem;
 }

@@ -1,16 +1,16 @@
-
-
 /* EXAMPLE BEGINNING */
 * {
   padding: 0;
   margin: 0;
 }
+
 html {
   --lightest: #eef5f9;
   --lightestblur: #eef5f982;
   --light: #d1eefb;
   /* --lightblur: #d1eefb4b; */
-  --middle: #bcdbe5;  /* changeded from #bbeafb; */
+  --middle: #bcdbe5;
+  /* changeded from #bbeafb; */
   --middleblur: #bbeafb78;
   --middledark: #76d0e3;
   --middledarkblur: #76d1e37a;
@@ -18,9 +18,12 @@ html {
   --darkblur: #32c2e37b;
   --darker: teal;
   --darkerblur: rgba(0, 128, 128, 0.055);
-  --background: white; /* changed from linear-gradient(180deg, rgba(187,234,251,1) 0%, rgba(236,217,217,1) 35%, rgba(118,208,227,1) 100%) */
-  --purple: #162e3d;  /* changed from #162e3d; */
-  --lightpurple: #76919c; /* changed from #76919c; */
+  --background: white;
+  /* changed from linear-gradient(180deg, rgba(187,234,251,1) 0%, rgba(236,217,217,1) 35%, rgba(118,208,227,1) 100%) */
+  --purple: #162e3d;
+  /* changed from #162e3d; */
+  --lightpurple: #76919c;
+  /* changed from #76919c; */
 
   --mutedlight: #eaeaea;
   --mutedgray: #dddddd;
@@ -28,13 +31,13 @@ html {
   --mutedblue: #d5e1ea;
   --mutedgreen: #e8f0d1;
 
-  --waterlight:#eef5f9;
+  --waterlight: #eef5f9;
   --waterpale: #d1eefb;
   --watermedium: #bbeafb;
   --wateraqua: #76d0e3;
   --waterteal: #32c4e3;
-  
-  --dreamslightest:#ddfbff;
+
+  --dreamslightest: #ddfbff;
   --dreamslightaqua: #c7ebf0;
   --dreamsgray: #bfd5e2;
   --dreamspurple: #b1b5c8;
@@ -50,7 +53,12 @@ body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 600;
 }
 
@@ -66,7 +74,7 @@ h1, h2, h3, h4, h5, h6 {
 .username-style {
   /* Add your custom styles here */
   font-weight: bold;
-  color: var(--purple); 
+  color: var(--purple);
   font-size: 1.5rem;
 }
 

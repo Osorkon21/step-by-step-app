@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react"
+import { useState, useRef, useEffect } from "react"
 
 export default function StepBarOpen({ goal, step, steps, setSteps, handleInputChange, handleStepBarClick }) {
   // const [loading, setLoading] = useState(false);
   // const [explanation, setExplanation] = useState("");
   const [submitError, setSubmitError] = useState("");
+  const [text, setText] = useState('');
+  const textareaRef = useRef(null);
 
   async function handleExplainStep(e) {
     e.preventDefault();
@@ -25,7 +27,7 @@ export default function StepBarOpen({ goal, step, steps, setSteps, handleInputCh
 
       // do the fetch call here with async
       try {
-        const response = await fetch('/api/openai/explain', {
+        const query = await fetch('/api/openai/explain', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -33,54 +35,41 @@ export default function StepBarOpen({ goal, step, steps, setSteps, handleInputCh
           body: JSON.stringify({ goalTitle: goal.name, stepTitle: step.title }),
         });
 
+        console.log(query)
+
+        const response = await query.json();
+
         if (response.result === "success") {
-          aiResponse = await response.json()
+          aiResponse = response.payload.content[0].text.value;
 
-          console.log("This is response in StepBarOpen.jsx", aiResponse);
-
-          // const payload = aiResponse?.payload;
-
-          // if (payload.content && payload.content.length > 0) {
-          //   const firstContentItem = payload.content[0];
-
-          //   if (firstContentItem.text && firstContentItem.text.value) {
-          //     var userSteps;
-          //     var textValue;
-
-          //     try {
-          //       textValue = JSON.parse(firstContentItem.text.value);
-          //       userSteps = textValue.steps
-          //     }
-          //     catch (err) {
-          //       throw new Error(firstContentItem.text.value);
-          //     }
-
-          //     if (!textValue.steps)
-          //       throw new Error(textValue.error);
-
-          //     // Generate steps
-          //     generateSteps(userSteps);
-          //   }
-          // }
-
-          // setSteps(steps.map(step => {
-          //   if (step.uuid !== uuid)
-          //     return step;
-          //   return {
-          //     ...step,
-          //     text: aiResponse
-          //   };
-          // }));
+          setSteps(steps.map(step => {
+            if (step.uuid !== uuid)
+              return step;
+            return {
+              ...step,
+              text: aiResponse
+            };
+          }));
         }
         else {
           throw new Error('Bad response from openAI API call');
         }
       } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
+        console.error('OpenAI fetch operation error', error.message);
         setSubmitError(error.message);
       }
     }
   }
+
+  useEffect(() => {
+    const textarea = textareaRef.current;
+
+    if (textarea) {
+      textarea.style.height = 'auto';
+      // Set the height to scrollHeight to fit the content
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+  }, [step.text]);
 
   return (
     <div className="curent_step_open truncate flex flex-col gap-1 cursor-pointer w-full" onClick={handleStepBarClick}>
@@ -92,7 +81,7 @@ export default function StepBarOpen({ goal, step, steps, setSteps, handleInputCh
 
         {step.text ?
 
-          <textarea data-uuid={step.uuid} className={`w-full shadow-inner`} name="text" value={step.text} placeholder="Step description" onChange={handleInputChange} />
+          <textarea ref={textareaRef} data-uuid={step.uuid} className={`w-full shadow-inner overflow-y-hidden`} name="text" value={step.text} placeholder="Step description" onChange={handleInputChange} />
           :
           <>
             {submitError &&

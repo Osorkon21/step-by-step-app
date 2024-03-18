@@ -50,3 +50,8 @@
 .step-bar-closed {
   /* Styles for open/closed step bar */
 }
+
+.my-inner-shadow{
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 10px 0px inset;
+
+}

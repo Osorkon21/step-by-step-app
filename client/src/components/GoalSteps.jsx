@@ -225,8 +225,11 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
 
           <div className="step flex" key={step.uuid}>
             <StepBar
+              goal={goal}
               usage={usage}
               step={step}
+              steps={steps}
+              setSteps={setSteps}
               currentStep={currentStep}
               setCurrentStep={setCurrentStep}
               handleCheck={handleCheck}

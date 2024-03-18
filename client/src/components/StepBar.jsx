@@ -2,10 +2,10 @@ import { StepBarClosed, StepBarOpen, MyPopover, TrashCanButton, ConfirmDelete } 
 import downArrow from "../assets/icons/down-arrow.svg"
 import rightArrow from "../assets/icons/right-arrow.svg"
 
-export default function StepBar({ usage, step, currentStep, setCurrentStep, handleCheck, handleInputChange, deleteStep }) {
+export default function StepBar({ goal, usage, step, steps, setSteps, currentStep, setCurrentStep, handleCheck, handleInputChange, deleteStep }) {
 
   function handleStepBarClick(e) {
-    if (e.target.name === "title" || e.target.name === "text")
+    if (e.target.name === "title" || e.target.name === "text" || e.target.name === "explain-step")
       return;
 
     if (currentStep && (step.uuid === currentStep.uuid))
@@ -25,18 +25,18 @@ export default function StepBar({ usage, step, currentStep, setCurrentStep, hand
 
       {(currentStep && (step.uuid === currentStep.uuid)) ?
         <img
-          className="right-arrow focus:outline-none hover:scale-150"
-          src={rightArrow}
-          alt="caret pointing right"
+          className="down-arrow focus:outline-none hover:scale-150"
+          src={downArrow}
+          alt="caret pointing down"
           width={"24"}
           height={"24"}
           onClick={handleStepBarClick}
         />
         :
         <img
-          className="down-arrow focus:outline-none hover:scale-150"
-          src={downArrow}
-          alt="caret pointing down"
+          className="right-arrow focus:outline-none hover:scale-150"
+          src={rightArrow}
+          alt="caret pointing right"
           width={"24"}
           height={"24"}
           onClick={handleStepBarClick}
@@ -66,7 +66,10 @@ export default function StepBar({ usage, step, currentStep, setCurrentStep, hand
       <div className={`step-content flex justify-start items-center truncate grow ${currentStep && (step.uuid === currentStep.uuid) ? 'step-bar-open' : 'step-bar-closed'}`} onClick={handleStepBarClick}>
         {(currentStep && (step.uuid === currentStep.uuid)) ?
           <StepBarOpen
+            goal={goal}
             step={step}
+            steps={steps}
+            setSteps={setSteps}
             handleInputChange={handleInputChange}
             handleStepBarClick={handleStepBarClick}
           ></StepBarOpen>

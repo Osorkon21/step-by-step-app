@@ -1,11 +1,13 @@
 import { useState } from "react"
-import { GoalCreate, GoalSteps } from "../components";
+import { GoalCreate, GoalSteps } from ".";
 
-export default function AddGoal() {
+export default function AddGoal({ className }) {
   const [goal, setGoal] = useState({ name: "" });
   const [goalSelected, setGoalSelected] = useState(false);
   const [steps, setSteps] = useState(null);
   const [submitError, setSubmitError] = useState("");
+  const defaultClasses = "body mt-16 max-w-7xl";
+  const combinedClasses = className ? `${defaultClasses} ${className}` : defaultClasses;
 
   // clear all fields, go to goal create screen
   function reset() {
@@ -16,7 +18,7 @@ export default function AddGoal() {
   }
 
   return (
-    <div className="body mt-16 max-w-7xl ">
+    <div className={combinedClasses}>
       <p className="paragraphStep"></p>
 
       <div className="goal-container ">

@@ -13,7 +13,7 @@ export default function App() {
           <div className='header-container'>
             <Header className="header" />
           </div>
-          <div className="flex flex-1 flex-col items-center justify-center">
+          <div className="flex flex-1 flex-col">
 
             <Routes>
               <Route path="/" element={<HomePage />} />

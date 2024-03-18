@@ -62,32 +62,32 @@ export default function Auth({ usage = "signup", close, setGoalStepsSubmitError 
       <form onSubmit={handleFormSubmit}>
         <div>
           <h2>{usage === "signup" ? "Signup" : "Login"}</h2>
-          <div>
+          <div className="gap-2 flex flex-col ">
             {usage === "signup" ? (
               <>
                 <div>
-                  <input type="text" name="email" placeholder="email" value={userData.email} onChange={handleInputChange} />
+                  <input className="w-full shadow-custom focus:bg-white focus:outline-none hover:bg-white bg-gray-100 " type="text" name="email" placeholder="email" value={userData.email} onChange={handleInputChange} />
                 </div>
 
                 <div>
-                  <input type="text" name="username" placeholder="username" value={userData.username} onChange={handleInputChange} />
+                  <input className="w-full shadow-custom focus:bg-white focus:outline-none hover:bg-white bg-gray-100 " type="text" name="username" placeholder="username" value={userData.username} onChange={handleInputChange} />
                 </div>
               </>
             )
               :
               <>
                 <div>
-                  <input type="text" name="uservalue" placeholder="email or username" value={userData.uservalue} onChange={handleInputChange} />
+                  <input className="w-full shadow-custom focus:bg-white focus:outline-none hover:bg-white bg-gray-100 " type="text" name="uservalue" placeholder="email or username" value={userData.uservalue} onChange={handleInputChange} />
                 </div>
               </>
             }
 
             <div>
-              <input type="password" name="password" placeholder="password" value={userData.password} onChange={handleInputChange} />
+              <input className="w-full  shadow-custom focus:bg-white focus:outline-none hover:bg-white bg-gray-100 " type="password" name="password" placeholder="password" value={userData.password} onChange={handleInputChange} />
             </div>
           </div>
 
-          <button className="mt-2">Submit Info</button>
+          <button className="mt-4 bg-middleblur w-full p-1 shadow">Submit Info</button>
         </div>
       </form>
 

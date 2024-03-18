@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { generateSteps } = require("../../chatgptAssistant")
+const { generateSteps, explainStep } = require("../../chatgptAssistant")
 
 
 router.route("/")
@@ -7,6 +7,18 @@ router.route("/")
     try {
       console.log(req.body)
       const payload = await generateSteps(req.body)
+      res.status(200).json({ result: "success", payload })
+    } catch (err) {
+      console.log(err.message)
+      res.status(500).json({ result: "error", payload: err.message })
+    }
+  })
+
+router.route("/explain")
+  .post(async (req, res) => {
+    try {
+      console.log(req.body)
+      const payload = await explainStep(req.body)
       res.status(200).json({ result: "success", payload })
     } catch (err) {
       console.log(err.message)

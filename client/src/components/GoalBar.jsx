@@ -21,7 +21,6 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal,
   }
 
   function handleInputChange(e) {
-    console.log(currentGoal)
     setCurrentGoal({ ...currentGoal, name: e.target.value });
   }
 
@@ -43,18 +42,18 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal,
 
         {(currentGoal && goal._id === currentGoal._id) ?
           <img
-            className="right-arrow focus:outline-none hover:scale-150"
-            src={rightArrow}
-            alt="caret pointing right"
+            className="down-arrow focus:outline-none hover:scale-150"
+            src={downArrow}
+            alt="caret pointing down"
             width={"32"}
             height={"32"}
             onClick={handleGoalBarClick}
           />
           :
           <img
-            className="down-arrow focus:outline-none hover:scale-150"
-            src={downArrow}
-            alt="caret pointing down"
+            className="right-arrow focus:outline-none hover:scale-150"
+            src={rightArrow}
+            alt="caret pointing right"
             width={"32"}
             height={"32"}
             onClick={handleGoalBarClick}

@@ -1,48 +1,86 @@
-import { useRef, useEffect } from "react"
+import { useState, useEffect } from "react"
 
-export default function StepBarOpen({ step, handleInputChange, handleStepBarClick }) {
-  // function useOutsideAlerter(ref) {
-  //   useEffect(() => {
-  //     function handleClickOutside(event) {
-  //       if (ref.current && !ref.current.contains(event.target)) {
-  //         handleStepBarClick();
-  //       }
-  //     }
-  //     document.addEventListener("mousedown", handleClickOutside);
-  //     return () => {
-  //       document.removeEventListener("mousedown", handleClickOutside);
-  //     };
-  //   }, [ref]);
-  // }
+export default function StepBarOpen({ goal, step, steps, setSteps, handleInputChange, handleStepBarClick }) {
+  // const [loading, setLoading] = useState(false);
+  // const [explanation, setExplanation] = useState("");
+  const [submitError, setSubmitError] = useState("");
 
-  // const wrapperRef = useRef(null);
-  // useOutsideAlerter(wrapperRef);
+  async function handleExplainStep(e) {
+    e.preventDefault();
+    const uuid = step.uuid;
+    const userGoal = goal.name
+    let aiResponse;
+    setSubmitError("");
 
-  // return <div ref={wrapperRef}>
-  //   <div className="curent_step_open truncate flex flex-col gap-1 cursor-pointer w-full" onClick={handleStepBarClick}>
-  //     <div className="w-full">
-  //       <textarea data-uuid={step.uuid} className={`w-full shadow-inner`} name="title" value={step.title} placeholder="Step title" onChange={handleInputChange} />
-  //     </div>
+    if (!step.title) {
+      setSubmitError("Step must have a title!")
+      return;
+    }
+    else if (!userGoal) {
+      setSubmitError("Goal must have a title!")
+      return;
+    }
+    else {
+      aiResponse = step.title;
 
-  //     <div className="">
-  //       <textarea data-uuid={step.uuid} className={`w-full shadow-inner`} name="text" value={step.text} placeholder="Step description" onChange={handleInputChange} />
-  //     </div>
-  //   </div>
-  // </div>
+      // do the fetch call here with async
+      try {
+        const response = await fetch('/api/openai/explain', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ goalTitle: goal.name, stepTitle: step.title }),
+        });
 
-  // function handleClickOutside(e) {
-  //   e.preventDefault();
-  //   console.log("HI")
-  //   handleStepBarClick(e);
-  // }
+        if (response.result === "success") {
+          aiResponse = await response.json()
 
-  // useEffect(() => {
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   return () => {
-  //     // Unbind the event listener on clean up
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, [])
+          console.log("This is response in StepBarOpen.jsx", aiResponse);
+
+          // const payload = aiResponse?.payload;
+
+          // if (payload.content && payload.content.length > 0) {
+          //   const firstContentItem = payload.content[0];
+
+          //   if (firstContentItem.text && firstContentItem.text.value) {
+          //     var userSteps;
+          //     var textValue;
+
+          //     try {
+          //       textValue = JSON.parse(firstContentItem.text.value);
+          //       userSteps = textValue.steps
+          //     }
+          //     catch (err) {
+          //       throw new Error(firstContentItem.text.value);
+          //     }
+
+          //     if (!textValue.steps)
+          //       throw new Error(textValue.error);
+
+          //     // Generate steps
+          //     generateSteps(userSteps);
+          //   }
+          // }
+
+          // setSteps(steps.map(step => {
+          //   if (step.uuid !== uuid)
+          //     return step;
+          //   return {
+          //     ...step,
+          //     text: aiResponse
+          //   };
+          // }));
+        }
+        else {
+          throw new Error('Bad response from openAI API call');
+        }
+      } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+        setSubmitError(error.message);
+      }
+    }
+  }
 
   return (
     <div className="curent_step_open truncate flex flex-col gap-1 cursor-pointer w-full" onClick={handleStepBarClick}>
@@ -51,7 +89,31 @@ export default function StepBarOpen({ step, handleInputChange, handleStepBarClic
       </div>
 
       <div className="">
-        <textarea data-uuid={step.uuid} className={`w-full shadow-inner`} name="text" value={step.text} placeholder="Step description" onChange={handleInputChange} />
+
+        {step.text ?
+
+          <textarea data-uuid={step.uuid} className={`w-full shadow-inner`} name="text" value={step.text} placeholder="Step description" onChange={handleInputChange} />
+          :
+          <>
+            {submitError &&
+              (<div className="text-red-600 ms-2">
+                {submitError}
+              </div>)
+            }
+
+            <button className="update-goal-btn hover:scale-95 mt-2" type="button" name="explain-step" onClick={handleExplainStep}>Explain Step</button>
+            {/* <>
+              {loading ? (
+                // below code generated by https://loading.io/
+                <div className="loadingio-spinner-bean-eater-zwyhx5ec3yq"><div className="ldio-wa7k0r94wz9">
+                  <div className=""><div></div><div></div><div></div></div><div><div></div><div></div><div></div></div>
+                </div></div>
+              ) : (
+
+            )}
+            </> */}
+          </>
+        }
       </div>
     </div>
   )

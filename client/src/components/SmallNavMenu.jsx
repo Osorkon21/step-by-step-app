@@ -2,6 +2,7 @@ import { Button, Menu, MenuItem, MenuTrigger, Popover } from 'react-aria-compone
 import { useAppCtx } from "../utils/AppProvider"
 import { SignupModal } from "./"
 import { useState } from "react"
+import logo from "../assets/icons/logo.svg"
 
 export default function SmallNavMenu({ logout }) {
   const appCtx = useAppCtx();
@@ -19,6 +20,7 @@ export default function SmallNavMenu({ logout }) {
 
   return (
     <div className="flex sm:hidden justify-end">
+
       <MenuTrigger>
         <Button className="mr-10 mt-4 py-2 px-3 border-2 bg-purple border-purple hover:text-white" aria-label="Menu">☰</Button>
         <Popover>

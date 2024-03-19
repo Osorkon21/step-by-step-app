@@ -21,6 +21,10 @@ export default {
         darkblur: '#32c2e37b',
         darker: 'teal',
         darkerblur: 'rgba(0, 128, 128, 0.055)',
+        lightestgray: '#f5f5f5',
+        lightgray: '#f9f9f9',
+        gray: 'e5e5e5',
+
         
         purple: '#162e3d',  // dark blue currently
         lightpurple: '#76919c', // light blue currently

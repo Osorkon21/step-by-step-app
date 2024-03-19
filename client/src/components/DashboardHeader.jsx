@@ -62,7 +62,7 @@ export default function DashboardHeader({ goals, inProgress, setInProgress, setI
   }, [categories])
 
   return (
-    <div className="dashboard-header p-4 mt-4">
+    <div className="dashboard-header p-4 mt-4 text-purple">
       <h1>Dashboard</h1>
       <div className="tabs flex gap-2">
         <button className="dashboard-tab col" type="button" style={inProgress ? { border: "2px solid var(--purple)" } : { border: "" }} onClick={() => { setCurrentGoal(null); setInProgress(true); setSubmitError(""); }}>In Progress Goals</button>

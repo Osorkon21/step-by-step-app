@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import AppProvider from './utils/AppProvider';
 import { Header, ProtectedRoute } from './components';
-import { HomePage, Dashboard, AddGoal, Profile, NotFound } from './pages/'
+import { HomePage, Dashboard, AddGoal, Profile, NotFound, NewGoal } from './pages/'
 
 export default function App() {
 
@@ -24,7 +24,7 @@ export default function App() {
                 </ProtectedRoute>
               } />
 
-              <Route path="/addgoal" element={<AddGoal />} />
+              <Route path="/addgoal" element={<NewGoal />} />
 
               <Route path="/profile" element={
                 <ProtectedRoute>

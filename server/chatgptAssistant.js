@@ -90,7 +90,7 @@ async function generateSteps(data) {
     // PULLING MECHANISM which checks status
     let runStatus = await openai.beta.threads.runs.retrieve(thread.id, run.id);
     while(runStatus.status !== "completed") {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 500));
       runStatus = await openai.beta.threads.runs.retrieve(thread.id, run.id);
 
       if (["failed", "cancelled", "expired"].includes(runStatus.status)) {
@@ -187,7 +187,7 @@ async function explainStep(data){
     // PULLING MECHANISM which checks status
     let runStatus = await openai.beta.threads.runs.retrieve(thread.id, run.id);
     while(runStatus.status !== "completed") {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 500));
       runStatus = await openai.beta.threads.runs.retrieve(thread.id, run.id);
 
       if (["failed", "cancelled", "expired"].includes(runStatus.status)) {

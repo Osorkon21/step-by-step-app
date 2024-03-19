@@ -210,7 +210,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
         <div className="add-goal-items gap-2 mt-2 flex flex-col items-center justify-center">
 
           {usage === "createGoal" &&
-            <input className="flex items-center justify-center w-full" type="text" placeholder="Goal title" name="name" value={goal.name} onChange={handleGoalNameChange} />
+            <input className="flex items-center justify-center w-full rounded-3xl p-2 pl-4 shadow-custom focus:bg-white hover:bg-white focus:outline-none bg-lightgray focus:shadow" type="text" placeholder="Goal title" name="name" value={goal.name} onChange={handleGoalNameChange} />
           }
 
           {usage === "updateGoal" &&

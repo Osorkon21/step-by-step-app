@@ -141,7 +141,7 @@ export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps, s
 
         <div className="gap-2 flex flex-col border-none justify-center w-full items-center">
           {/* <label className="">What is your new goal?</label> */}
-          <input type="text" placeholder="What's a goal of yours?" className="input w-80 goal-input rounded-3xl p-2 pl-4 shadow-custom focus:bg-white hover:bg-white focus:outline-none bg-gray-100 " name="goal" value={goal.name} onChange={handleInputChange} />
+          <input type="text" placeholder="What's a goal of yours?" className="input w-80 goal-input rounded-3xl p-2 pl-4 shadow-custom focus:bg-white hover:bg-white focus:outline-none bg-lightgray focus:shadow" name="goal" value={goal.name} onChange={handleInputChange} />
           <button type="submit" className="rounded-lg w-max px-8 bg-middle p-1 shadow mt-2" name="generate">Generate Steps</button>
         </div>
 

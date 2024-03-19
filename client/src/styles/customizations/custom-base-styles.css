@@ -24,6 +24,10 @@ html {
   /* changed from #162e3d; */
   --lightpurple: #76919c;
   /* changed from #76919c; */
+  --lightestgray: #f5f5f5;
+  --lightgray: #e5e5e5;
+  --gray: #b5b5b5;
+
 
   --mutedlight: #eaeaea;
   --mutedgray: #dddddd;

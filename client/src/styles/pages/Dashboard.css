@@ -13,18 +13,6 @@
 
 
 
-.tabs {
-  height: 3rem;
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  /* flex-grow: 1; */
-}
-
-.dashboard-tab {
-  flex-grow: 1;
-  border-radius: 2rem;
-}
 
 
 .input {
@@ -42,10 +30,6 @@
   width: 100%;
 
 
-}
-
-.dashboard-header {
-  text-align: center;
 }
 
 .goal-container {

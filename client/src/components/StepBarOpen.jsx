@@ -1,57 +1,108 @@
-import { useRef, useEffect } from "react"
+import { useState, useRef, useEffect } from "react"
 
-export default function StepBarOpen({ step, handleInputChange, handleStepBarClick }) {
-  // function useOutsideAlerter(ref) {
-  //   useEffect(() => {
-  //     function handleClickOutside(event) {
-  //       if (ref.current && !ref.current.contains(event.target)) {
-  //         handleStepBarClick();
-  //       }
-  //     }
-  //     document.addEventListener("mousedown", handleClickOutside);
-  //     return () => {
-  //       document.removeEventListener("mousedown", handleClickOutside);
-  //     };
-  //   }, [ref]);
-  // }
+export default function StepBarOpen({ goal, step, steps, setSteps, handleInputChange, handleStepBarClick }) {
+  // const [loading, setLoading] = useState(false);
+  // const [explanation, setExplanation] = useState("");
+  const [submitError, setSubmitError] = useState("");
+  const [text, setText] = useState('');
+  const textareaRef = useRef(null);
 
-  // const wrapperRef = useRef(null);
-  // useOutsideAlerter(wrapperRef);
+  async function handleExplainStep(e) {
+    e.preventDefault();
+    const uuid = step.uuid;
+    const userGoal = goal.name
+    let aiResponse;
+    setSubmitError("");
 
-  // return <div ref={wrapperRef}>
-  //   <div className="curent_step_open truncate flex flex-col gap-1 cursor-pointer w-full" onClick={handleStepBarClick}>
-  //     <div className="w-full">
-  //       <textarea data-uuid={step.uuid} className={`w-full shadow-inner`} name="title" value={step.title} placeholder="Step title" onChange={handleInputChange} />
-  //     </div>
+    if (!step.title) {
+      setSubmitError("Step must have a title!")
+      return;
+    }
+    else if (!userGoal) {
+      setSubmitError("Goal must have a title!")
+      return;
+    }
+    else {
+      aiResponse = step.title;
 
-  //     <div className="">
-  //       <textarea data-uuid={step.uuid} className={`w-full shadow-inner`} name="text" value={step.text} placeholder="Step description" onChange={handleInputChange} />
-  //     </div>
-  //   </div>
-  // </div>
+      // do the fetch call here with async
+      try {
+        const query = await fetch('/api/openai/explain', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ goalTitle: goal.name, stepTitle: step.title }),
+        });
 
-  // function handleClickOutside(e) {
-  //   e.preventDefault();
-  //   console.log("HI")
-  //   handleStepBarClick(e);
-  // }
+        console.log(query)
 
-  // useEffect(() => {
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   return () => {
-  //     // Unbind the event listener on clean up
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, [])
+        const response = await query.json();
+
+        if (response.result === "success") {
+          aiResponse = response.payload.content[0].text.value;
+
+          setSteps(steps.map(step => {
+            if (step.uuid !== uuid)
+              return step;
+            return {
+              ...step,
+              text: aiResponse
+            };
+          }));
+        }
+        else {
+          throw new Error('Bad response from openAI API call');
+        }
+      } catch (error) {
+        console.error('OpenAI fetch operation error', error.message);
+        setSubmitError(error.message);
+      }
+    }
+  }
+
+  useEffect(() => {
+    const textarea = textareaRef.current;
+
+    if (textarea) {
+      textarea.style.height = 'auto';
+      // Set the height to scrollHeight to fit the content
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+  }, [step.text]);
 
   return (
     <div className="curent_step_open truncate flex flex-col gap-1 cursor-pointer w-full" onClick={handleStepBarClick}>
       <div className="w-full">
-        <textarea data-uuid={step.uuid} className={`w-full shadow-inner`} name="title" value={step.title} placeholder="Step title" onChange={handleInputChange} />
+        <textarea data-uuid={step.uuid} className={`w-full shadow-custom p-2 pl-4 focus:bg-white hover:bg-white focus:outline-none bg-lightgray focus:shadow`} name="title" value={step.title} placeholder="Step title" onChange={handleInputChange} />
       </div>
 
       <div className="">
-        <textarea data-uuid={step.uuid} className={`w-full shadow-inner`} name="text" value={step.text} placeholder="Step description" onChange={handleInputChange} />
+
+        {step.text ?
+
+          <textarea ref={textareaRef} data-uuid={step.uuid} className={`w-full shadow-custom px-4 p-2 overflow-y-hidden focus:bg-white hover:bg-white focus:outline-none bg-lightgray focus:shadow`} name="text" value={step.text} placeholder="Step description" onChange={handleInputChange} />
+          :
+          <>
+            {submitError &&
+              (<div className="text-red-600 ms-2">
+                {submitError}
+              </div>)
+            }
+
+            <button className="update-goal-btn hover:scale-95 mt-2" type="button" name="explain-step" onClick={handleExplainStep}>More Info</button>
+            {/* <>
+              {loading ? (
+                // below code generated by https://loading.io/
+                <div className="loadingio-spinner-bean-eater-zwyhx5ec3yq"><div className="ldio-wa7k0r94wz9">
+                  <div className=""><div></div><div></div><div></div></div><div><div></div><div></div><div></div></div>
+                </div></div>
+              ) : (
+
+            )}
+            </> */}
+          </>
+        }
       </div>
     </div>
   )

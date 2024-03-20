@@ -139,15 +139,15 @@ export default function GoalCreate({ goal, setGoal, setGoalSelected, setSteps, s
     <form onSubmit={handleFormSubmit}>
       <div className="generate-goal w-full">
 
-        <div className="gap-2 flex flex-col border-none sm:flex-row justify-center">
+        <div className="gap-2 flex flex-col border-none justify-center w-full items-center">
           {/* <label className="">What is your new goal?</label> */}
-          <input type="text" placeholder="What's a goal of yours?" className="input w-full goal-input rounded-xl p-1 mb-2 sm:mb-0" name="goal" value={goal.name} onChange={handleInputChange} />
-          <button type="submit" className="rounded-xl bg-middle p-1" name="generate">Generate Steps with AI</button>
+          <input type="text" placeholder="Your Goal, ex. Computer programming" className="input w-80 sm:w-96 goal-input rounded-3xl p-2 pl-4 shadow-custom focus:bg-white hover:bg-white focus:outline-none bg-lightgray focus:shadow" name="goal" value={goal.name} onChange={handleInputChange} />
+          <button type="submit" className="rounded-lg w-max px-8 bg-middle p-1 shadow mt-2" name="generate">Generate Steps</button>
         </div>
 
         <div className="flex flex-row justify-center mt-2 gap-2">
           {/* <button className="p-1 bg-middle" name="no-generate">Add Steps manually</button> */}
-          <button className="p-1 bg-middle" name="random-goal">Generate Random Goal</button>
+          <button className="p-1 bg-middle shadow" name="random-goal">Generate Random Goal</button>
         </div>
       </div>
     </form>

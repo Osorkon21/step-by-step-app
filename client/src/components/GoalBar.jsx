@@ -21,7 +21,6 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal,
   }
 
   function handleInputChange(e) {
-    console.log(currentGoal)
     setCurrentGoal({ ...currentGoal, name: e.target.value });
   }
 
@@ -43,18 +42,18 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal,
 
         {(currentGoal && goal._id === currentGoal._id) ?
           <img
-            className="right-arrow focus:outline-none hover:scale-150"
-            src={rightArrow}
-            alt="caret pointing right"
+            className="down-arrow focus:outline-none hover:scale-150"
+            src={downArrow}
+            alt="caret pointing down"
             width={"32"}
             height={"32"}
             onClick={handleGoalBarClick}
           />
           :
           <img
-            className="down-arrow focus:outline-none hover:scale-150"
-            src={downArrow}
-            alt="caret pointing down"
+            className="right-arrow focus:outline-none hover:scale-150"
+            src={rightArrow}
+            alt="caret pointing right"
             width={"32"}
             height={"32"}
             onClick={handleGoalBarClick}
@@ -63,7 +62,7 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal,
 
         <div className='text-xl flex w-full'>
           {(currentGoal && goal._id === currentGoal._id) ?
-            <input className="goal-name-input shadow-inner w-full" type="text" name="title" id="title" value={currentGoal.name} onChange={handleInputChange} />
+            <input className="goal-name-input  w-full rounded-3xl p-2 pl-4 shadow-custom focus:bg-white hover:bg-white focus:outline-none bg-lightgray focus:shadow" type="text" name="title" id="title" value={currentGoal.name} onChange={handleInputChange} />
             :
             <span>{goal.name}</span>
           }

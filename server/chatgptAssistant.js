@@ -90,7 +90,7 @@ async function generateSteps(data) {
     // PULLING MECHANISM which checks status
     let runStatus = await openai.beta.threads.runs.retrieve(thread.id, run.id);
     while(runStatus.status !== "completed") {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 500));
       runStatus = await openai.beta.threads.runs.retrieve(thread.id, run.id);
 
       if (["failed", "cancelled", "expired"].includes(runStatus.status)) {
@@ -123,7 +123,104 @@ async function generateSteps(data) {
   }
 }
 
-module.exports = { generateSteps };
+async function explainStep(data){
+  try {
+    const goalTitle = data.goalTitle;
+    const stepTitle = data.stepTitle;
+    const stepInfo = `I want to know more about the step: ${stepTitle} in the goal: ${goalTitle}`;
+
+    console.log("inside explainStep", data.userGoal, data.stepTitle)
+    let explainAssistantId;
+    const assistantFilePath = "./explain.assistant.json";
+
+    // Check if the assistant.json file exists
+    try {
+      const assistantData = await fsPromises.readFile(
+        assistantFilePath,
+        "utf8"
+      );
+      assistantDetails = JSON.parse(assistantData);
+      assistantId = assistantDetails.assistantId;
+      console.log("\nExisting assistant detected.\n");
+    } catch (error) {
+      // If file does not exist or there is an error in reading it, create a new assistant
+      console.log("No existing assistant detected, creating new.\n");
+      const assistantConfig = {
+        name: "Explain",
+        instructions:
+          "You are a helpful assistant that provides additional info on one step of a goal.  You will be provided with a goal title and a step title.",
+        tools: [], // configure the retrieval tool to retrieve files in the future
+        model: "gpt-3.5-turbo-1106",
+      };
+
+      // , which designed to ouput JSON
+      // This would Create assistant if it didn't exist
+      const assistant = await openai.beta.assistants.create(assistantConfig);
+      assistantDetails = { assistantId: assistant.id, ...assistantConfig };
+
+      // Save the assistant details to assistant.json
+      await fsPromises.writeFile(
+        assistantFilePath,
+        JSON.stringify(assistantDetails, null, 2)
+      );
+      assistantId = assistantDetails.assistantId;
+    }
+
+    // Log the first greeting
+    console.log(
+      `Hello there, I am: ${assistantDetails.name}`
+    );
+
+    // Create a thread using the assistantId
+    const thread = await openai.beta.threads.create();
+    console.log(thread)
++
+    // const userQuestion = 
+    await openai.beta.threads.messages.create(thread.id,{
+      role: "user",
+      content: stepInfo}); //  NEED TO HAVE userGoal 
+
+    const run = await openai.beta.threads.runs.create(thread.id, {
+      assistant_id: assistantId
+    })
+
+    // PULLING MECHANISM which checks status
+    let runStatus = await openai.beta.threads.runs.retrieve(thread.id, run.id);
+    while(runStatus.status !== "completed") {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      runStatus = await openai.beta.threads.runs.retrieve(thread.id, run.id);
+
+      if (["failed", "cancelled", "expired"].includes(runStatus.status)) {
+        console.log(`Run status ${runStatus.status}. Unable to complet the request.`);
+        break;
+      }
+    }
+    // retrieve all messages
+    const messages = await openai.beta.threads.messages.list(thread.id);
+    // LAST MESSAGE
+    const lastMessage = messages.data.filter((message) => message.run_id
+    === run.id && message.role === "assistant").pop()
+
+    if(lastMessage) {
+      
+      console.log(`${lastMessage.content[0].text.value} \n`)
+      console.log(typeof(lastMessage), lastMessage)
+      if (lastMessage.content[0].text.value.match(/^```json/)) {
+        lastMessage.content[0].text.value = lastMessage.content[0].text.value.replace("```json", "").replace("```", "");
+        console.log(`${lastMessage.content[0].text.value} \n`)
+
+      }
+    } else if(!["failed", "cancelled", "expired"].includes(runStatus.status)) {
+      console.log("No response received from assistant")
+    }
+
+    return lastMessage
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+module.exports = { generateSteps, explainStep };
 // Call the main function
 // main();
 

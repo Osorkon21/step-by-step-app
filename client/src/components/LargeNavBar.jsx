@@ -6,7 +6,7 @@ export default function LargeNavBar({ logout }) {
   const appCtx = useAppCtx();
 
   return (
-    <ul className='hidden sm:flex flex-row justify-center'>
+    <ul className='hidden sm:flex flex-row justify-center items-center'>
       <li className='px-2'>
         <Link className="nav-link text-purple hover:text-lightpurple " href="/">Home</Link>
       </li>
@@ -25,7 +25,7 @@ export default function LargeNavBar({ logout }) {
       </li>
       <li className='px-2'>
         {appCtx.user?._id !== undefined ? (
-          <button className="logout-btn nav-link text-purple hover:text-lightpurple hover:border-0 bg-middle" onClick={() => {
+          <button className="logout-btn nav-link text-purple hover:text-lightpurple hover:border-0 bg-middle px-4 py-1" onClick={() => {
             logout();
             appCtx.updateUser();
           }}>Logout</button>

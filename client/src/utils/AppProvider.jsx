@@ -10,6 +10,7 @@ export const useAppCtx = () => useContext(AppContext);
 export default function AppProvider(props) {
 
   const [user, setUser] = useState({});
+  const [stayPut, setStayPut] = useState(false);
 
   function updateUser() {
     verifyUser();
@@ -51,7 +52,7 @@ export default function AppProvider(props) {
 
 
   return (
-    <AppContext.Provider value={{ user, verifyUser, updateUser }}>
+    <AppContext.Provider value={{ user, stayPut, setStayPut, verifyUser, updateUser }}>
       {props.children}
     </AppContext.Provider>
   );

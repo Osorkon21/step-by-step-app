@@ -38,10 +38,6 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
 
     const catToUse = categories.find((cat) => cat.name === category);
 
-    console.log(categories)
-    console.log(category)
-    console.log(catToUse)
-
     const newGoal = {
       name: goal.name,
 
@@ -71,8 +67,8 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
 
     if (response.ok) {
 
-      // go to dashboard after creating/updating goal
-      window.location.href = "/dashboard";
+      // refresh dashboard after creating/updating goal
+      window.location.href = "/";
     }
     else {
       console.log(response);

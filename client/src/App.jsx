@@ -18,14 +18,6 @@ export default function App() {
             <Routes>
               <Route path="/" element={<HomePage />} />
 
-              <Route path="/dashboard" element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              } />
-
-              <Route path="/addgoal" element={<NewGoal />} />
-
               <Route path="/profile" element={
                 <ProtectedRoute>
                   <Profile />
@@ -35,7 +27,10 @@ export default function App() {
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>
-            <footer className="flex justify-center items-center p-4 text-center  w-full">&copy; 2023-2024 SBS Development Group</footer>
+          <footer className="flex flex-col justify-center items-center p-4 text-center w-full">
+            <p>We use ChatGPT, which can make mistakes. Consider checking important information.</p>
+            <p>&copy; 2023-2024 UpwardArc Development Group</p>
+          </footer>
         </div>
       </BrowserRouter>
     </AppProvider>

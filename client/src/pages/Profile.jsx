@@ -61,6 +61,11 @@ export default function Profile() {
         setConfirmEmail("");
         setNewPwd("");
         setConfirmPwd("");
+
+        alert("Changes successfully saved!")
+        // "undo" option, "x" box, have a box pop up and then disappear on its own
+
+
       }
       else {
         if (response.code === MONGODB_DUPLICATE_KEY_CODE)
@@ -206,6 +211,8 @@ export default function Profile() {
           </div>
 
           <button className="update-goal-btn hover:scale-95" type="submit">Save Changes</button>
+
+          <div classname="changesSaved"></div>
 
           <div className="text-red-600">
             {submitError}

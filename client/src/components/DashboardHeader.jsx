@@ -64,7 +64,6 @@ export default function DashboardHeader({ goals, inProgress, setInProgress, setI
 
   return (
     <div className="text-center p-4 mt-4 text-purple">
-      <h1 className="text-5xl md:text-6xl my-8">Dashboard</h1>
       <div className="my-12">
         <Link href="/addgoal" className="rounded-full grow h-32 w-auto p-8 shadow-md hover:shadow-custom">➕</Link>
       </div>
@@ -74,7 +73,7 @@ export default function DashboardHeader({ goals, inProgress, setInProgress, setI
       </div>
       <div>
         <h5 className="p-1">Filter by category</h5>
-        <CategorySelect 
+        <CategorySelect
           category={currentCategory}
           categories={categories}
           // label={"Filter by category"}

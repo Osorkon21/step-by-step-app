@@ -269,7 +269,7 @@ textarea {
     height: 200px;
     display: inline-block;
     overflow: hidden;
-    background: #f1f2f3;
+    background: var(--overlay-background);
 }
 
 .ldio-jlyegyo6g8 {

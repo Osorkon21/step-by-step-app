@@ -15,8 +15,16 @@ export default function GoalBar({ goal, categories, currentGoal, setCurrentGoal,
       const filteredSteps = currentGoal.steps.filter(step => step.title);
 
       // do not update database if required data is missing
-      if (!currentGoal.name || !filteredSteps.length || !currentGoal.category) {
+      if (!currentGoal.name || !filteredSteps.length) {
         console.log("currentGoal was missing a required field, did not update database")
+
+        if (goal._id === currentGoal._id)
+          setCurrentGoal(null);
+        else
+          setCurrentGoal(goal);
+
+        setSubmitError("");
+
         return;
       }
 
@@ -41,9 +49,6 @@ export default function GoalBar({ goal, categories, currentGoal, setCurrentGoal,
 
         const response = await query.json();
 
-        console.log(response)
-        console.log(response.result)
-
         if (response.result === "success") {
 
           // refresh dashboard after creating/updating goal
@@ -57,15 +62,12 @@ export default function GoalBar({ goal, categories, currentGoal, setCurrentGoal,
       catch (err) {
         console.log(err.message)
       }
+    }
 
-      if (goal._id === currentGoal._id)
-        setCurrentGoal(null);
-      else
-        setCurrentGoal(goal);
-    }
-    else {
+    if (currentGoal && goal._id === currentGoal._id)
+      setCurrentGoal(null);
+    else
       setCurrentGoal(goal);
-    }
 
     setSubmitError("");
   }
@@ -97,7 +99,6 @@ export default function GoalBar({ goal, categories, currentGoal, setCurrentGoal,
             alt="caret pointing down"
             width={"32"}
             height={"32"}
-            onClick={handleGoalBarClick}
           />
           :
           <img
@@ -106,7 +107,6 @@ export default function GoalBar({ goal, categories, currentGoal, setCurrentGoal,
             alt="caret pointing right"
             width={"32"}
             height={"32"}
-            onClick={handleGoalBarClick}
           />
         }
 
@@ -139,6 +139,7 @@ export default function GoalBar({ goal, categories, currentGoal, setCurrentGoal,
             deleteFunc={deleteGoal}
           ></ConfirmDelete>}
         ></MyPopover>
+
       </div>
     </div>
 

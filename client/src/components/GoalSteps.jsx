@@ -243,7 +243,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
         <button className="update-goal-btn hover:scale-95 mt-2" type="button" onClick={handleAddStep}>Add Step</button>
         <div className="ag-cat-drop mt-2 ">
           <CategorySelect className="mt-2 "
-            category={goal.category.name}
+            category={goal.category?.name}
             categories={categories}
             handleSelectionChange={handleSelectionChange}
           ></CategorySelect>

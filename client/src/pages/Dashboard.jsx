@@ -19,6 +19,9 @@ export default function Dashboard() {
   // display inProgress (true) or completed (false) goals
   const [inProgress, setInProgress] = useState(true);
 
+  const [categories, setCategories] = useState(null);
+  const [currentCategory, setCurrentCategory] = useState(null);
+
   const [submitError, setSubmitError] = useState("");
 
   // clear goal currently displayed
@@ -39,6 +42,56 @@ export default function Dashboard() {
 
   function setSteps(steps) {
     setCurrentGoal({ ...currentGoal, steps: steps });
+  }
+
+  async function getCategories() {
+    try {
+      // get all categories
+      const query = await fetch("/api/categories", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      const response = await query.json();
+
+      if (response.result === "success!") {
+        const showAll = {
+          id: "asdjiwqeauorbuaebajsdwqeesjhgfkjlfbajsdfkbl",
+          name: "Show All"
+        };
+
+        const dbCategories = response.payload.map(function (category) { return { id: category._id, name: category.name } });
+
+        dbCategories.unshift(showAll);
+
+        setCategories(dbCategories);
+        setCurrentCategory("Show All");
+      }
+      else
+        throw new Error("Bad response for get all Categories")
+    }
+    catch (err) {
+      console.log(err.message);
+    }
+  }
+
+  function handleCategoryChange(categoryName) {
+    const categoryId = categories.find((category) => category.name === categoryName).id
+    const filteredGoals = goals.filter((goal) => goal.category._id === categoryId);
+
+    setCurrentCategory(categoryName);
+    setCurrentGoal(null);
+
+    if (categoryName !== "Show All") {
+      setInProgressGoals(filteredGoals.filter((goal) => !goal.completed));
+      setCompletedGoals(filteredGoals.filter((goal) => goal.completed));
+    }
+    else {
+      setInProgressGoals(goals.filter((goal) => !goal.completed));
+      setCompletedGoals(goals.filter((goal) => goal.completed));
+    }
   }
 
   async function deleteGoal(goalId) {
@@ -70,15 +123,20 @@ export default function Dashboard() {
 
   }, [appCtx]);
 
+  useEffect(() => {
+    if (!categories)
+      getCategories();
+  }, [])
+
   return (
     <div className="body mt-16">
       {/* buttons at the top that switch between in progress and completed goals */}
       <DashboardHeader
-        goals={goals}
+        categories={categories}
+        currentCategory={currentCategory}
+        handleCategoryChange={handleCategoryChange}
         inProgress={inProgress}
         setInProgress={setInProgress}
-        setInProgressGoals={setInProgressGoals}
-        setCompletedGoals={setCompletedGoals}
         setCurrentGoal={setCurrentGoal}
         setSubmitError={setSubmitError}
       ></DashboardHeader>
@@ -90,6 +148,7 @@ export default function Dashboard() {
             <div className="goal-container" key={goal._id}>
               <GoalBar
                 goal={goal}
+                categories={categories}
                 currentGoal={currentGoal}
                 setCurrentGoal={setCurrentGoal}
                 deleteGoal={deleteGoal}
@@ -120,7 +179,7 @@ export default function Dashboard() {
       }
 
       {inProgress && inProgressGoals?.length === 0 &&
-        <p className="mt-2">You have no goals in progress!</p>
+        <p className="mt-2">You have no {currentCategory} goals in progress!</p>
       }
 
       {/* display completed goals */}
@@ -160,7 +219,7 @@ export default function Dashboard() {
       }
 
       {!inProgress && completedGoals?.length === 0 &&
-        <p className="mt-2">You have no completed goals!</p>
+        <p className="mt-2">You have no completed {currentCategory} goals!</p>
       }
     </div>
   );

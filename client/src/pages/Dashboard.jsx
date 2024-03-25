@@ -36,8 +36,14 @@ export default function Dashboard() {
     const response = await query.json();
     const userGoals = response.payload.goals;
     setGoals(userGoals);
-    setInProgressGoals(userGoals.filter((goal) => !goal.completed));
-    setCompletedGoals(userGoals.filter((goal) => goal.completed));
+
+    if (currentCategory) {
+      handleCategoryChange(currentCategory)
+    }
+    else {
+      setInProgressGoals(userGoals.filter((goal) => !goal.completed));
+      setCompletedGoals(userGoals.filter((goal) => goal.completed));
+    }
   }
 
   function setSteps(steps) {
@@ -78,13 +84,12 @@ export default function Dashboard() {
   }
 
   function handleCategoryChange(categoryName) {
-    const categoryId = categories.find((category) => category.name === categoryName).id
-    const filteredGoals = goals.filter((goal) => goal.category._id === categoryId);
-
     setCurrentCategory(categoryName);
-    setCurrentGoal(null);
 
     if (categoryName !== "Show All") {
+      const categoryId = categories.find((category) => category.name === categoryName).id
+      const filteredGoals = goals.filter((goal) => goal.category._id === categoryId);
+
       setInProgressGoals(filteredGoals.filter((goal) => !goal.completed));
       setCompletedGoals(filteredGoals.filter((goal) => goal.completed));
     }
@@ -179,7 +184,7 @@ export default function Dashboard() {
       }
 
       {inProgress && inProgressGoals?.length === 0 &&
-        <p className="mt-2">You have no {currentCategory} goals in progress!</p>
+        <p className="mt-2">You have no {currentCategory === "Show All" ? "" : currentCategory} goals in progress!</p>
       }
 
       {/* display completed goals */}
@@ -219,7 +224,7 @@ export default function Dashboard() {
       }
 
       {!inProgress && completedGoals?.length === 0 &&
-        <p className="mt-2">You have no completed {currentCategory} goals!</p>
+        <p className="mt-2">You have no completed {currentCategory === "Show All" ? "" : currentCategory} goals!</p>
       }
     </div>
   );

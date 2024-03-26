@@ -1,67 +1,10 @@
 import { Link } from "react-aria-components";
 import { CategorySelect, AddGoal } from "./"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
-export default function DashboardHeader({ goals, inProgress, setInProgress, setInProgressGoals, setCompletedGoals, setCurrentGoal, setSubmitError }) {
+export default function DashboardHeader({ categories, currentCategory, handleCategoryChange, inProgress, setInProgress, setCurrentGoal, setSubmitError }) {
 
-  const [currentCategory, setCurrentCategory] = useState(null);
-  const [categories, setCategories] = useState(null);
   const [displayAddGoal, setDisplayAddGoal] = useState(false);
-
-  async function getCategories() {
-    try {
-      // get all categories
-      const query = await fetch("/api/categories", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json"
-        }
-      });
-
-      const response = await query.json();
-
-      if (response.result === "success!") {
-        const showAll = {
-          id: "asdjiwqeauorbuaebajsdwqeesjhgfkjlfbajsdfkbl",
-          name: "Show All"
-        };
-
-        const dbCategories = response.payload.map(function (category) { return { id: category._id, name: category.name } });
-
-        dbCategories.unshift(showAll);
-
-        setCategories(dbCategories);
-        setCurrentCategory("Show All");
-      }
-      else
-        throw new Error("Bad response for get all Categories")
-    }
-    catch (err) {
-      console.log(err.message);
-    }
-  }
-
-  function handleCategoryChange(categoryName) {
-    const categoryId = categories.find((category) => category.name === categoryName).id
-    const filteredGoals = goals.filter((goal) => goal.category._id === categoryId);
-
-    setCurrentCategory(categoryName);
-    setCurrentGoal(null);
-
-    if (categoryName !== "Show All") {
-      setInProgressGoals(filteredGoals.filter((goal) => !goal.completed));
-      setCompletedGoals(filteredGoals.filter((goal) => goal.completed));
-    }
-    else {
-      setInProgressGoals(goals.filter((goal) => !goal.completed));
-      setCompletedGoals(goals.filter((goal) => goal.completed));
-    }
-  }
-
-  useEffect(() => {
-    if (!categories)
-      getCategories();
-  }, [categories])
 
   return (
     <div className="text-center p-4 mt-4 text-purple">

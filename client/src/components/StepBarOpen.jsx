@@ -8,15 +8,7 @@ export default function StepBarOpen({ goal, step, steps, setSteps, handleInputCh
 
   function handleExplainStep(e) {
     e.preventDefault();
-    setLoading(true);
-    getDescription();
-  }
-
-  async function getDescription() {
-    const uuid = step.uuid;
     const userGoal = goal.name
-    let aiResponse;
-    setSubmitError("");
 
     if (!step.title) {
       setSubmitError("Step must have a title!")
@@ -26,40 +18,48 @@ export default function StepBarOpen({ goal, step, steps, setSteps, handleInputCh
       setSubmitError("Goal must have a title!")
       return;
     }
-    else {
-      aiResponse = step.title;
 
-      // do the fetch call here with async
-      try {
-        const query = await fetch('/api/openai/explain', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ goalTitle: goal.name, stepTitle: step.title }),
-        });
+    setLoading(true);
+    getDescription();
+  }
 
-        const response = await query.json();
+  async function getDescription() {
+    const uuid = step.uuid;
+    let aiResponse;
+    setSubmitError("");
 
-        if (response.result === "success") {
-          aiResponse = response.payload.content[0].text.value;
+    aiResponse = step.title;
 
-          setSteps(steps.map(step => {
-            if (step.uuid !== uuid)
-              return step;
-            return {
-              ...step,
-              text: aiResponse
-            };
-          }));
-        }
-        else {
-          throw new Error('Bad response from openAI API call');
-        }
-      } catch (error) {
-        console.error('OpenAI fetch operation error', error.message);
-        setSubmitError(error.message);
+    // do the fetch call here with async
+    try {
+      const query = await fetch('/api/openai/explain', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ goalTitle: goal.name, stepTitle: step.title }),
+      });
+
+      const response = await query.json();
+
+      if (response.result === "success") {
+        aiResponse = response.payload.content[0].text.value;
+
+        setSteps(steps.map(step => {
+          if (step.uuid !== uuid)
+            return step;
+          return {
+            ...step,
+            text: aiResponse
+          };
+        }));
       }
+      else {
+        throw new Error('Bad response from openAI API call');
+      }
+    } catch (error) {
+      console.error('OpenAI fetch operation error', error.message);
+      setSubmitError(error.message);
     }
 
     setLoading(false);

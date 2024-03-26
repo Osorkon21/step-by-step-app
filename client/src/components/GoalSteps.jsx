@@ -5,9 +5,8 @@ import { ModalWithDialogTrigger, StepBar, TriggerButton, SignupModal, CategorySe
 
 export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage, setSubmitError, defaultChecked }) {
 
-  const appCtx = useAppCtx()
+  const appCtx = useAppCtx();
 
-  const [category, setCategory] = useState(goal.category?.name || null);
   const [categories, setCategories] = useState(null);
   const [currentStep, setCurrentStep] = useState(null);
 
@@ -31,12 +30,12 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
       setSubmitError("At least one step must have a title!");
       return;
     }
-    else if (!category) {
+    else if (!goal.category) {
       setSubmitError("Goal must have a category!");
       return;
     }
 
-    const catToUse = categories.find((cat) => cat.name === category);
+    const catToUse = categories.find((cat) => cat.name === goal.category.name);
 
     const newGoal = {
       name: goal.name,
@@ -187,7 +186,12 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
   }
 
   function handleSelectionChange(key) {
-    setCategory(key);
+    setGoal({
+      ...goal,
+      category: {
+        name: key
+      }
+    })
   }
 
   useEffect(() => {
@@ -239,7 +243,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
         <button className="update-goal-btn hover:scale-95 mt-2" type="button" onClick={handleAddStep}>Add Step</button>
         <div className="ag-cat-drop mt-2 ">
           <CategorySelect className="mt-2 "
-            category={category}
+            category={goal.category?.name}
             categories={categories}
             handleSelectionChange={handleSelectionChange}
           ></CategorySelect>

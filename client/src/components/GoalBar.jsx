@@ -3,21 +3,83 @@ import downArrow from "../assets/icons/down-arrow.svg"
 import rightArrow from "../assets/icons/right-arrow.svg"
 import { useState, useEffect } from "react"
 
-export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal, setSubmitError }) {
+export default function GoalBar({ goals, setGoals, renderGoals, goal, categories, currentGoal, setCurrentGoal, deleteGoal, setSubmitError }) {
   const [percentComplete, setPercentComplete] = useState(Math.floor(goal.completedStepCount / goal.stepsCount * 100))
 
-  function handleGoalBarClick(e) {
-    if (e.target.id === "title")
+  async function handleGoalBarClick(e) {
+    if (e.target.id === "title" || e.target.id === "confirm-del-btn")
       return;
 
-    if (currentGoal && goal._id === currentGoal._id) {
+    if (currentGoal) {
+      // remove all steps without a title
+      const filteredSteps = currentGoal.steps.filter(step => step.title);
+
+      // do not update database if required data is missing
+      if (!currentGoal.name || !filteredSteps.length) {
+        console.log("currentGoal was missing a required field, did not update database")
+
+        if (goal._id === currentGoal._id)
+          setCurrentGoal(null);
+        else
+          setCurrentGoal(goal);
+
+        setSubmitError("");
+
+        return;
+      }
+
+      const catToUse = categories.find((cat) => cat.name === currentGoal.category.name);
+
+      const newGoal = {
+        name: currentGoal.name,
+
+        // if all steps are completed, goal is completed
+        completed: filteredSteps.every((step) => step.completed),
+
+        category: catToUse.id,
+        steps: filteredSteps
+      }
+
+      try {
+        const query = await fetch(`/api/goals/${currentGoal._id}`, {
+          method: 'PUT',
+          body: JSON.stringify({ goal: newGoal }),
+          headers: { 'Content-Type': 'application/json' },
+        });
+
+        const response = await query.json();
+
+        if (response.result === "success") {
+          const updatedGoal = response.payload;
+
+          const newGoals = goals.map((goal) => {
+            if (goal._id === updatedGoal._id)
+              return {
+                ...updatedGoal,
+                category: catToUse
+              };
+
+            return goal;
+          })
+
+          setGoals(newGoals);
+          renderGoals(newGoals);
+        }
+        else {
+          console.log("Database error - unable to save goal!", response);
+        }
+      }
+      catch (err) {
+        console.log(err.message)
+      }
+    }
+
+    if (currentGoal && goal._id === currentGoal._id)
       setCurrentGoal(null);
-      setSubmitError("");
-    }
-    else {
+    else
       setCurrentGoal(goal);
-      setSubmitError("");
-    }
+
+    setSubmitError("");
   }
 
   function handleInputChange(e) {
@@ -47,7 +109,6 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal,
             alt="caret pointing down"
             width={"32"}
             height={"32"}
-            onClick={handleGoalBarClick}
           />
           :
           <img
@@ -56,7 +117,6 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal,
             alt="caret pointing right"
             width={"32"}
             height={"32"}
-            onClick={handleGoalBarClick}
           />
         }
 
@@ -89,6 +149,7 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal,
             deleteFunc={deleteGoal}
           ></ConfirmDelete>}
         ></MyPopover>
+
       </div>
     </div>
 

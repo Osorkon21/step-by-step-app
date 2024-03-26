@@ -64,6 +64,10 @@ async function updateItemById(req, res) {
       { runValidators: true, new: true }
     )
 
+    if (!goal) {
+      return res.status(404).json({ message: 'No goal with that ID' })
+    }
+
     res.json({ result: "success", payload: goal });
 
   } catch (err) {

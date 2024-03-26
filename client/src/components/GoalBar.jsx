@@ -3,11 +3,11 @@ import downArrow from "../assets/icons/down-arrow.svg"
 import rightArrow from "../assets/icons/right-arrow.svg"
 import { useState, useEffect } from "react"
 
-export default function GoalBar({ goal, categories, currentGoal, setCurrentGoal, deleteGoal, setSubmitError }) {
+export default function GoalBar({ goals, setGoals, renderGoals, goal, categories, currentGoal, setCurrentGoal, deleteGoal, setSubmitError }) {
   const [percentComplete, setPercentComplete] = useState(Math.floor(goal.completedStepCount / goal.stepsCount * 100))
 
   async function handleGoalBarClick(e) {
-    if (e.target.id === "title")
+    if (e.target.id === "title" || e.target.id === "confirm-del-btn")
       return;
 
     if (currentGoal) {
@@ -50,10 +50,20 @@ export default function GoalBar({ goal, categories, currentGoal, setCurrentGoal,
         const response = await query.json();
 
         if (response.result === "success") {
+          const updatedGoal = response.payload;
 
-          // refresh dashboard after creating/updating goal
-          // window.location.href = "/";
-          console.log("goal updated")
+          const newGoals = goals.map((goal) => {
+            if (goal._id === updatedGoal._id)
+              return {
+                ...updatedGoal,
+                category: catToUse
+              };
+
+            return goal;
+          })
+
+          setGoals(newGoals);
+          renderGoals(newGoals);
         }
         else {
           console.log("Database error - unable to save goal!", response);

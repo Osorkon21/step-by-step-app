@@ -37,13 +37,8 @@ export default function Dashboard() {
     const userGoals = response.payload.goals;
     setGoals(userGoals);
 
-    if (currentCategory) {
-      handleCategoryChange(currentCategory)
-    }
-    else {
-      setInProgressGoals(userGoals.filter((goal) => !goal.completed));
-      setCompletedGoals(userGoals.filter((goal) => goal.completed));
-    }
+    setInProgressGoals(userGoals.filter((goal) => !goal.completed));
+    setCompletedGoals(userGoals.filter((goal) => goal.completed));
   }
 
   function setSteps(steps) {
@@ -85,17 +80,20 @@ export default function Dashboard() {
 
   function handleCategoryChange(categoryName) {
     setCurrentCategory(categoryName);
+    renderGoals(goals, categoryName);
+  }
 
+  function renderGoals(newGoals, categoryName = currentCategory) {
     if (categoryName !== "Show All") {
       const categoryId = categories.find((category) => category.name === categoryName).id
-      const filteredGoals = goals.filter((goal) => goal.category._id === categoryId);
+      const filteredGoals = newGoals.filter((goal) => goal.category._id === categoryId);
 
       setInProgressGoals(filteredGoals.filter((goal) => !goal.completed));
       setCompletedGoals(filteredGoals.filter((goal) => goal.completed));
     }
     else {
-      setInProgressGoals(goals.filter((goal) => !goal.completed));
-      setCompletedGoals(goals.filter((goal) => goal.completed));
+      setInProgressGoals(newGoals.filter((goal) => !goal.completed));
+      setCompletedGoals(newGoals.filter((goal) => goal.completed));
     }
   }
 
@@ -110,8 +108,14 @@ export default function Dashboard() {
 
       const response = await query.json();
 
-      if (response.message === 'Goal successfully deleted')
-        await getUserGoals();
+      if (response.message === 'Goal successfully deleted') {
+        if (currentGoal?._id === goalId)
+          setCurrentGoal(null);
+
+        const newGoals = goals.filter((goal) => goal._id !== goalId);
+        setGoals(newGoals);
+        renderGoals(newGoals);
+      }
       else
         throw new Error("bad response on delete goal route")
     }
@@ -152,6 +156,9 @@ export default function Dashboard() {
           {inProgressGoals.map(goal => (
             <div className="goal-container" key={goal._id}>
               <GoalBar
+                goals={goals}
+                setGoals={setGoals}
+                renderGoals={renderGoals}
                 goal={goal}
                 categories={categories}
                 currentGoal={currentGoal}
@@ -193,7 +200,11 @@ export default function Dashboard() {
           {completedGoals.map(goal => (
             <div className="goal-container" key={goal._id}>
               <GoalBar
+                goals={goals}
+                setGoals={setGoals}
+                renderGoals={renderGoals}
                 goal={goal}
+                categories={categories}
                 currentGoal={currentGoal}
                 setCurrentGoal={setCurrentGoal}
                 deleteGoal={deleteGoal}

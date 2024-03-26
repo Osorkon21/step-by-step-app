@@ -212,7 +212,7 @@ export default function Profile() {
 
           <button className="update-goal-btn hover:scale-95" type="submit">Save Changes</button>
 
-          <div classname="changesSaved"></div>
+          <div className="changesSaved"></div>
 
           <div className="text-red-600">
             {submitError}

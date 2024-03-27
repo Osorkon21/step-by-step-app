@@ -167,10 +167,10 @@ export default function Profile() {
                 <SelectValue />
                 <span aria-hidden="true">▼</span>
               </Button>
-              <Popover className="bg-middle p-4 rounded-lg hover:bg-purple focus:outline-none">
+              <Popover className="bg-middle p-4 rounded-lg hover:bg-purple hover:text-white focus:outline-none">
                 <ListBox className="">
                   {pronouns.map((pronoun) => (
-                    <ListBoxItem className="hover:bg-purple rounded-md p-1" key={pronoun} id={pronoun}>{pronoun}</ListBoxItem>
+                    <ListBoxItem className="hover:bg-purple hover:text-white rounded-md p-1" key={pronoun} id={pronoun}>{pronoun}</ListBoxItem>
                   ))}
                 </ListBox>
               </Popover>

@@ -8,10 +8,10 @@ export default function CategorySelect({ category, categories, handleSelectionCh
         <SelectValue />
         <span aria-hidden="true">▼</span>
       </Button>
-      <Popover className="bg-middle p-4 rounded-lg hover:bg-purple focus:outline-none">
+      <Popover className="bg-middle p-4 rounded-lg hover:bg-purple hover:text-white focus:outline-none">
         <ListBox className="">
           {categories?.map((category) => (
-            <ListBoxItem className="hover:bg-purple rounded-md p-1" key={category.id} id={category.name}>{category.name}</ListBoxItem>
+            <ListBoxItem className="hover:bg-purple hover:text-white rounded-md p-1" key={category.id} id={category.name}>{category.name}</ListBoxItem>
           ))}
         </ListBox>
       </Popover>

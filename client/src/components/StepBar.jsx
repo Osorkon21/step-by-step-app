@@ -34,7 +34,7 @@ export default function StepBar({ goal, usage, step, steps, setSteps, currentSte
         />
         :
         <img
-          className="right-arrow focus:outline-none hover:scale-150"
+          className="right-arrow focus:outline-none hover:scale-150 w-5 h-5"
           src={rightArrow}
           alt="caret pointing right"
           width={"24"}

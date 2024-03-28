@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 import { useAppCtx } from "../utils/AppProvider"
 import { ModalWithDialogTrigger, StepBar, TriggerButton, SignupModal, CategorySelect } from "./"
 
-export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, updateCurrentGoal, usage, setSubmitError, defaultChecked }) {
+export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, updateCurrentGoal, usage, setSubmitError, defaultChecked, getAiResponse }) {
 
   const appCtx = useAppCtx();
 

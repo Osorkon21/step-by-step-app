@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 import { useAppCtx } from "../utils/AppProvider"
 import { ModalWithDialogTrigger, StepBar, TriggerButton, SignupModal, CategorySelect } from "./"
 
-export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage, setSubmitError, defaultChecked }) {
+export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, updateCurrentGoal, usage, setSubmitError, defaultChecked }) {
 
   const appCtx = useAppCtx();
 
@@ -226,6 +226,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
           <div className="step flex" key={step.uuid}>
             <StepBar
               goal={goal}
+              updateCurrentGoal={updateCurrentGoal}
               usage={usage}
               step={step}
               steps={steps}

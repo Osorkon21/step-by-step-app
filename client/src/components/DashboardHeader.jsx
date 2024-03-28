@@ -7,7 +7,7 @@ export default function DashboardHeader({ categories, currentCategory, handleCat
   const [displayAddGoal, setDisplayAddGoal] = useState(false);
 
   return (
-    <div className="dash-header text-center p-4 mt-4 text-purple w-full m-0">
+    <div className="dash-header text-center p-4 mt-4 text-purple w-full">
       <div className="my-12">
         {displayAddGoal ?
           <AddGoal />
@@ -16,11 +16,11 @@ export default function DashboardHeader({ categories, currentCategory, handleCat
         }
 
       </div>
-      <div className=" flex justify-center gap-2">
-        <button className="shadow-custom rounded-full grow h-12 px-2 poppins" type="button" style={inProgress ? { border: "2px solid var(--purple)" } : { border: "" }} onClick={() => { setCurrentGoal(null); setInProgress(true); setSubmitError(""); }}>In Progress Goals</button>
-        <button className="shadow-custom rounded-full grow h-12 px-2 poppins" type="button" style={!inProgress ? { border: "2px solid var(--purple)" } : { border: "" }} onClick={() => { setCurrentGoal(null); setInProgress(false); setSubmitError(""); }}>Completed Goals</button>
+      <div className=" flex justify-center items-center gap-2">
+        <button className="shadow-custom rounded-full grow h-12 px-2 max-w-xs" type="button" style={inProgress ? { border: "2px solid var(--purple)" } : { border: "" }} onClick={() => { setCurrentGoal(null); setInProgress(true); setSubmitError(""); }}>In Progress Goals</button>
+        <button className="shadow-custom rounded-full grow h-12 px-2 max-w-xs " type="button" style={!inProgress ? { border: "2px solid var(--purple)" } : { border: "" }} onClick={() => { setCurrentGoal(null); setInProgress(false); setSubmitError(""); }}>Completed Goals</button>
       </div>
-      <div>
+      <div className="mt-12">
         <h5 className="p-1">Filter by category</h5>
         <CategorySelect
           category={currentCategory}

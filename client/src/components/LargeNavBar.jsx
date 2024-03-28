@@ -8,7 +8,7 @@ export default function LargeNavBar({ logout }) {
   return (
     <ul className='hidden sm:flex flex-row justify-center items-center'>
       <li className='px-2'>
-        <Link className="nav-link text-purple hover:text-lightpurple " href="/">Home</Link>
+        <Link className="nav-link text-purple hover:text-lightpurple " href="/">{appCtx.user?._id !== undefined ? "Dashboard" : "Home"}</Link>
       </li>
       <li className="px-2">
         {appCtx.user?._id !== undefined && (

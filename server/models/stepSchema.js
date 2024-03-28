@@ -18,7 +18,16 @@ const stepSchema = new Schema({
         type: String,
         required: true
     }
-});
+},
+    {
+        toJSON: {
+            getters: true,
+            virtuals: true,
+        },
+        timestamps: true,
+        id: false,
+    }
+);
 
 
 module.exports = stepSchema;

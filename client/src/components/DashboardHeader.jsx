@@ -63,18 +63,18 @@ export default function DashboardHeader({ goals, inProgress, setInProgress, setI
   }, [categories])
 
   return (
-    <div className="text-center p-4 mt-4 text-purple">
+    <div className="text-center p-4 mt-4 text-purple poppins">
       <h1 className="text-5xl md:text-6xl my-8">Dashboard</h1>
       <div className="my-12">
         <Link href="/addgoal" className="rounded-full grow h-32 w-auto p-8 shadow-md hover:shadow-custom">➕</Link>
       </div>
       <div className=" flex justify-center gap-2">
-        <button className="shadow-custom rounded-full grow h-12 px-2" type="button" style={inProgress ? { border: "2px solid var(--purple)" } : { border: "" }} onClick={() => { setCurrentGoal(null); setInProgress(true); setSubmitError(""); }}>In Progress Goals</button>
-        <button className="shadow-custom rounded-full grow h-12 px-2" type="button" style={!inProgress ? { border: "2px solid var(--purple)" } : { border: "" }} onClick={() => { setCurrentGoal(null); setInProgress(false); setSubmitError(""); }}>Completed Goals</button>
+        <button className="shadow-custom rounded-full grow h-12 px-2 poppins" type="button" style={inProgress ? { border: "2px solid var(--purple)" } : { border: "" }} onClick={() => { setCurrentGoal(null); setInProgress(true); setSubmitError(""); }}>In Progress Goals</button>
+        <button className="shadow-custom rounded-full grow h-12 px-2 poppins" type="button" style={!inProgress ? { border: "2px solid var(--purple)" } : { border: "" }} onClick={() => { setCurrentGoal(null); setInProgress(false); setSubmitError(""); }}>Completed Goals</button>
       </div>
       <div>
-        <h5 className="p-1">Filter by category</h5>
-        <CategorySelect 
+        <h5 className="p-1 poppins">Filter by category</h5>
+        <CategorySelect
           category={currentCategory}
           categories={categories}
           // label={"Filter by category"}

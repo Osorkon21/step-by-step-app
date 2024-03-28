@@ -66,32 +66,32 @@ export default function Auth({ usage = "signup", close, setGoalStepsSubmitError 
             {usage === "signup" ? (
               <>
                 <div>
-                  <input className="w-full shadow-custom focus:bg-white focus:outline-none hover:bg-white bg-lightgray " type="text" name="email" placeholder="email" value={userData.email} onChange={handleInputChange} />
+                  <input className="poppins w-full shadow-custom focus:bg-white focus:outline-none hover:bg-white bg-lightgray " type="text" name="email" placeholder="email" value={userData.email} onChange={handleInputChange} />
                 </div>
 
                 <div>
-                  <input className="w-full shadow-custom focus:bg-white focus:outline-none hover:bg-white bg-lightgray " type="text" name="username" placeholder="username" value={userData.username} onChange={handleInputChange} />
+                  <input className="poppins w-full shadow-custom focus:bg-white focus:outline-none hover:bg-white bg-lightgray " type="text" name="username" placeholder="username" value={userData.username} onChange={handleInputChange} />
                 </div>
               </>
             )
               :
               <>
                 <div>
-                  <input className="w-full shadow-custom focus:bg-white focus:outline-none hover:bg-white bg-lightgray " type="text" name="uservalue" placeholder="email or username" value={userData.uservalue} onChange={handleInputChange} />
+                  <input className="poppins w-full shadow-custom focus:bg-white focus:outline-none hover:bg-white bg-lightgray " type="text" name="uservalue" placeholder="email or username" value={userData.uservalue} onChange={handleInputChange} />
                 </div>
               </>
             }
 
             <div>
-              <input className="w-full  shadow-custom focus:bg-white focus:outline-none hover:bg-white bg-lightgray " type="password" name="password" placeholder="password" value={userData.password} onChange={handleInputChange} />
+              <input className=" poppins w-full  shadow-custom focus:bg-white focus:outline-none hover:bg-white bg-lightgray " type="password" name="password" placeholder="password" value={userData.password} onChange={handleInputChange} />
             </div>
           </div>
 
-          <button className="mt-4 bg-middleblur w-full p-1 shadow">Submit Info</button>
+          <button className="mt-4 bg-middleblur w-full p-1 shadow poppins">Submit Info</button>
         </div>
       </form>
 
-      <div className="text-red-600">
+      <div className="text-red-600 poppins">
         {submitError}
       </div>
     </div>

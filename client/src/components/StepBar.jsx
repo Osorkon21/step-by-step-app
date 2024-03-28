@@ -81,6 +81,10 @@ export default function StepBar({ goal, usage, step, steps, setSteps, currentSte
         }
       </div>
 
+      <div>
+        <span>{new Date(steps.updatedAt).toLocaleDateString()}</span>
+      </div>
+
       <div className="w-6 h-6 flex justify-center items-center shrink-0">  <MyPopover
         button={<TrashCanButton
           large={false}

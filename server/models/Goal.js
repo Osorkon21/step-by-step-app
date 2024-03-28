@@ -16,6 +16,11 @@ const goalSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Category'
   },
+  timeCreated: {
+    type: String,
+    required: true,
+    default: true
+  },
   steps: [
     stepSchema
   ]

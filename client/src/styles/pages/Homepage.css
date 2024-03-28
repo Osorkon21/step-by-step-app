@@ -1,4 +1,9 @@
+.poppins {
+  font-family: 'Poppins', sans-serif;
+}
+
 .maintext {
+
   margin-top: 10em;
   display: flex;
   flex-direction: column;
@@ -18,11 +23,13 @@
 }
 
 h1 {
+
   font-size: 4em;
   font-weight: 550;
 }
 
 h2 {
+
   margin: 1rem;
   font-size: 3.5em;
   font-weight: 350;

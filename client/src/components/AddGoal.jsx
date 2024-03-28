@@ -56,7 +56,7 @@ export default function AddGoal({ className }) {
             )}
           </>
         }
-        {submitError && (<div className="text-red-600 ms-2">
+        {submitError && (<div className="text-red-600 ms-2 poppins">
           {submitError}
         </div>)
         }

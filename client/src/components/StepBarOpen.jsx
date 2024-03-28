@@ -85,7 +85,7 @@ export default function StepBarOpen({ goal, step, steps, setSteps, handleInputCh
           :
           <>
             {submitError &&
-              (<div className="text-red-600 ms-2">
+              (<div className="text-red-600 ms-2 poppins">
                 {submitError}
               </div>)
             }

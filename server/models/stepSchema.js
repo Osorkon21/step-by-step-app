@@ -20,10 +20,6 @@ const stepSchema = new Schema({
     }
 },
     {
-        toJSON: {
-            getters: true,
-            virtuals: true,
-        },
         timestamps: true,
         id: false,
     }

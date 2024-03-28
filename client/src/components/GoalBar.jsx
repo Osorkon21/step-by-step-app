@@ -5,6 +5,48 @@ import { useState, useEffect } from "react"
 
 export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal, setSubmitError }) {
   const [percentComplete, setPercentComplete] = useState(Math.floor(goal.completedStepCount / goal.stepsCount * 100))
+  const [timestamp, setTimestamp] = useState('')
+
+  const calculateTimestamp = () => {
+    let currentTime = new Date();
+    let createdTime = new Date(goal.createdAt);
+    let timeDifference = currentTime.getTime() - createdTime.getTime();
+    let secondsDifference = Math.floor(timeDifference / 1000);
+
+    console.log("Created At:", goal.createdAt);
+    console.log("Current Time:", currentTime);
+    console.log("Calculated Timestamp:", secondsDifference);
+
+    if (secondsDifference < 60) {
+      setTimestamp('Just now')
+    } else if (secondsDifference < 3600) {
+      const minutes = Math.floor(secondsDifference / 60);
+      setTimestamp(`${minutes} minute${minutes !== 1 ? 's' : ''} ago`);
+    } else if (secondsDifference < 86400) {
+      const hours = Math.floor(secondsDifference / 3600);
+      setTimestamp(`${hours} hour${hours !== 1 ? 's' : ''} ago`);
+    } else if (secondsDifference < 172800) {
+      setTimestamp('Yesterday')
+    } else if (secondsDifference < 2592000) {
+      const days = Math.floor(secondsDifference / 86400);
+      setTimestamp(`${days} day${days !== 1 ? 's' : ''} ago`);
+    } else {
+      setTimestamp(createdTime.toLocaleDateString());
+    }
+  };
+
+  useEffect(() => {
+    calculateTimestamp()
+
+    // Update the timestamp every minute
+    const interval = setInterval(() => {
+      calculateTimestamp()
+    }, 60000);
+
+    // Clean up the interval on component unmount
+    return () => clearInterval(interval);
+  }, [goal.createdAt]);
+
 
   function handleGoalBarClick(e) {
     if (e.target.id === "title")
@@ -76,8 +118,10 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal,
         ></ProgressBar>
 
         <div>
-          <span>{new Date(goal.createdAt).toLocaleDateString()}</span>
+          <span>{timestamp}</span>
         </div>
+
+        {/* Last edited at {new Date(goal.createdAt).toLocaleTimeString()} */}
 
         <MyPopover className=""
           button={<TrashCanButton

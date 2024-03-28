@@ -24,6 +24,7 @@ export default {
         lightestgray: '#f5f5f5',
         lightgray: '#f9f9f9',
         gray: 'e5e5e5',
+        orange: '#ed9f12',
 
         
         purple: '#162e3d',  // dark blue currently

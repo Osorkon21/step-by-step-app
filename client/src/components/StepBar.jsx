@@ -13,7 +13,11 @@ export default function StepBar({ goal, updateCurrentGoal, usage, step, steps, s
       setCurrentStep(null);
     else
       setCurrentStep(step);
+
+    console.log(step)
+
   }
+
 
   return (
     <div className="stepbar cursor-pointer flex gap-2 items-center justify-center w-full hover:border-purple border-2 border-transparent rounded-2xl p-1">
@@ -77,6 +81,7 @@ export default function StepBar({ goal, updateCurrentGoal, usage, step, steps, s
           ></StepBarClosed>
         }
       </div>
+
 
       <div className="w-6 h-6 flex justify-center items-center shrink-0">  <MyPopover
         button={<TrashCanButton

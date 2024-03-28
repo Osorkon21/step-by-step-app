@@ -13,12 +13,8 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurre
     let timeDifference = currentTime.getTime() - createdTime.getTime();
     let secondsDifference = Math.floor(timeDifference / 1000);
 
-    console.log("Created At:", goal.createdAt);
-    console.log("Current Time:", currentTime);
-    console.log("Calculated Timestamp:", secondsDifference);
-
     if (secondsDifference < 60) {
-      setTimestamp('Just now')
+      setTimestamp('now')
     } else if (secondsDifference < 3600) {
       const minutes = Math.floor(secondsDifference / 60);
       setTimestamp(`${minutes} minute${minutes !== 1 ? 's' : ''} ago`);
@@ -26,7 +22,7 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurre
       const hours = Math.floor(secondsDifference / 3600);
       setTimestamp(`${hours} hour${hours !== 1 ? 's' : ''} ago`);
     } else if (secondsDifference < 172800) {
-      setTimestamp('Yesterday')
+      setTimestamp('yesterday')
     } else if (secondsDifference < 2592000) {
       const days = Math.floor(secondsDifference / 86400);
       setTimestamp(`${days} day${days !== 1 ? 's' : ''} ago`);
@@ -117,7 +113,7 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurre
         ></ProgressBar>
 
         <div>
-          <span>{timestamp}</span>
+          <span>Created {timestamp}</span>
         </div>
 
         {/* Last edited at {new Date(goal.createdAt).toLocaleTimeString()} */}

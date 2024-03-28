@@ -253,7 +253,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, updat
 
         <div className="mt-2 gap-2 flex">
           {appCtx.user?._id !== undefined ? (
-            <button className="update-goal-btn hover:scale-95" type="submit">Save Goal</button>
+            <button className="update-goal-btn hover:scale-95" type="submit">{usage === "createGoal" ? "Save to Dashboard" : "Save Goal"}</button>
           )
             : (
               <ModalWithDialogTrigger

@@ -7,15 +7,13 @@ export default function StepBar({ goal, updateCurrentGoal, usage, step, steps, s
     if (e.target.name === "title" || e.target.name === "text" || e.target.name === "explain-step")
       return;
 
-    updateCurrentGoal();
+    if (updateCurrentGoal)
+      updateCurrentGoal();
 
     if (currentStep && (step.uuid === currentStep.uuid))
       setCurrentStep(null);
     else
       setCurrentStep(step);
-
-    console.log(step)
-
   }
 
 

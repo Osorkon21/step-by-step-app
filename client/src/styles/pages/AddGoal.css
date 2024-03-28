@@ -44,6 +44,7 @@
     border-radius: 2rem;
     border: 0;
 }
+
 @keyframes modal-fade {
     from {
         opacity: 0;
@@ -99,7 +100,7 @@
 button {
     border-radius: var(--border-radius);
     /* background-color: var(--middledark); */
-    
+
 }
 
 button:hover {
@@ -231,10 +232,57 @@ textarea {
     transform: translateZ(0) scale(1);
     backface-visibility: hidden;
     transform-origin: 0 0;
-    /* see note above */
 }
 
 .ldio-wa7k0r94wz9 div {
+    box-sizing: content-box;
+}
+
+@keyframes ldio-jlyegyo6g8 {
+    0% {
+        background: #bbcedd
+    }
+
+    12.5% {
+        background: #bbcedd
+    }
+
+    12.625% {
+        background: #85a2b6
+    }
+
+    100% {
+        background: #85a2b6
+    }
+}
+
+.ldio-jlyegyo6g8 div {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: #85a2b6;
+    animation: ldio-jlyegyo6g8 1s linear infinite;
+}
+
+.loadingio-spinner-blocks-xjt6aoemvak {
+    width: 200px;
+    height: 200px;
+    display: inline-block;
+    overflow: hidden;
+    background: var(--overlay-background);
+}
+
+.ldio-jlyegyo6g8 {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform: translateZ(0) scale(1);
+    backface-visibility: hidden;
+    transform-origin: 0 0;
+
+}
+
+.ldio-jlyegyo6g8 div {
     box-sizing: content-box;
 }
 

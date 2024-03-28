@@ -3,7 +3,7 @@ import downArrow from "../assets/icons/down-arrow.svg"
 import rightArrow from "../assets/icons/right-arrow.svg"
 import { useState, useEffect } from "react"
 
-export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal, setSubmitError }) {
+export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurrentGoal, deleteGoal, setSubmitError }) {
   const [percentComplete, setPercentComplete] = useState(Math.floor(goal.completedStepCount / goal.stepsCount * 100))
   const [timestamp, setTimestamp] = useState('')
 
@@ -48,18 +48,19 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal,
   }, [goal.createdAt]);
 
 
-  function handleGoalBarClick(e) {
-    if (e.target.id === "title")
+  async function handleGoalBarClick(e) {
+    if (e.target.id === "title" || e.target.id === "confirm-del-btn")
       return;
 
-    if (currentGoal && goal._id === currentGoal._id) {
+    if (currentGoal)
+      await updateCurrentGoal();
+
+    if (currentGoal && goal._id === currentGoal._id)
       setCurrentGoal(null);
-      setSubmitError("");
-    }
-    else {
+    else
       setCurrentGoal(goal);
-      setSubmitError("");
-    }
+
+    setSubmitError("");
   }
 
   function handleInputChange(e) {
@@ -89,7 +90,6 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal,
             alt="caret pointing down"
             width={"32"}
             height={"32"}
-            onClick={handleGoalBarClick}
           />
           :
           <img
@@ -98,13 +98,12 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal,
             alt="caret pointing right"
             width={"32"}
             height={"32"}
-            onClick={handleGoalBarClick}
           />
         }
 
         <div className='text-xl flex w-full'>
           {(currentGoal && goal._id === currentGoal._id) ?
-            <input className="goal-name-input  w-full rounded-3xl p-2 pl-4 shadow-custom focus:bg-white hover:bg-white focus:outline-none bg-lightgray focus:shadow" type="text" name="title" id="title" value={currentGoal.name} onChange={handleInputChange} />
+            <input className="goal-name-input  w-full rounded-3xl p-2 pl-4 shadow-custom focus:bg-white hover:bg-white focus:outline-none bg-lightgray focus:shadow" type="text" name="title" id="title" placeholder="Your goal, ex. Learn computer programming" value={currentGoal.name} onChange={handleInputChange} />
             :
             <span>{goal.name}</span>
           }
@@ -133,6 +132,7 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, deleteGoal,
             deleteFunc={deleteGoal}
           ></ConfirmDelete>}
         ></MyPopover>
+
       </div>
     </div>
 

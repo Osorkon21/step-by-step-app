@@ -18,7 +18,12 @@ const stepSchema = new Schema({
         type: String,
         required: true
     }
-});
+},
+    {
+        timestamps: true,
+        id: false,
+    }
+);
 
 
 module.exports = stepSchema;

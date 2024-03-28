@@ -3,11 +3,10 @@ import { useState, useEffect } from "react"
 import { useAppCtx } from "../utils/AppProvider"
 import { ModalWithDialogTrigger, StepBar, TriggerButton, SignupModal, CategorySelect } from "./"
 
-export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage, setSubmitError, defaultChecked }) {
+export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, updateCurrentGoal, usage, setSubmitError, defaultChecked }) {
 
-  const appCtx = useAppCtx()
+  const appCtx = useAppCtx();
 
-  const [category, setCategory] = useState(goal.category?.name || null);
   const [categories, setCategories] = useState(null);
   const [currentStep, setCurrentStep] = useState(null);
 
@@ -31,16 +30,12 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
       setSubmitError("At least one step must have a title!");
       return;
     }
-    else if (!category) {
+    else if (!goal.category) {
       setSubmitError("Goal must have a category!");
       return;
     }
 
-    const catToUse = categories.find((cat) => cat.name === category);
-
-    console.log(categories)
-    console.log(category)
-    console.log(catToUse)
+    const catToUse = categories.find((cat) => cat.name === goal.category.name);
 
     const newGoal = {
       name: goal.name,
@@ -71,8 +66,8 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
 
     if (response.ok) {
 
-      // go to dashboard after creating/updating goal
-      window.location.href = "/dashboard";
+      // refresh dashboard after creating/updating goal
+      window.location.href = "/";
     }
     else {
       console.log(response);
@@ -191,7 +186,12 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
   }
 
   function handleSelectionChange(key) {
-    setCategory(key);
+    setGoal({
+      ...goal,
+      category: {
+        name: key
+      }
+    })
   }
 
   useEffect(() => {
@@ -206,11 +206,11 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
 
   return (
     <>
-      <form onSubmit={handleFormSubmit} className="w-full gap-2 ">
+      <form onSubmit={handleFormSubmit} className="w-full gap-2">
         <div className="add-goal-items gap-2 mt-2 flex flex-col items-center justify-center">
 
           {usage === "createGoal" &&
-            <input className="flex items-center justify-center w-full rounded-3xl p-2 pl-4 shadow-custom focus:bg-white hover:bg-white focus:outline-none bg-lightgray focus:shadow" type="text" placeholder="Goal title" name="name" value={goal.name} onChange={handleGoalNameChange} />
+            <input className="flex items-center justify-center w-full rounded-3xl p-2 pl-4 shadow-custom focus:bg-white hover:bg-white focus:outline-none bg-lightgray focus:shadow" type="text" placeholder="Your goal, ex. Learn computer programming" name="name" value={goal.name} onChange={handleGoalNameChange} />
           }
 
           {usage === "updateGoal" &&
@@ -226,6 +226,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
           <div className="step flex" key={step.uuid}>
             <StepBar
               goal={goal}
+              updateCurrentGoal={updateCurrentGoal}
               usage={usage}
               step={step}
               steps={steps}
@@ -243,7 +244,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
         <button className="update-goal-btn hover:scale-95 mt-2" type="button" onClick={handleAddStep}>Add Step</button>
         <div className="ag-cat-drop mt-2 ">
           <CategorySelect className="mt-2 "
-            category={category}
+            category={goal.category?.name}
             categories={categories}
             handleSelectionChange={handleSelectionChange}
           ></CategorySelect>
@@ -252,7 +253,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, usage
 
         <div className="mt-2 gap-2 flex">
           {appCtx.user?._id !== undefined ? (
-            <button className="update-goal-btn hover:scale-95" type="submit">Save Goal</button>
+            <button className="update-goal-btn hover:scale-95" type="submit">{usage === "createGoal" ? "Save to Dashboard" : "Save Goal"}</button>
           )
             : (
               <ModalWithDialogTrigger

@@ -2,11 +2,13 @@ import { StepBarClosed, StepBarOpen, MyPopover, TrashCanButton, ConfirmDelete } 
 import downArrow from "../assets/icons/down-arrow.svg"
 import rightArrow from "../assets/icons/right-arrow.svg"
 
-export default function StepBar({ goal, usage, step, steps, setSteps, currentStep, setCurrentStep, handleCheck, handleInputChange, deleteStep }) {
-
+export default function StepBar({ goal, updateCurrentGoal, usage, step, steps, setSteps, currentStep, setCurrentStep, handleCheck, handleInputChange, deleteStep }) {
   function handleStepBarClick(e) {
     if (e.target.name === "title" || e.target.name === "text" || e.target.name === "explain-step")
       return;
+
+    if (updateCurrentGoal)
+      updateCurrentGoal();
 
     if (currentStep && (step.uuid === currentStep.uuid))
       setCurrentStep(null);
@@ -14,9 +16,8 @@ export default function StepBar({ goal, usage, step, steps, setSteps, currentSte
       setCurrentStep(step);
   }
 
+
   return (
-
-
     <div className="stepbar cursor-pointer flex gap-2 items-center justify-center w-full hover:border-purple border-2 border-transparent rounded-2xl p-1">
 
       {/* ORIGINAL CHECKBOX <div className="flex justify-center items-center w-6 h-6">
@@ -34,7 +35,7 @@ export default function StepBar({ goal, usage, step, steps, setSteps, currentSte
         />
         :
         <img
-          className="right-arrow focus:outline-none hover:scale-150"
+          className="right-arrow focus:outline-none hover:scale-150 w-5 h-5"
           src={rightArrow}
           alt="caret pointing right"
           width={"24"}
@@ -71,15 +72,14 @@ export default function StepBar({ goal, usage, step, steps, setSteps, currentSte
             steps={steps}
             setSteps={setSteps}
             handleInputChange={handleInputChange}
-            handleStepBarClick={handleStepBarClick}
           ></StepBarOpen>
           :
           <StepBarClosed
             step={step}
-            handleStepBarClick={handleStepBarClick}
           ></StepBarClosed>
         }
       </div>
+
 
       <div className="w-6 h-6 flex justify-center items-center shrink-0">  <MyPopover
         button={<TrashCanButton
@@ -96,7 +96,3 @@ export default function StepBar({ goal, usage, step, steps, setSteps, currentSte
     </div>
   );
 }
-
-
-// max-w-xs md:max-w-2xl lg:max-w-4xl 
-

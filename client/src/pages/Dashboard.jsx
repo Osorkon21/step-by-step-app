@@ -194,7 +194,7 @@ export default function Dashboard() {
   }, [])
 
   return (
-    <div className="body mt-16">
+    <div className="body mt-16 max-w-7xl">
       {/* buttons at the top that switch between in progress and completed goals */}
       <DashboardHeader
         categories={categories}

@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { GoalCreate, GoalSteps } from ".";
+import { v4 as uuidv4 } from "uuid"
 
 export default function AddGoal({ className }) {
   const [goal, setGoal] = useState({ name: "" });
@@ -17,6 +18,94 @@ export default function AddGoal({ className }) {
     setSubmitError("");
   }
 
+  async function getAiResponse() {
+    if (goal.name) {
+
+      // go to step edit page
+      setGoalSelected(true);
+
+      // have chatGPT generate steps
+      // if (btnName === "generate") {
+
+      // do the fetch call here with async
+      try {
+        const query = await fetch('/api/openai', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ userGoal: goal.name }),
+        });
+
+        if (!query.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        let aiResponse = await query.json()
+
+        // Log server response
+        // console.log("This is response in GoalCreate.jsx", aiResponse);
+
+        const payload = aiResponse.payload;
+
+        if (payload.content && payload.content.length > 0) {
+          const firstContentItem = payload.content[0];
+
+          if (firstContentItem.text && firstContentItem.text.value) {
+            var userSteps;
+            var textValue;
+
+            try {
+              textValue = JSON.parse(firstContentItem.text.value);
+              userSteps = textValue.steps
+            }
+            catch (err) {
+              throw new Error(firstContentItem.text.value);
+            }
+
+            if (!textValue.steps)
+              throw new Error(textValue.error);
+
+            // Generate steps
+            generateSteps(userSteps);
+          }
+        }
+
+      } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+        setSubmitError(error.message);
+        setGoalSelected(false);
+      }
+
+      // }
+      // does not call chatGPT API
+      // else if (btnName === "no-generate") {
+      //   setSteps([{ uuid: uuidv4(), title: "", text: "", completed: false }]);
+      // }
+    }
+    else
+      // display error if goal field is empty
+      setSubmitError("Goal cannot be blank!");
+  }
+
+  // add generated steps created by chatGPT
+  function generateSteps(steps) {
+
+    // confirm it is an array and Map to format the steps
+    if (Array.isArray(steps)) {
+      const formattedAIResponse = steps.map(function (step) {
+        return { uuid: uuidv4(), title: step, text: "", completed: false };
+      });
+
+      setSteps(formattedAIResponse);
+    }
+    else {
+      console.log("Steps is not an array!");
+      setGoalSelected(false);
+      setSubmitError("I could not understand your input. Please try again with a different goal.");
+    }
+  }
+
   return (
     <div className={combinedClasses}>
       <p className="paragraphStep"></p>
@@ -28,9 +117,8 @@ export default function AddGoal({ className }) {
             <GoalCreate
               goal={goal}
               setGoal={setGoal}
-              setGoalSelected={setGoalSelected}
-              setSteps={setSteps}
               setSubmitError={setSubmitError}
+              getAiResponse={getAiResponse}
             ></GoalCreate>
           </>
         ) :
@@ -46,6 +134,7 @@ export default function AddGoal({ className }) {
                 setGoal={setGoal}
                 setSubmitError={setSubmitError}
                 usage="createGoal"
+                getAiResponse={getAiResponse}
               ></GoalSteps>
             ) : (
               // while waiting on API response, display this

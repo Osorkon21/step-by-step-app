@@ -15,6 +15,9 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, updat
     e.preventDefault();
     setSubmitError("");
 
+    if (e.nativeEvent.submitter?.id === "try-again")
+      return;
+
     if (appCtx.user?._id === undefined)
       return;
 
@@ -194,6 +197,12 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, updat
     })
   }
 
+  function handleTryAgain(e) {
+    e.preventDefault();
+    setSteps(null);
+    getAiResponse();
+  }
+
   useEffect(() => {
     if (!categories)
       getCategories();
@@ -210,7 +219,12 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, updat
         <div className="add-goal-items gap-2 mt-2 flex flex-col items-center justify-center">
 
           {usage === "createGoal" &&
-            <input className="flex items-center justify-center w-full rounded-3xl p-2 pl-4 shadow-custom focus:bg-white hover:bg-white focus:outline-none bg-lightgray focus:shadow" type="text" placeholder="Your goal, ex. Learn computer programming" name="name" value={goal.name} onChange={handleGoalNameChange} />
+            <div className="flex justify-center gap-2">
+              <input className="input w-80 sm:w-96 goal-input rounded-3xl p-2 pl-4 shadow-custom focus:bg-white hover:bg-white focus:outline-none bg-lightgray focus:shadow" type="text" placeholder="Your goal, ex. Learn computer programming" name="name" value={goal.name} onChange={handleGoalNameChange} />
+
+              <button className="update-goal-btn" id="try-again" type="submit" onClick={handleTryAgain}>Try Again</button>
+            </div>
+
           }
 
           {usage === "updateGoal" &&
@@ -253,7 +267,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, updat
 
         <div className="mt-2 gap-2 flex">
           {appCtx.user?._id !== undefined ? (
-            <button className="update-goal-btn hover:scale-95" type="submit">{usage === "createGoal" ? "Save to Dashboard" : "Save Goal"}</button>
+            <button className="update-goal-btn hover:scale-95" type="button" onClick={handleFormSubmit}>{usage === "createGoal" ? "Save to Dashboard" : "Save Goal"}</button>
           )
             : (
               <ModalWithDialogTrigger
@@ -266,9 +280,9 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, updat
               ></ModalWithDialogTrigger>
             )}
 
-          {usage === "createGoal" &&
+          {/* {usage === "createGoal" &&
             <button className="update-goal-btn hover:scale-95" type="reset" onClick={reset}>Start Over</button>
-          }
+          } */}
         </div>
       </form>
     </>

@@ -115,11 +115,11 @@ export default function Dashboard() {
 
       if (response.result === "success!") {
         const showAll = {
-          id: "asdjiwqeauorbuaebajsdwqeesjhgfkjlfbajsdfkbl",
+          _id: "asdjiwqeauorbuaebajsdwqeesjhgfkjlfbajsdfkbl",
           name: "Show All"
         };
 
-        const dbCategories = response.payload.map(function (category) { return { id: category._id, name: category.name } });
+        const dbCategories = response.payload.map(function (category) { return { _id: category._id, name: category.name } });
 
         dbCategories.unshift(showAll);
 
@@ -141,7 +141,7 @@ export default function Dashboard() {
 
   function renderGoals(newGoals, categoryName = currentCategory) {
     if (categoryName !== "Show All") {
-      const categoryId = categories.find((category) => category.name === categoryName).id
+      const categoryId = categories.find((category) => category.name === categoryName)._id
       const filteredGoals = newGoals.filter((goal) => goal.category._id === categoryId);
 
       setInProgressGoals(filteredGoals.filter((goal) => !goal.completed));
@@ -194,7 +194,7 @@ export default function Dashboard() {
   }, [])
 
   return (
-    <div className="body mt-16 max-w-7xl">
+    <div className="dashboard body mt-16 max-w-7xl">
       {/* buttons at the top that switch between in progress and completed goals */}
       <DashboardHeader
         categories={categories}

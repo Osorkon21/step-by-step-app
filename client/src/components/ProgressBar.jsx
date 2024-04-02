@@ -19,7 +19,7 @@ export default function ProgressBar(props) {
   let barWidth = `${Math.round(percentage * 100)}%`;
 
   return (
-    <div {...progressBarProps} style={{ width: 200 }}>
+    <div className='progressBar' {...progressBarProps} style={{ width: 200 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         {label &&
           (

@@ -8,7 +8,7 @@ export default function AddGoal({ className }) {
   const [steps, setSteps] = useState(null);
   const [submitError, setSubmitError] = useState("");
   const defaultClasses = "body mt-16 max-w-7xl items-center justify-center";
-  const combinedClasses = className ? `${defaultClasses} ${className}` : defaultClasses;
+  const combinedClasses = className ? `addGoal ${defaultClasses} ${className}` : "addGoal " + defaultClasses;
 
   // clear all fields, go to goal create screen
   function reset() {

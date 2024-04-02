@@ -21,7 +21,7 @@ export default function SmallNavMenu({ logout }) {
   }
 
   return (
-    <div className="flex sm:hidden justify-between">
+    <div className="smallNavMenu flex sm:hidden justify-between">
       <Link className='flex gap-2 items-center text-purple hover:text-middle' href='/'>
         <img src={logo} alt="logo" className="w-10 h-auto ml-8" />
         <p className='text-2xl'>Upward Arc</p>

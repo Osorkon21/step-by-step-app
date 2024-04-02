@@ -6,7 +6,7 @@ export default function LargeNavBar({ logout }) {
   const appCtx = useAppCtx();
 
   return (
-    <ul className='hidden sm:flex flex-row justify-center items-center'>
+    <ul className='largeNavBar hidden sm:flex flex-row justify-center items-center'>
       <li className='px-2'>
         <Link className="nav-link text-purple hover:text-lightpurple " href="/">{appCtx.user?._id !== undefined ? "Dashboard" : "Home"}</Link>
       </li>

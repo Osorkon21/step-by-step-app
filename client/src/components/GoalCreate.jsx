@@ -36,7 +36,7 @@ export default function GoalCreate({ goal, setGoal, setSubmitError, getAiRespons
   }
 
   return (
-    <form onSubmit={handleFormSubmit}>
+    <form className="goalCreate" onSubmit={handleFormSubmit}>
       <div className="generate-goal w-full">
 
         <div className="gap-2 flex flex-col border-none justify-center w-full items-center">

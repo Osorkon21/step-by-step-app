@@ -134,7 +134,7 @@ export default function Profile() {
   }, [newPwd, confirmPwd]);
 
   return (
-    <div className="body mt-24 text-purple text-center">
+    <div className="profile body mt-24 text-purple text-center">
       <h1 className="text-5xl md:text-6xl my-8">User Profile</h1>
 
       {appCtx.user?._id !== undefined && (

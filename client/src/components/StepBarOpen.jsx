@@ -85,7 +85,7 @@ export default function StepBarOpen({ goal, step, steps, setSteps, handleInputCh
   }, [step.text]);
 
   return (
-    <div className="curent_step_open truncate flex flex-col gap-1 cursor-pointer w-full" onClick={handleStepBarClick}>
+    <div className="stepBarOpen curent_step_open truncate flex flex-col gap-1 cursor-pointer w-full" onClick={handleStepBarClick}>
       <div className="w-full">
         <textarea ref={titleRef} data-uuid={step.uuid} className={`w-full shadow-custom p-2 pl-4 overflow-y-hidden focus:bg-white hover:bg-white focus:outline-none bg-lightgray focus:shadow`} name="title" value={step.title} placeholder="Step title" onChange={handleInputChange} />
       </div>

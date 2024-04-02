@@ -46,7 +46,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, updat
       // if all steps are completed, goal is completed
       completed: filteredSteps.every((step) => step.completed),
 
-      category: catToUse.id,
+      category: catToUse._id,
       steps: filteredSteps
     }
 
@@ -181,7 +181,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, updat
       });
 
       const response = await query.json();
-      setCategories(response.payload.map(function (category) { return { id: category._id, name: category.name } }));
+      setCategories(response.payload.map(function (category) { return { _id: category._id, name: category.name } }));
     }
     catch (err) {
       console.log(err.message);
@@ -213,9 +213,15 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, updat
       setCurrentStep(steps[0]);
   }, [steps]);
 
+  useEffect(() => {
+    if (goal && usage === "createGoal") {
+      handleSelectionChange("Misc.")
+    }
+  }, [])
+
   return (
     <>
-      <form onSubmit={handleFormSubmit} className="w-full gap-2">
+      <form onSubmit={handleFormSubmit} className="goalSteps w-full gap-2">
         <div className="add-goal-items gap-2 mt-2 flex flex-col items-center justify-center">
 
           {usage === "createGoal" &&

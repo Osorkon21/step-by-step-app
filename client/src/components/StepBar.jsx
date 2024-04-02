@@ -18,7 +18,7 @@ export default function StepBar({ goal, updateCurrentGoal, usage, step, steps, s
 
 
   return (
-    <div className="stepbar cursor-pointer flex gap-2 items-center justify-center w-full hover:border-purple border-2 border-transparent rounded-2xl p-1">
+    <div className="stepBar stepbar cursor-pointer flex gap-2 items-center justify-center w-full hover:border-purple border-2 border-transparent rounded-2xl p-1">
 
       {/* ORIGINAL CHECKBOX <div className="flex justify-center items-center w-6 h-6">
         <input className={`checkbox ${step.uuid}`} type="checkbox" checked={step.completed} onChange={handleCheck} />

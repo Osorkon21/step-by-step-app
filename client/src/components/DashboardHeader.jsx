@@ -7,7 +7,7 @@ export default function DashboardHeader({ categories, currentCategory, handleCat
   const [displayAddGoal, setDisplayAddGoal] = useState(false);
 
   return (
-    <div className="dash-header text-center p-4 mt-4 text-purple w-full">
+    <div className="dashboardHeader dash-header text-center p-4 mt-4 text-purple w-full">
       <div className="my-12">
         {displayAddGoal ?
           <AddGoal />

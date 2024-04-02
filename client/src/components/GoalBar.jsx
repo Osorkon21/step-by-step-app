@@ -76,7 +76,7 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurre
   }, [currentGoal?.steps])
 
   return (
-    <div className=" flex flex-col md:flex-row justify-center items-center gap-2 cursor-pointer w-full" onClick={(e) => handleGoalBarClick(e)}>
+    <div className="goalBar flex flex-col md:flex-row justify-center items-center gap-2 cursor-pointer w-full" onClick={(e) => handleGoalBarClick(e)}>
       <div className="flex flex-row gap-4 w-full justify-center items-center">
 
         {(currentGoal && goal._id === currentGoal._id) ?

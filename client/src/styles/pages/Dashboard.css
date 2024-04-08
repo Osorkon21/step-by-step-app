@@ -1,17 +1,14 @@
 .trash-can {
   cursor: pointer;
+  filter: grayscale(20%);
+  fill: lightgray;
+  filter: invert(82%) sepia(0%) saturate(0%) hue-rotate(166deg) brightness(88%) contrast(83%);
 }
-
-/* .trash-can:hover {
-  filter: invert(13%) sepia(93%) saturate(7491%) hue-rotate(11deg) brightness(98%) contrast(125%);
-    
-} */
 
 .trash-can:hover {
-  scale: 1.25;
+  filter: invert(13%) sepia(93%) saturate(7491%) hue-rotate(11deg) brightness(98%) contrast(125%);
+    
 }
-
-
 
 
 
@@ -23,10 +20,10 @@
 
 .step {
   margin-top: 1rem;
-  background-color: var(--light);
+  background-color: var(--background);
   /* padding: 1rem; */
   display: flex;
-  border-radius: 2rem;
+  border-radius: 1rem;
   width: 100%;
 
 
@@ -42,7 +39,7 @@
   /* border: 2px solid var(--darkblur); */
   background-color: var(--middleblur);
   padding: var(--padding);
-  border-radius: 2rem;
+  border-radius: 1rem;
 }
 
 input.checkbox {
@@ -66,11 +63,12 @@ input.checkbox:hover {
 } */
 
 .update-goal-btn {
-  /* border: 2px solid var(--purple); */
+  border: 2px solid var(--purple);
   padding: .5rem;
-  background-color: var(--lightpurple);
+  /* background-color: var(--lightpurple); */
+  /* border: 2px solid transparent; */
 }
 
 .update-goal-btn:hover {
-  outline: 2px solid var(--purple);
+  /* border: var(--purple); */
 }

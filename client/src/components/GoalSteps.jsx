@@ -161,8 +161,6 @@ export default function GoalSteps({ steps, setSteps, goal, setGoal, updateCurren
       newStep
     ]);
 
-    console.log(newStep)
-
     setCurrentStep(newStep);
   }
 

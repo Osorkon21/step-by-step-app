@@ -3,12 +3,12 @@ import AppProvider from './utils/AppProvider';
 import { Header, ProtectedRoute } from './components';
 import { HomePage, Profile, NotFound } from './pages/'
 import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend"
+import { TouchBackend } from "react-dnd-touch-backend"
 
 export default function App() {
 
   return (
-    <DndProvider backend={HTML5Backend}>
+    <DndProvider backend={TouchBackend} options={{ enableMouseEvents: true }}>
       <AppProvider>
         <BrowserRouter>
           <div className='flex flex-col min-h-screen '>

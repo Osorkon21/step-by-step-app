@@ -65,7 +65,7 @@ export default function StepBar({ id, index, moveStepBar, goal, updateCurrentGoa
     }),
   });
 
-  const opacity = isDragging ? 0 : 1
+  const opacity = isDragging ? 0.5 : 1
 
   drag(drop(ref));
 

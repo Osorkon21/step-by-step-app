@@ -98,7 +98,7 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurre
   }, [currentGoal?.name]);
 
   return (
-    <div className="goalBar flex flex-col md:flex-row justify-start items-start gap-2 cursor-pointer w-full" onClick={(e) => handleGoalBarClick(e)}>
+    <div className="goalBar flex flex-col md:flex-row justify-center items-center gap-2 cursor-pointer w-full" onClick={(e) => handleGoalBarClick(e)}>
       <div className="flex flex-row gap-4 w-full justify-start items-start">
 
         {(currentGoal && goal._id === currentGoal._id) ?
@@ -128,7 +128,7 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurre
         </div>
 
       </div>
-      <div className="flex gap-4 justify-between w-full">
+      <div className="flex gap-4 justify-between w-full items-center">
         <ProgressBar
           label={"Completed"}
           value={(currentGoal && goal._id === currentGoal._id) ? percentComplete : Math.floor(goal.completedStepCount / goal.stepsCount * 100)}

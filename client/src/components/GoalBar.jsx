@@ -1,11 +1,13 @@
 import { MyPopover, TrashCanButton, ConfirmDelete, ProgressBar } from "./"
 import downArrow from "../assets/icons/down-arrow.svg"
 import rightArrow from "../assets/icons/right-arrow.svg"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 
 export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurrentGoal, deleteGoal, setSubmitError }) {
   const [percentComplete, setPercentComplete] = useState(Math.floor(goal.completedStepCount / goal.stepsCount * 100))
   const [timestamp, setTimestamp] = useState('')
+  const inputRef = useRef(null);
+
 
   const calculateTimestamp = () => {
     let currentTime = new Date();
@@ -43,7 +45,15 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurre
     return () => clearInterval(interval);
   }, [goal.createdAt]);
 
+ 
+  function handleInputChange(e) {
+    if (currentGoal) {
+      setCurrentGoal({ ...currentGoal, name: e.target.value });
+    }
+  }
 
+
+// Resize the textarea to fit the content ?? IS THIS COMMENT CORRECT?
   async function handleGoalBarClick(e) {
     if (e.target.id === "title" || e.target.id === "confirm-del-btn")
       return;
@@ -63,6 +73,7 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurre
     setCurrentGoal({ ...currentGoal, name: e.target.value });
   }
 
+  // Calculate the percentage of steps completed
   useEffect(() => {
     if (currentGoal) {
       const totalSteps = currentGoal.steps.length;
@@ -74,6 +85,17 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurre
       setPercentComplete(Math.floor(goal.completedStepCount / goal.stepsCount * 100))
     }
   }, [currentGoal?.steps])
+
+  // Resize the textarea to fit the content
+  useEffect(() => {
+    const textArea = inputRef.current;
+
+    if (textArea && currentGoal && currentGoal.name) {
+      textArea.style.height = 'auto';
+      // Set the height to scrollHeight to fit the content
+      textArea.style.height = `${textArea.scrollHeight}px`;
+    }
+  }, [currentGoal?.name]);
 
   return (
     <div className="goalBar flex flex-col md:flex-row justify-center items-center gap-2 cursor-pointer w-full" onClick={(e) => handleGoalBarClick(e)}>
@@ -99,7 +121,7 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurre
 
         <div className='text-xl flex w-full'>
           {(currentGoal && goal._id === currentGoal._id) ?
-            <input className="goal-name-input  w-full rounded-3xl p-2 pl-4 shadow-custom focus:bg-white hover:bg-white focus:outline-none bg-lightgray focus:shadow" type="text" name="title" id="title" placeholder="Your goal, ex. Learn computer programming" value={currentGoal.name} onChange={handleInputChange} />
+            <textarea ref={inputRef} className="goal-name-input  w-full rounded-3xl p-2 pl-4 shadow-custom focus:bg-white hover:bg-white focus:outline-none bg-lightgray focus:shadow" name="title" id="title" placeholder="Your goal, ex. Learn computer programming" value={currentGoal.name} onChange={handleInputChange} />
             :
             <span>{goal.name}</span>
           }

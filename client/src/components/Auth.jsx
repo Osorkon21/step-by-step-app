@@ -87,7 +87,7 @@ export default function Auth({ usage = "signup", close, setGoalStepsSubmitError 
             </div>
           </div>
 
-          <button className="mt-4 bg-middleblur w-full p-1 shadow poppins text-white">Submit Info</button>
+          <button className="mt-4 bg-middleblur w-full p-1 shadow poppins ">Submit Info</button>
         </div>
       </form>
 

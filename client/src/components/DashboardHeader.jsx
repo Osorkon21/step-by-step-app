@@ -12,7 +12,7 @@ export default function DashboardHeader({ categories, currentCategory, handleCat
         {displayAddGoal ?
           <AddGoal />
           :
-          <Link className="cursor-pointer rounded-full grow h-32 w-auto p-8 border-2 border-purple hover:shadow-custom" onPress={() => setDisplayAddGoal(true)}>➕</Link>
+          <Link className="cursor-pointer rounded-full grow h-32 w-auto p-8 bg-middle hover:shadow-custom" onPress={() => setDisplayAddGoal(true)}>➕</Link>
         }
 
       </div>

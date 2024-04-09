@@ -63,8 +63,9 @@ input.checkbox:hover {
 } */
 
 .update-goal-btn {
-  border: 2px solid var(--purple);
+  /* border: 2px solid var(--purple); */
   padding: .5rem;
+  background-color: var(--middle);
   /* background-color: var(--lightpurple); */
   /* border: 2px solid transparent; */
 }

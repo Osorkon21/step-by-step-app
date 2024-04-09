@@ -45,7 +45,7 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurre
     return () => clearInterval(interval);
   }, [goal.createdAt]);
 
- 
+
   function handleInputChange(e) {
     if (currentGoal) {
       setCurrentGoal({ ...currentGoal, name: e.target.value });
@@ -53,7 +53,7 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurre
   }
 
 
-// Resize the textarea to fit the content ?? IS THIS COMMENT CORRECT?
+  // Resize the textarea to fit the content ?? IS THIS COMMENT CORRECT?
   async function handleGoalBarClick(e) {
     if (e.target.id === "title" || e.target.id === "confirm-del-btn")
       return;
@@ -98,24 +98,24 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurre
   }, [currentGoal?.name]);
 
   return (
-    <div className="goalBar flex flex-col md:flex-row justify-center items-center gap-2 cursor-pointer w-full" onClick={(e) => handleGoalBarClick(e)}>
-      <div className="flex flex-row gap-4 w-full justify-center items-center">
+    <div className="goalBar flex flex-col md:flex-row justify-start items-start gap-2 cursor-pointer w-full" onClick={(e) => handleGoalBarClick(e)}>
+      <div className="flex flex-row gap-4 w-full justify-start items-start">
 
         {(currentGoal && goal._id === currentGoal._id) ?
           <img
             className="down-arrow focus:outline-none hover:scale-150"
             src={downArrow}
             alt="caret pointing down"
-            width={"32"}
-            height={"32"}
+            width={"24"}
+            height={"24"}
           />
           :
           <img
             className="right-arrow focus:outline-none hover:scale-150"
             src={rightArrow}
             alt="caret pointing right"
-            width={"32"}
-            height={"32"}
+            width={"24"}
+            height={"24"}
           />
         }
 
@@ -128,29 +128,30 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurre
         </div>
 
       </div>
-      <div className="flex gap-4 items-center">
+      <div className="flex gap-4 justify-between w-full">
         <ProgressBar
           label={"Completed"}
           value={(currentGoal && goal._id === currentGoal._id) ? percentComplete : Math.floor(goal.completedStepCount / goal.stepsCount * 100)}
         ></ProgressBar>
 
-        <div>
+        <div className="date w-32">
           <span>Created {timestamp}</span>
         </div>
 
         {/* Last edited at {new Date(goal.createdAt).toLocaleTimeString()} */}
 
-        <MyPopover className=""
-          button={<TrashCanButton
-            large={true}
-          ></TrashCanButton>}
-          contents={<ConfirmDelete
-            target={"goal"}
-            idToDel={goal._id}
-            deleteFunc={deleteGoal}
-          ></ConfirmDelete>}
-        ></MyPopover>
-
+        <div className="w-6 h-6 flex justify-center items-center shrink-0">
+          <MyPopover className=""
+            button={<TrashCanButton
+              large={true}
+            ></TrashCanButton>}
+            contents={<ConfirmDelete
+              target={"goal"}
+              idToDel={goal._id}
+              deleteFunc={deleteGoal}
+            ></ConfirmDelete>}
+          ></MyPopover>
+        </div>
       </div>
     </div>
 

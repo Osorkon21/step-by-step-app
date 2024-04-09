@@ -1,11 +1,13 @@
 import { MyPopover, TrashCanButton, ConfirmDelete, ProgressBar } from "./"
 import downArrow from "../assets/icons/down-arrow.svg"
 import rightArrow from "../assets/icons/right-arrow.svg"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 
 export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurrentGoal, deleteGoal, setSubmitError }) {
   const [percentComplete, setPercentComplete] = useState(Math.floor(goal.completedStepCount / goal.stepsCount * 100))
   const [timestamp, setTimestamp] = useState('')
+  const inputRef = useRef(null);
+
 
   const calculateTimestamp = () => {
     let currentTime = new Date();
@@ -44,6 +46,14 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurre
   }, [goal.createdAt]);
 
 
+  function handleInputChange(e) {
+    if (currentGoal) {
+      setCurrentGoal({ ...currentGoal, name: e.target.value });
+    }
+  }
+
+
+  // Resize the textarea to fit the content ?? IS THIS COMMENT CORRECT?
   async function handleGoalBarClick(e) {
     if (e.target.id === "title" || e.target.id === "confirm-del-btn")
       return;
@@ -63,6 +73,7 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurre
     setCurrentGoal({ ...currentGoal, name: e.target.value });
   }
 
+  // Calculate the percentage of steps completed
   useEffect(() => {
     if (currentGoal) {
       const totalSteps = currentGoal.steps.length;
@@ -75,60 +86,72 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurre
     }
   }, [currentGoal?.steps])
 
+  // Resize the textarea to fit the content
+  useEffect(() => {
+    const textArea = inputRef.current;
+
+    if (textArea && currentGoal && currentGoal.name) {
+      textArea.style.height = 'auto';
+      // Set the height to scrollHeight to fit the content
+      textArea.style.height = `${textArea.scrollHeight}px`;
+    }
+  }, [currentGoal?.name]);
+
   return (
-    <div className="goalBar flex flex-col md:flex-row justify-center items-center gap-2 cursor-pointer w-full" onClick={(e) => handleGoalBarClick(e)}>
-      <div className="flex flex-row gap-4 w-full justify-center items-center">
+    <div className="goalBar flex flex-col md:flex-row justify-start items-start gap-2 cursor-pointer w-full" onClick={(e) => handleGoalBarClick(e)}>
+      <div className="flex flex-row gap-4 w-full justify-start items-start">
 
         {(currentGoal && goal._id === currentGoal._id) ?
           <img
             className="down-arrow focus:outline-none hover:scale-150"
             src={downArrow}
             alt="caret pointing down"
-            width={"32"}
-            height={"32"}
+            width={"24"}
+            height={"24"}
           />
           :
           <img
             className="right-arrow focus:outline-none hover:scale-150"
             src={rightArrow}
             alt="caret pointing right"
-            width={"32"}
-            height={"32"}
+            width={"24"}
+            height={"24"}
           />
         }
 
         <div className='text-xl flex w-full'>
           {(currentGoal && goal._id === currentGoal._id) ?
-            <input className="goal-name-input  w-full rounded-3xl p-2 pl-4 shadow-custom focus:bg-white hover:bg-white focus:outline-none bg-lightgray focus:shadow" type="text" name="title" id="title" placeholder="Your goal, ex. Learn computer programming" value={currentGoal.name} onChange={handleInputChange} />
+            <textarea ref={inputRef} rows={1} className="goal-name-input  w-full rounded-3xl p-2 pl-4 shadow-custom focus:bg-white hover:bg-white focus:outline-none bg-lightgray focus:shadow" name="title" id="title" placeholder="Your goal, ex. Learn computer programming" value={currentGoal.name} onChange={handleInputChange} />
             :
             <span>{goal.name}</span>
           }
         </div>
 
       </div>
-      <div className="flex gap-4 items-center">
+      <div className="flex gap-4 justify-between w-full">
         <ProgressBar
           label={"Completed"}
           value={(currentGoal && goal._id === currentGoal._id) ? percentComplete : Math.floor(goal.completedStepCount / goal.stepsCount * 100)}
         ></ProgressBar>
 
-        <div>
+        <div className="date w-32">
           <span>Created {timestamp}</span>
         </div>
 
         {/* Last edited at {new Date(goal.createdAt).toLocaleTimeString()} */}
 
-        <MyPopover className=""
-          button={<TrashCanButton
-            large={true}
-          ></TrashCanButton>}
-          contents={<ConfirmDelete
-            target={"goal"}
-            idToDel={goal._id}
-            deleteFunc={deleteGoal}
-          ></ConfirmDelete>}
-        ></MyPopover>
-
+        <div className="w-6 h-6 flex justify-center items-center shrink-0">
+          <MyPopover className=""
+            button={<TrashCanButton
+              large={true}
+            ></TrashCanButton>}
+            contents={<ConfirmDelete
+              target={"goal"}
+              idToDel={goal._id}
+              deleteFunc={deleteGoal}
+            ></ConfirmDelete>}
+          ></MyPopover>
+        </div>
       </div>
     </div>
 

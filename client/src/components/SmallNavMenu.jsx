@@ -28,7 +28,7 @@ export default function SmallNavMenu({ logout }) {
       </Link>
 
       <MenuTrigger>
-        <Button className="mr-10 mt-4 py-2 px-3 border-2 bg-purple border-purple hover:text-white" aria-label="Menu">☰</Button>
+        <Button className="mr-10 my-4 py-2 px-3 border-2 bg-purple border-purple text-white" aria-label="Menu">☰</Button>
         <Popover>
           <Menu className="flex flex-col bg-middle p-2 gap-1 rounded-lg" onAction={handleMenuAction}>
             <MenuItem className="cursor-pointer hover:bg-purple hover:text-white rounded-md p-1" id="home" href="/">{appCtx.user?._id !== undefined ? "Dashboard" : "Home"}</MenuItem>

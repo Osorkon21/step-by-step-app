@@ -17,7 +17,7 @@ export default function LargeNavBar({ logout }) {
       </li>
       <li className='px-2'>
         {appCtx.user?._id !== undefined ? (
-          <button className="logout-btn nav-link text-purple hover:text-lightpurple hover:border-0 bg-middle px-4 py-1" onClick={() => {
+          <button className="logout-btn nav-link text-purple hover:text-lightpurple py-1 hover:outline-none" onClick={() => {
             logout();
             appCtx.updateUser();
           }}>Logout</button>

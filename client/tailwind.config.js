@@ -14,7 +14,7 @@ export default {
         light: '#d1eefb',
         lightblur: '#d1eefb4b',
         middle: '#bcdbe5', // light blue
-        middleblur: '#76919c', // middle blue
+        middleblur: '#dff5fd', // middle blue
         middledark: '#76d0e3',
         middledarkblur: '#76919c',
         dark: '#32c4e3',
@@ -23,7 +23,7 @@ export default {
         darkerblur: 'rgba(0, 128, 128, 0.055)',
         lightestgray: '#f5f5f5',
         lightgray: '#f9f9f9',
-        gray: 'e5e5e5',
+        gray: '#dcdcdc',
         orange: '#ed9f12',
 
         

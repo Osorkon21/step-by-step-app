@@ -87,14 +87,14 @@ export default function StepBarOpen({ goal, step, steps, setSteps, handleInputCh
   return (
     <div className="stepBarOpen curent_step_open truncate flex flex-col gap-1 cursor-pointer w-full" onClick={handleStepBarClick}>
       <div className="w-full">
-        <textarea ref={titleRef} data-uuid={step.uuid} className={`w-full shadow-custom p-2 pl-4 overflow-y-hidden focus:bg-white hover:bg-white focus:outline-none bg-lightgray focus:shadow`} name="title" value={step.title} placeholder="Step title" onChange={handleInputChange} />
+        <textarea ref={titleRef} rows={1} data-uuid={step.uuid} className={`w-full shadow-custom border-2 border-transparent p-2 pl-4 overflow-y-hidden focus:bg-white hover:bg-white focus:outline-middleblur bg-lightgray focus:shadow-none`} name="title" value={step.title} placeholder="Step title" onChange={handleInputChange} />
       </div>
 
       <div className="">
 
         {step.text ?
 
-          <textarea ref={textRef} data-uuid={step.uuid} className={`w-full shadow-custom px-4 p-2 overflow-y-hidden focus:bg-white hover:bg-white focus:outline-none bg-lightgray focus:shadow`} name="text" value={step.text} placeholder="Step description" onChange={handleInputChange} />
+          <textarea ref={textRef} data-uuid={step.uuid} className={`w-full shadow-custom px-4 p-2 overflow-y-hidden focus:bg-white hover:bg-white focus:outline-none bg-lightgray focus:shadow`} name="text" rows={1} value={step.text} placeholder="Step description" onChange={handleInputChange} />
           :
           <>
             {submitError &&
@@ -109,7 +109,7 @@ export default function StepBarOpen({ goal, step, steps, setSteps, handleInputCh
                 <div style={{ left: "38px", top: "38px", animationDelay: "0s" }}></div><div style={{ left: "80px", top: "38px", animationDelay: "0.125s" }}></div><div style={{ left: "122px", top: "38px", animationDelay: "0.25s" }}></div><div style={{ left: "38px", top: "80px", animationDelay: "0.875s" }}></div><div style={{ left: "122px", top: "80px", animationDelay: "0.375s" }}></div><div style={{ left: "38px", top: "122px", animationDelay: "0.75s" }}></div><div style={{ left: "80px", top: "122px", animationDelay: "0.625s" }}></div><div style={{ left: "122px", top: "122px", animationDelay: "0.5s" }}></div>
               </div></div>
               :
-              <button className="update-goal-btn hover:scale-95 mt-2" type="button" name="explain-step" onClick={handleExplainStep}>More Info</button>
+              <button className="update-goal-btn mt-2 border-2 border-transparent hover:border-purple hover:outline-none  hover:bg-middle" type="button" name="explain-step" onClick={handleExplainStep}>More Info</button>
             }
           </>
         }

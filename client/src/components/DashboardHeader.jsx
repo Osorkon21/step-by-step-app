@@ -7,12 +7,12 @@ export default function DashboardHeader({ categories, currentCategory, handleCat
   const [displayAddGoal, setDisplayAddGoal] = useState(false);
 
   return (
-    <div className="dashboardHeader dash-header text-center mt-4 text-purple w-full">
+    <div className="dashboardHeader dash-header text-center mt-8 text-purple w-full">
       <div className="my-12">
         {displayAddGoal ?
           <AddGoal />
           :
-          <Link className="cursor-pointer rounded-full grow h-32 w-auto p-8 bg-middle hover:shadow-custom" onPress={() => setDisplayAddGoal(true)}>➕</Link>
+          <Link className="cursor-pointer rounded-full grow border-2 border-transparent h-32 w-auto p-8 bg-middle hover:border-purple" onPress={() => setDisplayAddGoal(true)}>➕</Link>
         }
 
       </div>

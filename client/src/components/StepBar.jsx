@@ -1,8 +1,17 @@
 import { StepBarClosed, StepBarOpen, MyPopover, TrashCanButton, ConfirmDelete } from "./"
 import downArrow from "../assets/icons/down-arrow.svg"
 import rightArrow from "../assets/icons/right-arrow.svg"
+import { ItemTypes } from "./Constants"
+import { useDrag } from "react-dnd"
 
 export default function StepBar({ goal, updateCurrentGoal, usage, step, steps, setSteps, currentStep, setCurrentStep, handleCheck, handleInputChange, deleteStep }) {
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: ItemTypes.STEP_BAR,
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging()
+    })
+  }))
+
   function handleStepBarClick(e) {
     if (e.target.name === "title" || e.target.name === "text" || e.target.name === "explain-step")
       return;
@@ -18,7 +27,16 @@ export default function StepBar({ goal, updateCurrentGoal, usage, step, steps, s
 
 
   return (
-    <div className="stepBar stepbar cursor-pointer flex gap-2 items-center justify-center w-full hover:border-purple border-2 border-transparent rounded-2xl p-1">
+    <div
+      ref={drag}
+      style={{
+        opacity: isDragging ? 0.5 : 1,
+        // fontSize: 25,
+        // fontWeight: 'bold',
+        cursor: 'move',
+      }}
+      className="stepBar stepbar cursor-pointer flex gap-2 items-center justify-center w-full hover:border-purple border-2 border-transparent rounded-2xl p-1"
+    >
 
       {/* ORIGINAL CHECKBOX <div className="flex justify-center items-center w-6 h-6">
         <input className={`checkbox ${step.uuid}`} type="checkbox" checked={step.completed} onChange={handleCheck} />

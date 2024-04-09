@@ -23,7 +23,7 @@ export default {
         darkerblur: 'rgba(0, 128, 128, 0.055)',
         lightestgray: '#f5f5f5',
         lightgray: '#f9f9f9',
-        gray: 'e5e5e5',
+        gray: '#dcdcdc',
         orange: '#ed9f12',
 
         

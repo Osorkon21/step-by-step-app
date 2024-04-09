@@ -4,7 +4,7 @@ export default function CategorySelect({ category, categories, handleSelectionCh
   return (
     <Select className="categorySelect" placeholder={category ? category : "Goal Category"} aria-label="category select dropdown" onSelectionChange={handleSelectionChange}>
       {label && <Label>{label}</Label>}
-      <Button className="poppins p-2 border-2 border-purple hover:scale-95">
+      <Button className="poppins p-2 border-2 border-purple ">
         <SelectValue />
         <span aria-hidden="true">▼</span>
       </Button>

@@ -261,7 +261,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, updat
           </div>
         ))}
 
-        <button className="update-goal-btn hover:scale-95 mt-2" type="button" onClick={handleAddStep}>Add Step</button>
+        <button className="update-goal-btn mt-2" type="button" onClick={handleAddStep}>Add Step</button>
         <div className="ag-cat-drop mt-2 ">
           <CategorySelect className="mt-2 "
             category={goal.category?.name}
@@ -273,7 +273,7 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, updat
 
         <div className="mt-2 gap-2 flex">
           {appCtx.user?._id !== undefined ? (
-            <button className="update-goal-btn hover:scale-95" type="button" onClick={handleFormSubmit}>{usage === "createGoal" ? "Save to Dashboard" : "Save Goal"}</button>
+            <button className="update-goal-btn" type="button" onClick={handleFormSubmit}>{usage === "createGoal" ? "Save to Dashboard" : "Save Goal"}</button>
           )
             : (
               <ModalWithDialogTrigger

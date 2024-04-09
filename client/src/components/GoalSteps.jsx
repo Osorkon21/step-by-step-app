@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid"
-import { useCallback, useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { useAppCtx } from "../utils/AppProvider"
 import { ModalWithDialogTrigger, StepBar, TriggerButton, SignupModal, CategorySelect } from "./"
 
@@ -205,14 +205,14 @@ export default function GoalSteps({ steps, setSteps, goal, setGoal, updateCurren
     getAiResponse();
   }
 
-  const moveStepBar = useCallback((dragIndex, hoverIndex) => {
+  function moveStepBar(dragIndex, hoverIndex) {
     const movedStep = steps[dragIndex];
 
     steps.splice(dragIndex, 1);
     steps.splice(hoverIndex, 0, movedStep)
 
     setSteps([...steps]);
-  }, []);
+  };
 
   useEffect(() => {
     if (!categories)
@@ -255,7 +255,7 @@ export default function GoalSteps({ steps, setSteps, goal, setGoal, updateCurren
         {steps.map((step, index) =>
           <div className="step flex" key={step.uuid}>
             <StepBar
-              id={step._id ? step._id : step.uuid}
+              id={step._id}
               index={index}
               moveStepBar={moveStepBar}
               goal={goal}

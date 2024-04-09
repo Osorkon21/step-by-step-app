@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from "uuid"
-import { useState, useEffect } from "react"
+import { useCallback, useState, useEffect } from "react"
 import { useAppCtx } from "../utils/AppProvider"
 import { ModalWithDialogTrigger, StepBar, TriggerButton, SignupModal, CategorySelect } from "./"
 
-export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, updateCurrentGoal, usage, setSubmitError, defaultChecked, getAiResponse }) {
+export default function GoalSteps({ steps, setSteps, goal, setGoal, updateCurrentGoal, usage, setSubmitError, defaultChecked, getAiResponse }) {
 
   const appCtx = useAppCtx();
 
@@ -161,6 +161,8 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, updat
       newStep
     ]);
 
+    console.log(newStep)
+
     setCurrentStep(newStep);
   }
 
@@ -203,6 +205,15 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, updat
     getAiResponse();
   }
 
+  const moveStepBar = useCallback((dragIndex, hoverIndex) => {
+    const movedStep = steps[dragIndex];
+
+    steps.splice(dragIndex, 1);
+    steps.splice(hoverIndex, 0, movedStep)
+
+    setSteps([...steps]);
+  }, []);
+
   useEffect(() => {
     if (!categories)
       getCategories();
@@ -241,10 +252,12 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, updat
           }
         </div>
 
-        {steps.map(step => (
-
+        {steps.map((step, index) =>
           <div className="step flex" key={step.uuid}>
             <StepBar
+              id={step._id ? step._id : step.uuid}
+              index={index}
+              moveStepBar={moveStepBar}
               goal={goal}
               updateCurrentGoal={updateCurrentGoal}
               usage={usage}
@@ -256,10 +269,9 @@ export default function GoalSteps({ steps, setSteps, reset, goal, setGoal, updat
               handleCheck={handleCheck}
               handleInputChange={handleInputChange}
               deleteStep={deleteStep}
-            ></StepBar>
-
-          </div>
-        ))}
+            />
+          </div>)
+        }
 
         <button className="update-goal-btn mt-2" type="button" onClick={handleAddStep}>Add Step</button>
         <div className="ag-cat-drop mt-2 ">

@@ -9,6 +9,7 @@ export default function GoalSteps({ steps, setSteps, goal, setGoal, updateCurren
 
   const [categories, setCategories] = useState(null);
   const [currentStep, setCurrentStep] = useState(null);
+  const [dragging, setDragging] = useState(false);
 
   // format goal and step items, add them to database
   async function handleFormSubmit(e) {
@@ -256,6 +257,8 @@ export default function GoalSteps({ steps, setSteps, goal, setGoal, updateCurren
               id={step._id}
               index={index}
               moveStepBar={moveStepBar}
+              dragging={dragging}
+              setDragging={setDragging}
               goal={goal}
               updateCurrentGoal={updateCurrentGoal}
               usage={usage}

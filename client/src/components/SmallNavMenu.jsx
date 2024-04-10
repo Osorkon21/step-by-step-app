@@ -22,9 +22,9 @@ export default function SmallNavMenu({ logout }) {
 
   return (
     <div className="smallNavMenu flex sm:hidden justify-between">
-      <Link className='flex gap-2 items-center text-purple hover:text-middle' href='/'>
+      <Link className='flex gap-2 items-center text-purple' href='/'>
         <img src={logo} alt="logo" className="w-10 h-auto ml-8" />
-        <p className='text-2xl'>Upward Arc</p>
+        <p className='text-2xl hidden sm:block'>Upward Arc</p>
       </Link>
 
       <MenuTrigger>

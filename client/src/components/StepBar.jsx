@@ -58,14 +58,14 @@ export default function StepBar({ id, index, moveStepBar, goal, updateCurrentGoa
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypes.STEP_BAR,
     item: () => {
-      return { id, index }
+      return { id, index, stepTitle: step.title }
     },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
   });
 
-  const opacity = isDragging ? 0.5 : 1
+  const opacity = isDragging ? 0 : 1
 
   drag(drop(ref));
 

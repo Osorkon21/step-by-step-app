@@ -1,11 +1,12 @@
 import { StepBarClosed, StepBarOpen, MyPopover, TrashCanButton, ConfirmDelete } from "./"
 import downArrow from "../assets/icons/down-arrow.svg"
 import rightArrow from "../assets/icons/right-arrow.svg"
+import dragIcon from "../assets/icons/drag-icon.svg"
 import { ItemTypes } from "./Constants"
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 
-export default function StepBar({ id, index, moveStepBar, goal, updateCurrentGoal, usage, step, steps, setSteps, currentStep, setCurrentStep, handleCheck, handleInputChange, deleteStep }) {
+export default function StepBar({ id, index, moveStepBar, dragging, setDragging, goal, updateCurrentGoal, usage, step, steps, setSteps, currentStep, setCurrentStep, handleCheck, handleInputChange, deleteStep }) {
   const ref = useRef(null);
 
   const [{ handlerId }, drop] = useDrop({
@@ -58,16 +59,15 @@ export default function StepBar({ id, index, moveStepBar, goal, updateCurrentGoa
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypes.STEP_BAR,
     item: () => {
-      return { id, index }
+      return { id, index, title: step.title }
     },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
   });
 
-  const opacity = isDragging ? 0.5 : 1
-
-  drag(drop(ref));
+  // sets component opacity for drag events
+  const opacity = isDragging ? 0 : (dragging ? 0.4 : 1);
 
   function handleStepBarClick(e) {
     if (e.target.name === "title" || e.target.name === "text" || e.target.name === "explain-step")
@@ -82,10 +82,16 @@ export default function StepBar({ id, index, moveStepBar, goal, updateCurrentGoa
       setCurrentStep(step);
   }
 
+  useEffect(() => {
+    if (isDragging)
+      setDragging(true);
+    else if (dragging)
+      setDragging(false);
+  }, [isDragging])
 
   return (
     <div
-      ref={ref}
+      ref={drop(ref)}
       style={{ opacity }}
       data-handler-id={handlerId}
       className="stepBar stepbar cursor-pointer flex gap-2 items-center justify-center w-full hover:border-purple border-2 border-transparent rounded-2xl p-1"
@@ -94,6 +100,15 @@ export default function StepBar({ id, index, moveStepBar, goal, updateCurrentGoa
       {/* ORIGINAL CHECKBOX <div className="flex justify-center items-center w-6 h-6">
         <input className={`checkbox ${step.uuid}`} type="checkbox" checked={step.completed} onChange={handleCheck} />
       </div> */}
+
+      <img
+        className="drag-icon focus:outline-none cursor-grab"
+        src={dragIcon}
+        alt="drag icon"
+        width={"24"}
+        height={"24"}
+        ref={drag}
+      />
 
       {(currentStep && (step.uuid === currentStep.uuid)) ?
         <img

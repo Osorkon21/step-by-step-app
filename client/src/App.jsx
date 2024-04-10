@@ -4,12 +4,25 @@ import { Header, ProtectedRoute } from './components';
 import { HomePage, Profile, NotFound } from './pages/'
 import { DndProvider } from "react-dnd";
 import { TouchBackend } from "react-dnd-touch-backend"
+import { usePreview } from "react-dnd-preview"
+
+const MyPreview = () => {
+  const preview = usePreview()
+  if (!preview.display) {
+    return null
+  }
+
+  const { item, style } = preview;
+
+  return <div className="item-list__item bg-middle px-4 p-1 rounded-full" style={style}>{item.title}</div>
+}
 
 export default function App() {
 
   return (
     <DndProvider backend={TouchBackend} options={{ enableMouseEvents: true }}>
       <AppProvider>
+        <MyPreview />
         <BrowserRouter>
           <div className='flex flex-col min-h-screen '>
 

@@ -106,7 +106,7 @@ export default function StepBar({ id, index, moveStepBar, goal, updateCurrentGoa
         />
         :
         <img
-          className="right-arrow focus:outline-none hover:scale-150 w-5 h-5"
+          className="right-arrow focus:outline-none hover:scale-150 w-6 h-6"
           src={rightArrow}
           alt="caret pointing right"
           width={"24"}

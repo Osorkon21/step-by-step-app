@@ -1,18 +1,21 @@
 import { Link } from "react-aria-components";
 import { CategorySelect, AddGoal } from "./"
 import { useState } from "react"
+import plusSign from "../assets/icons/plus-sign.svg"
 
 export default function DashboardHeader({ categories, currentCategory, handleCategoryChange, inProgress, setInProgress, setCurrentGoal, setSubmitError }) {
 
   const [displayAddGoal, setDisplayAddGoal] = useState(false);
 
   return (
-    <div className="dashboardHeader dash-header text-center mt-8 text-purple w-full">
-      <div className="my-12">
+    <div className="dashboardHeader dash-header text-center mt-8 text-purple w-full flex flex-col justify-center items-center">
+      <div className="my-12 w-full flex justify-center">
         {displayAddGoal ?
           <AddGoal />
           :
-          <Link className="cursor-pointer rounded-full grow border-2 border-transparent h-32 w-auto p-8 bg-middle hover:border-purple" onPress={() => setDisplayAddGoal(true)}>➕</Link>
+          <Link className="cursor-pointer" onPress={() => setDisplayAddGoal(true)}>
+            <img className="bg-middle rounded-full p-4 border-2 border-transparent hover:border-purple" src={plusSign} alt="plus sign" width="96" height="96" />
+          </Link>
         }
 
       </div>

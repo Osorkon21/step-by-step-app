@@ -1,12 +1,19 @@
 import { Link } from "react-aria-components"
 import { ModalWithDialogTrigger, TriggerButton, SignupModal } from "./"
 import { useAppCtx } from "../utils/AppProvider"
+import logo from "../assets/icons/logo.svg"
+
+
 
 export default function LargeNavBar({ logout }) {
   const appCtx = useAppCtx();
 
   return (
     <ul className='largeNavBar hidden sm:flex flex-row justify-center items-center'>
+      <Link className='flex gap-2 items-center text-purple' href='/'>
+        <img src={logo} alt="logo" className="w-10 h-auto ml-8" />
+        <p className='text-2xl hidden sm:block'>Upward Arc</p>
+      </Link>
       <li className='px-2'>
         <Link className="nav-link text-purple hover:text-lightpurple " href="/">{appCtx.user?._id !== undefined ? "Dashboard" : "Home"}</Link>
       </li>

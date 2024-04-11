@@ -1,6 +1,7 @@
-# Step-By-Step App
+# Upward Arc
+- formerly Named Step By Step
 
-[Heroku deployment](https://step-by-step-2d601ea78552.herokuapp.com/)
+[Upward Arc Deployed](https://upwardarc.com/)
 
 ## Background Story
 
@@ -29,10 +30,19 @@ they can learn the step-by-step process of achieving that goal which is generate
 
 Below: image of the homepage for step-by-step app that was created.
 
-![README.file](./client/image/pic10.png)
+![README.file](./client/image/UpwardArc.png)
 
-![README.file](./client/image/pic11.png)
+- Dashboard (only available to logged in)
 
-![README.file](./client/image/pic12.png)
+![README.file](./client/image/dashboard.png)
+
+- More Info Button
+
+![README.file](./client/image/moreinfo.png)
+![README.file](./client/image/moreinfo2.png)
+
+- Filter by In Progress or Completed
+
+![README.file](./client/image/filter.png)
 
 &copy; 2023-2024 SBS Development Group

@@ -14,7 +14,7 @@ const MyPreview = () => {
 
   const { item, style } = preview;
 
-  return <div className="item-list__item bg-middle px-4 p-1 rounded-2xl w-10/12" style={style}>{item.title}</div>
+  return <div className="item-list__item bg-middle px-4 p-1 rounded-2xl w-10/12" style={style}>{item.title ? item.title : "Empty Step"}</div>
 }
 
 export default function App() {

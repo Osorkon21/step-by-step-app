@@ -4,11 +4,25 @@ export default {
 ],
   theme: {
     extend: {
+      screens: {
+        'xs': '480px',
+      },
       boxShadow: {
         'custom': 'rgba(0, 0, 0, 0.3) 0px 1px 5px 0px inset',
         'custom2': 'rgba(17, 17, 26, 0.1) 0px 4px 16px 0px inset, rgba(17, 17, 26, 0.05) 0px 8px 32px 0px',
       },
       colors: {
+        textdark: '#5A5A5A',
+        textlight: 'ffffff',
+        sunshineyellow: '#FFD700',
+        sunshineyellow2: '#FFFD37',
+        skyblue: '#87CEEB',
+        coralpink: '#F88379',
+        mintgreen: '#98FF98',
+        lavenderpurple: '#E6E6FA',
+
+
+
         lightest: '#eef5f9',
         lightestblur: '#eef5f982',
         light: '#d1eefb',
@@ -30,23 +44,6 @@ export default {
         purple: '#162e3d',  // dark blue currently
         lightpurple: '#76919c', // light blue currently
       
-        mutedlight: '#eaeaea',
-        mutedgray: '#dddddd',
-        mutedpink: '#ecd9d9',
-        mutedblue: '#d5e1ea',
-        mutedgreen: '#e8f0d1',
-      
-        waterlight:'#eef5f9',
-        waterpale: '#d1eefb',
-        watermedium: '#bbeafb',
-        wateraqua: '#76d0e3',
-        waterteal: '#32c4e3',
-        
-        dreamslightest:'#ddfbff',
-        dreamslightaqua: '#c7ebf0',
-        dreamsgray: '#bfd5e2',
-        dreamspurple: '#b1b5c8',
-        dreamsmauve: '#b2abbf',
       
       }
     },

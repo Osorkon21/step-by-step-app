@@ -31,6 +31,22 @@ export default function Dashboard() {
     setSubmitError("");
   }
 
+  async function saveTempGoal() {
+    const response = await fetch('/api/goals', {
+      method: 'POST',
+      body: JSON.stringify({ goal: appCtx.tempGoal, userId: appCtx.user._id }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (!response.ok) {
+      console.log(response);
+      console.error("Database error - unable to save temp goal!");
+    }
+
+    appCtx.setTempGoal(null);
+    getUserGoals();
+  }
+
   async function getUserGoals() {
     const query = await fetch(`/api/users/${appCtx.user._id}`);
     const response = await query.json();
@@ -183,9 +199,11 @@ export default function Dashboard() {
   // load goals from database once user id is defined
   useEffect(() => {
     if (appCtx.user?._id) {
-      getUserGoals();
+      if (appCtx.tempGoal)
+        saveTempGoal();
+      else
+        getUserGoals();
     }
-
   }, [appCtx]);
 
   useEffect(() => {

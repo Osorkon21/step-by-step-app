@@ -94,7 +94,7 @@ export default function StepBar({ id, index, moveStepBar, dragging, setDragging,
       ref={drop(ref)}
       style={{ opacity }}
       data-handler-id={handlerId}
-      className="stepBar stepbar cursor-pointer flex gap-2 items-center justify-center w-full hover:border-purple border-2 border-transparent rounded-2xl p-1"
+      className="stepBar stepbar cursor-pointer flex gap-2 items-start justify-center w-full hover:border-purple border-2 border-transparent rounded-2xl p-1"
     >
 
       {/* ORIGINAL CHECKBOX <div className="flex justify-center items-center w-6 h-6">
@@ -150,6 +150,9 @@ export default function StepBar({ id, index, moveStepBar, dragging, setDragging,
         </div>
       }
 
+      <div>
+        
+      </div>
       <div className={`step-content flex justify-start items-center truncate grow ${currentStep && (step.uuid === currentStep.uuid) ? 'step-bar-open' : 'step-bar-closed'}`} onClick={handleStepBarClick}>
         {(currentStep && (step.uuid === currentStep.uuid)) ?
           <StepBarOpen

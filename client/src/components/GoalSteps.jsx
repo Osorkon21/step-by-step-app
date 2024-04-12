@@ -1,12 +1,13 @@
 import { v4 as uuidv4 } from "uuid"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useAppCtx } from "../utils/AppProvider"
 import { ModalWithDialogTrigger, StepBar, TriggerButton, SignupModal, CategorySelect } from "./"
+import redo from "../assets/icons/redo.svg";
 
 export default function GoalSteps({ steps, setSteps, goal, setGoal, updateCurrentGoal, usage, setSubmitError, defaultChecked, getAiResponse }) {
 
   const appCtx = useAppCtx();
-
+  const inputRef = useRef(null);
   const [categories, setCategories] = useState(null);
   const [currentStep, setCurrentStep] = useState(null);
   const [dragging, setDragging] = useState(false);
@@ -229,16 +230,30 @@ export default function GoalSteps({ steps, setSteps, goal, setGoal, updateCurren
     }
   }, [])
 
+  // Resize the textarea to fit the content
+  useEffect(() => {
+    const textArea = inputRef.current;
+
+    if (textArea ) {
+      textArea.style.height = 'auto';
+      // Set the height to scrollHeight to fit the content
+      textArea.style.height = `${textArea.scrollHeight}px`;
+    }
+  }, [goal.name]);
+
   return (
     <>
       <form onSubmit={handleFormSubmit} className="goalSteps w-full gap-2">
-        <div className="add-goal-items gap-2 mt-2 flex flex-col items-center justify-center">
+        <div className="add-goal-items gap-2 mt-2 flex flex-col items-center justify-center w-full">
 
           {usage === "createGoal" &&
-            <div className="flex justify-center gap-2">
-              <input className="input w-80 sm:w-96 goal-input rounded-3xl p-2 pl-4 shadow-custom focus:bg-white hover:bg-white focus:outline-none bg-lightgray focus:shadow" type="text" placeholder="Your goal, ex. Learn computer programming" name="name" value={goal.name} onChange={handleGoalNameChange} />
+            <div className="flex justify-center gap-2 w-full">
+              <textarea ref={inputRef} rows={1} className="input w-full goal-input rounded-3xl p-2 pl-4 shadow-custom focus:bg-white hover:bg-white focus:outline-none bg-lightgray focus:shadow" placeholder="Your goal, ex. Learn computer programming" name="name" value={goal.name} onChange={handleGoalNameChange} />
 
-              <button className="update-goal-btn" id="try-again" type="submit" onClick={handleTryAgain}>Try Again</button>
+              <button className="update-goal-btn rounded-full w-auto" id="try-again" type="submit" onClick={handleTryAgain}>
+                <img src={redo} alt="Try Again" className="" width={"24"}
+                  height={"24"} />
+              </button>
             </div>
 
           }
@@ -275,34 +290,34 @@ export default function GoalSteps({ steps, setSteps, goal, setGoal, updateCurren
         }
 
         <button className="update-goal-btn mt-2" type="button" onClick={handleAddStep}>Add Step</button>
-        <div className="ag-cat-drop mt-2 ">
-          <CategorySelect className="mt-2 "
+        <div className="ag-cat-drop mt-2 flex gap-4 justify-center">
+          <CategorySelect className=""
             category={goal.category?.name}
             categories={categories}
             handleSelectionChange={handleSelectionChange}
           ></CategorySelect>
 
+          <div className="">
+            {appCtx.user?._id !== undefined ? (
+              <button className="update-goal-btn border-2" type="button" onClick={handleFormSubmit}>{usage === "createGoal" ? "Save to Dashboard" : "Save Goal"}</button>
+            )
+              : (
+                <ModalWithDialogTrigger
+                  trigger={<TriggerButton
+                    buttonText={"Sign up to save goal!"}
+                  ></TriggerButton>}
+                  modal={<SignupModal
+                    setGoalStepsSubmitError={setSubmitError}
+                  ></SignupModal>}
+                ></ModalWithDialogTrigger>
+              )}
+
+            {/* {usage === "createGoal" &&
+              <button className="update-goal-btn hover:scale-95" type="reset" onClick={reset}>Start Over</button>
+            } */}
+          </div>
         </div>
 
-        <div className="mt-2 gap-2 flex">
-          {appCtx.user?._id !== undefined ? (
-            <button className="update-goal-btn" type="button" onClick={handleFormSubmit}>{usage === "createGoal" ? "Save to Dashboard" : "Save Goal"}</button>
-          )
-            : (
-              <ModalWithDialogTrigger
-                trigger={<TriggerButton
-                  buttonText={"Sign up to save goal!"}
-                ></TriggerButton>}
-                modal={<SignupModal
-                  setGoalStepsSubmitError={setSubmitError}
-                ></SignupModal>}
-              ></ModalWithDialogTrigger>
-            )}
-
-          {/* {usage === "createGoal" &&
-            <button className="update-goal-btn hover:scale-95" type="reset" onClick={reset}>Start Over</button>
-          } */}
-        </div>
       </form>
     </>
   )

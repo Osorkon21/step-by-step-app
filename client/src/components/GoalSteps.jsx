@@ -303,7 +303,7 @@ export default function GoalSteps({ steps, setSteps, goal, setGoal, updateCurren
             )
               : (
                 <ModalWithDialogTrigger
-                  trigger={<TriggerButton
+                  trigger={<TriggerButton 
                     buttonText={"Sign up to save goal!"}
                   ></TriggerButton>}
                   modal={<SignupModal

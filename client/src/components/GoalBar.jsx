@@ -99,7 +99,7 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurre
 
   return (
     <div className="goalBar flex flex-col md:flex-row justify-center items-center gap-2 cursor-pointer w-full" onClick={(e) => handleGoalBarClick(e)}>
-      <div className="flex flex-row gap-4 w-full justify-start items-start">
+      <div className="flex flex-row gap-4 w-full justify-start items-center">
 
         {(currentGoal && goal._id === currentGoal._id) ?
           <img

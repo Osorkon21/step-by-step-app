@@ -234,7 +234,7 @@ export default function GoalSteps({ steps, setSteps, goal, setGoal, updateCurren
   useEffect(() => {
     const textArea = inputRef.current;
 
-    if (textArea ) {
+    if (textArea) {
       textArea.style.height = 'auto';
       // Set the height to scrollHeight to fit the content
       textArea.style.height = `${textArea.scrollHeight}px`;
@@ -303,8 +303,15 @@ export default function GoalSteps({ steps, setSteps, goal, setGoal, updateCurren
             )
               : (
                 <ModalWithDialogTrigger
-                  trigger={<TriggerButton 
+                  trigger={<TriggerButton
                     buttonText={"Sign up to save goal!"}
+                    goal={{
+                      name: goal.name,
+                      completed: steps.filter(step => step.title).every((step) => step.completed),
+                      category: goal.category?.name,
+                      steps: steps.filter(step => step.title)
+                    }}
+                    categories={categories}
                   ></TriggerButton>}
                   modal={<SignupModal
                     setGoalStepsSubmitError={setSubmitError}

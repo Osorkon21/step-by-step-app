@@ -6,7 +6,12 @@
 }
 
 .trash-can:hover {
-  filter: invert(13%) sepia(93%) saturate(7491%) hue-rotate(11deg) brightness(98%) contrast(125%);
+  /* red filter below */
+  /* filter: invert(13%) sepia(93%) saturate(7491%) hue-rotate(11deg) brightness(98%) contrast(125%); */
+
+  filter: invert(16%) sepia(24%) saturate(974%) hue-rotate(159deg) brightness(98%) contrast(98%);
+
+
     
 }
 
@@ -38,7 +43,7 @@
   margin-top: var(--padding);
   /* border: 2px solid var(--darkblur); */
   background-color: var(--middleblur);
-  padding: var(--padding);
+  /* padding: var(--padding); */
   border-radius: 1rem;
 }
 

@@ -228,7 +228,7 @@ export default function Dashboard() {
       {inProgress && Boolean(inProgressGoals?.length) &&
         <>
           {inProgressGoals.map(goal => (
-            <div className="goal-container shadow-lg" key={goal._id}>
+            <div className="goal-container " key={goal._id}>
               <GoalBar
                 goal={goal}
                 currentGoal={currentGoal}

@@ -243,12 +243,12 @@ export default function GoalSteps({ steps, setSteps, goal, setGoal, updateCurren
 
   return (
     <>
-      <form onSubmit={handleFormSubmit} className="goalSteps w-full gap-2">
-        <div className="add-goal-items gap-2 mt-2 flex flex-col items-center justify-center w-full">
+      <form onSubmit={handleFormSubmit} className="goalSteps w-full gap-2 p-2">
+        <div className="add-goal-items gap-2 flex flex-col items-center justify-center w-full">
 
           {usage === "createGoal" &&
             <div className="flex justify-center gap-2 w-full">
-              <textarea ref={inputRef} rows={1} className="input w-full goal-input rounded-3xl p-2 pl-4 shadow-custom focus:bg-white hover:bg-white focus:outline-none bg-lightgray focus:shadow" placeholder="Your goal, ex. Learn computer programming" name="name" value={goal.name} onChange={handleGoalNameChange} />
+              <textarea ref={inputRef} rows={1} className="input w-full goal-input rounded-2xl p-2 pl-4 shadow-custom focus:bg-white hover:bg-white focus:outline-none bg-lightgray focus:shadow" placeholder="Your goal, ex. Learn computer programming" name="name" value={goal.name} onChange={handleGoalNameChange} />
 
               <button className="update-goal-btn rounded-full w-auto" id="try-again" type="submit" onClick={handleTryAgain}>
                 <img src={redo} alt="Try Again" className="" width={"24"}
@@ -289,7 +289,7 @@ export default function GoalSteps({ steps, setSteps, goal, setGoal, updateCurren
           </div>)
         }
 
-        <button className="update-goal-btn mt-2" type="button" onClick={handleAddStep}>Add Step</button>
+        <button className="update-goal-btn mt-2 flex justify-start" type="button" onClick={handleAddStep}>Add Step</button>
         <div className="ag-cat-drop mt-2 flex gap-4 justify-center">
           <CategorySelect className=""
             category={goal.category?.name}

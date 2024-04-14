@@ -35,7 +35,7 @@ export default function ProgressBar(props) {
           )}
       </div>
       <div style={{ height: 10, background: 'lightgray' }}>
-        <div style={{ width: barWidth, height: 10, background: 'orange' }} />
+        <div style={{ width: barWidth, height: 10, background: 'var(--purple)' }} />
       </div>
     </div>
   );

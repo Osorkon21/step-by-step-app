@@ -7,7 +7,7 @@ export default function AddGoal({ className }) {
   const [goalSelected, setGoalSelected] = useState(false);
   const [steps, setSteps] = useState(null);
   const [submitError, setSubmitError] = useState("");
-  const defaultClasses = "body mt-16 max-w-7xl items-center justify-center";
+  const defaultClasses = "body max-w-7xl items-center justify-center";
   const combinedClasses = className ? `addGoal ${defaultClasses} ${className}` : "addGoal " + defaultClasses;
 
   // clear all fields, go to goal create screen
@@ -110,7 +110,7 @@ export default function AddGoal({ className }) {
     <div className={combinedClasses}>
       <p className="paragraphStep"></p>
 
-      <div className="goal-container shadow-lg">
+      <div className="goal-container ">
         {/* if no goal has been submitted, display goal create form */}
         {!goalSelected ? (
           <>

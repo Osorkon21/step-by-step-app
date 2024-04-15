@@ -8,50 +8,48 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurre
   const [timestamp, setTimestamp] = useState('')
   const inputRef = useRef(null);
 
-
   const calculateTimestamp = () => {
     let currentTime = new Date();
     let createdTime = new Date(goal.createdAt);
+    let completedTime = null;
+    let str = "Created ";
+
+    if (goal.completedTimestamp)
+      completedTime = new Date(goal.completedTimestamp);
+
+    if (goal.completed && completedTime) {
+      str = "Completed ";
+      createdTime = completedTime;
+    }
+
     let timeDifference = currentTime.getTime() - createdTime.getTime();
     let secondsDifference = Math.floor(timeDifference / 1000);
 
     if (secondsDifference < 60) {
-      setTimestamp('now')
+      str = str + 'now';
     } else if (secondsDifference < 3600) {
       const minutes = Math.floor(secondsDifference / 60);
-      setTimestamp(`${minutes} minute${minutes !== 1 ? 's' : ''} ago`);
+      str = str + `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
     } else if (secondsDifference < 86400) {
       const hours = Math.floor(secondsDifference / 3600);
-      setTimestamp(`${hours} hour${hours !== 1 ? 's' : ''} ago`);
+      str = str + `${hours} hour${hours !== 1 ? 's' : ''} ago`;
     } else if (secondsDifference < 172800) {
-      setTimestamp('yesterday')
+      str = str + 'yesterday';
     } else if (secondsDifference < 2592000) {
       const days = Math.floor(secondsDifference / 86400);
-      setTimestamp(`${days} day${days !== 1 ? 's' : ''} ago`);
+      str = str + `${days} day${days !== 1 ? 's' : ''} ago`;
     } else {
-      setTimestamp(createdTime.toLocaleDateString());
+      str = str + createdTime.toLocaleDateString();
     }
+
+    setTimestamp(str);
   };
-
-  useEffect(() => {
-    calculateTimestamp()
-
-    // Update the timestamp every minute
-    const interval = setInterval(() => {
-      calculateTimestamp()
-    }, 60000);
-
-    // Clean up the interval on component unmount
-    return () => clearInterval(interval);
-  }, [goal.createdAt]);
-
 
   function handleInputChange(e) {
     if (currentGoal) {
       setCurrentGoal({ ...currentGoal, name: e.target.value });
     }
   }
-
 
   // Resize the textarea to fit the content ?? IS THIS COMMENT CORRECT?
   async function handleGoalBarClick(e) {
@@ -72,6 +70,20 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurre
   function handleInputChange(e) {
     setCurrentGoal({ ...currentGoal, name: e.target.value });
   }
+
+  useEffect(() => {
+    calculateTimestamp();
+  }, [goal])
+
+  useEffect(() => {
+    // Update the timestamp every minute
+    const interval = setInterval(() => {
+      calculateTimestamp()
+    }, 60000);
+
+    // Clean up the interval on component unmount
+    return () => clearInterval(interval);
+  }, [goal.createdAt]);
 
   // Calculate the percentage of steps completed
   useEffect(() => {
@@ -98,7 +110,7 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurre
   }, [currentGoal?.name]);
 
   return (
-    <div className="goalBar flex flex-col md:flex-row justify-center items-center gap-2 cursor-pointer w-full" onClick={(e) => handleGoalBarClick(e)}>
+    <div className="goalBar flex flex-col md:flex-row justify-between items-center gap-2 cursor-pointer w-full p-2" onClick={(e) => handleGoalBarClick(e)}>
       <div className="flex flex-row gap-4 w-full justify-start items-center">
 
         {(currentGoal && goal._id === currentGoal._id) ?
@@ -121,21 +133,21 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurre
 
         <div className='text-xl flex w-full'>
           {(currentGoal && goal._id === currentGoal._id) ?
-            <textarea ref={inputRef} rows={1} className="goal-name-input  w-full rounded-3xl p-2 pl-4 shadow-custom focus:bg-white hover:bg-white focus:outline-none bg-lightgray focus:shadow" name="title" id="title" placeholder="Your goal, ex. Learn computer programming" value={currentGoal.name} onChange={handleInputChange} />
+            <textarea ref={inputRef} rows={1} className="goal-name-input  w-full rounded-2xl p-2 pl-4 shadow-custom focus:bg-white hover:bg-white focus:outline-none bg-lightgray focus:shadow" name="title" id="title" placeholder="Your goal, ex. Learn computer programming" value={currentGoal.name} onChange={handleInputChange} />
             :
             <span>{goal.name}</span>
           }
         </div>
 
       </div>
-      <div className="flex gap-4 justify-between w-full items-center">
+      <div className="flex gap-4 xs:gap-8 w-full justify-center md:justify-end items-center">
         <ProgressBar
           label={"Completed"}
           value={(currentGoal && goal._id === currentGoal._id) ? percentComplete : Math.floor(goal.completedStepCount / goal.stepsCount * 100)}
         ></ProgressBar>
 
         <div className="date w-32">
-          <span>Created {timestamp}</span>
+          <span>{timestamp}</span>
         </div>
 
         {/* Last edited at {new Date(goal.createdAt).toLocaleTimeString()} */}

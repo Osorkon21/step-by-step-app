@@ -73,11 +73,16 @@ export default function Dashboard() {
 
     const catToUse = categories.find((cat) => cat.name === currentGoal.category.name);
 
+    const completed = filteredSteps.every((step) => step.completed);
+
     const newGoal = {
       name: currentGoal.name,
 
       // if all steps are completed, goal is completed
-      completed: filteredSteps.every((step) => step.completed),
+      completed: completed,
+
+      // if goal is newly completed update completedTimestamp, otherwise don't change it
+      completedTimestamp: (!currentGoal.completed && completed) ? new Date() : currentGoal.completedTimestamp ? currentGoal.completedTimestamp : null,
 
       category: catToUse.id,
       steps: filteredSteps
@@ -197,6 +202,7 @@ export default function Dashboard() {
   }
 
   // load goals from database once user id is defined
+  // NOTE: This saves temporary goals twice in development due to Strict Mode. Obviously this violates best practices. It works in production, though, and I can't figure out a way around this right now.
   useEffect(() => {
     if (appCtx.user?._id) {
       if (appCtx.tempGoal)

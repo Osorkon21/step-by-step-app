@@ -8,50 +8,48 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurre
   const [timestamp, setTimestamp] = useState('')
   const inputRef = useRef(null);
 
-
   const calculateTimestamp = () => {
     let currentTime = new Date();
     let createdTime = new Date(goal.createdAt);
+    let completedTime = null;
+    let str = "Created ";
+
+    if (goal.completedTimestamp)
+      completedTime = new Date(goal.completedTimestamp);
+
+    if (goal.completed && completedTime) {
+      str = "Completed ";
+      createdTime = completedTime;
+    }
+
     let timeDifference = currentTime.getTime() - createdTime.getTime();
     let secondsDifference = Math.floor(timeDifference / 1000);
 
     if (secondsDifference < 60) {
-      setTimestamp('now')
+      str = str + 'now';
     } else if (secondsDifference < 3600) {
       const minutes = Math.floor(secondsDifference / 60);
-      setTimestamp(`${minutes} minute${minutes !== 1 ? 's' : ''} ago`);
+      str = str + `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
     } else if (secondsDifference < 86400) {
       const hours = Math.floor(secondsDifference / 3600);
-      setTimestamp(`${hours} hour${hours !== 1 ? 's' : ''} ago`);
+      str = str + `${hours} hour${hours !== 1 ? 's' : ''} ago`;
     } else if (secondsDifference < 172800) {
-      setTimestamp('yesterday')
+      str = str + 'yesterday';
     } else if (secondsDifference < 2592000) {
       const days = Math.floor(secondsDifference / 86400);
-      setTimestamp(`${days} day${days !== 1 ? 's' : ''} ago`);
+      str = str + `${days} day${days !== 1 ? 's' : ''} ago`;
     } else {
-      setTimestamp(createdTime.toLocaleDateString());
+      str = str + createdTime.toLocaleDateString();
     }
+
+    setTimestamp(str);
   };
-
-  useEffect(() => {
-    calculateTimestamp()
-
-    // Update the timestamp every minute
-    const interval = setInterval(() => {
-      calculateTimestamp()
-    }, 60000);
-
-    // Clean up the interval on component unmount
-    return () => clearInterval(interval);
-  }, [goal.createdAt]);
-
 
   function handleInputChange(e) {
     if (currentGoal) {
       setCurrentGoal({ ...currentGoal, name: e.target.value });
     }
   }
-
 
   // Resize the textarea to fit the content ?? IS THIS COMMENT CORRECT?
   async function handleGoalBarClick(e) {
@@ -72,6 +70,20 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurre
   function handleInputChange(e) {
     setCurrentGoal({ ...currentGoal, name: e.target.value });
   }
+
+  useEffect(() => {
+    calculateTimestamp();
+  }, [goal])
+
+  useEffect(() => {
+    // Update the timestamp every minute
+    const interval = setInterval(() => {
+      calculateTimestamp()
+    }, 60000);
+
+    // Clean up the interval on component unmount
+    return () => clearInterval(interval);
+  }, [goal.createdAt]);
 
   // Calculate the percentage of steps completed
   useEffect(() => {
@@ -135,7 +147,7 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurre
         ></ProgressBar>
 
         <div className="date w-32">
-          <span>Created {timestamp}</span>
+          <span>{timestamp}</span>
         </div>
 
         {/* Last edited at {new Date(goal.createdAt).toLocaleTimeString()} */}

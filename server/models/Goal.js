@@ -12,6 +12,9 @@ const goalSchema = new Schema({
     type: Boolean,
     default: false
   },
+  completedTimestamp: {
+    type: Date
+  },
   category: {
     type: Schema.Types.ObjectId,
     ref: 'Category'

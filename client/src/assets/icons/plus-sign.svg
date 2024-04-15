@@ -1,1 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m0 0h24v24h-24z" fill="#fff" opacity="0" transform="matrix(-1 0 0 -1 24 24)"/><path d="m19 11h-6v-6a1 1 0 0 0 -2 0v6h-6a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2z" fill="#162e3d"/></svg>
+<!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m0 0h24v24h-24z" fill="#fff" opacity="0" transform="matrix(-1 0 0 -1 24 24)"/><path d="m19 11h-6v-6a1 1 0 0 0 -2 0v6h-6a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2z" fill="#162e3d"/></svg> -->
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M24 12C24 13.0865 23.1192 13.9672 22.0328 13.9672H1.96721C0.880751 13.9672 0 13.0865 0 12V12C0 10.9135 0.880751 10.0328 1.96721 10.0328H22.0328C23.1192 10.0328 24 10.9135 24 12V12Z" fill="#162e3d"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M12.0001 24C10.9136 24 10.0329 23.1192 10.0329 22.0328L10.0329 1.96721C10.0329 0.880751 10.9136 -1.6685e-07 12.0001 -1.07487e-07V-1.07487e-07C13.0865 -4.81236e-08 13.9673 0.880751 13.9673 1.96721L13.9673 22.0328C13.9673 23.1192 13.0865 24 12.0001 24V24Z" fill="#162e3d"/>
+</svg>

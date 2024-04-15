@@ -8,23 +8,23 @@ export default function DashboardHeader({ categories, currentCategory, handleCat
   const [displayAddGoal, setDisplayAddGoal] = useState(false);
 
   return (
-    <div className="dashboardHeader dash-header text-center mt-8 text-purple w-full flex flex-col justify-center items-center">
-      <div className="my-12 w-full flex justify-center">
+    <div className="dashboardHeader dash-header text-center text-purple w-full flex flex-col justify-center items-center">
+      <div className="mt-10 mb-8 w-full flex justify-center">
         {displayAddGoal ?
           <AddGoal />
           :
           <Link className="cursor-pointer" onPress={() => setDisplayAddGoal(true)}>
-            <img className="bg-middle rounded-full p-4 border-2 border-transparent hover:border-purple" src={plusSign} alt="plus sign" width="96" height="96" />
+            <img className="bg-middleblur rounded-full p-6 border-2 border-transparent hover:scale-110" src={plusSign} alt="plus sign" width="80" height="80" />
           </Link>
         }
 
       </div>
-      <div className=" flex justify-center items-center gap-2">
-        <button className="shadow-custom rounded-2xl grow h-12 px-2 max-w-xs" type="button" style={inProgress ? { border: "2px solid var(--purple)" } : { border: "" }} onClick={() => { setCurrentGoal(null); setInProgress(true); setSubmitError(""); }}>In Progress Goals</button>
-        <button className="shadow-custom rounded-2xl grow h-12 px-2 max-w-xs " type="button" style={!inProgress ? { border: "2px solid var(--purple)" } : { border: "" }} onClick={() => { setCurrentGoal(null); setInProgress(false); setSubmitError(""); }}>Completed Goals</button>
+      <div className=" flex justify-center items-center bg-middleblur gap-1 p-1 rounded-2xl">
+        <button className="rounded-xl grow h-12 px-8 sm:px-12 md:px-16 max-w-xs" type="button" style={inProgress ? { backgroundColor: "var(--purple)", color: "white" } : { border: "" }} onClick={() => { setCurrentGoal(null); setInProgress(true); setSubmitError(""); }}>In Progress Goals</button>
+        <button className="rounded-xl grow h-12 px-8 sm:px-12 md:px-16 max-w-xs " type="button" style={!inProgress ? { backgroundColor: "var(--purple)", color: "white" } : { border: "" }} onClick={() => { setCurrentGoal(null); setInProgress(false); setSubmitError(""); }}>Completed Goals</button>
       </div>
-      <div className="mt-12">
-        <h5 className="p-1">Filter by category</h5>
+      <div className="mt-8">
+        <h5 className="pb-1">Filter by category</h5>
         <CategorySelect
           category={currentCategory}
           categories={categories}

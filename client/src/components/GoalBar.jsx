@@ -110,7 +110,7 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurre
   }, [currentGoal?.name]);
 
   return (
-    <div className="goalBar flex flex-col md:flex-row justify-center items-center gap-2 cursor-pointer w-full" onClick={(e) => handleGoalBarClick(e)}>
+    <div className="goalBar flex flex-col md:flex-row justify-between items-center gap-2 cursor-pointer w-full p-2" onClick={(e) => handleGoalBarClick(e)}>
       <div className="flex flex-row gap-4 w-full justify-start items-center">
 
         {(currentGoal && goal._id === currentGoal._id) ?
@@ -133,14 +133,14 @@ export default function GoalBar({ goal, currentGoal, setCurrentGoal, updateCurre
 
         <div className='text-xl flex w-full'>
           {(currentGoal && goal._id === currentGoal._id) ?
-            <textarea ref={inputRef} rows={1} className="goal-name-input  w-full rounded-3xl p-2 pl-4 shadow-custom focus:bg-white hover:bg-white focus:outline-none bg-lightgray focus:shadow" name="title" id="title" placeholder="Your goal, ex. Learn computer programming" value={currentGoal.name} onChange={handleInputChange} />
+            <textarea ref={inputRef} rows={1} className="goal-name-input  w-full rounded-2xl p-2 pl-4 shadow-custom focus:bg-white hover:bg-white focus:outline-none bg-lightgray focus:shadow" name="title" id="title" placeholder="Your goal, ex. Learn computer programming" value={currentGoal.name} onChange={handleInputChange} />
             :
             <span>{goal.name}</span>
           }
         </div>
 
       </div>
-      <div className="flex gap-4 justify-between w-full items-center">
+      <div className="flex gap-4 xs:gap-8 w-full justify-center md:justify-end items-center">
         <ProgressBar
           label={"Completed"}
           value={(currentGoal && goal._id === currentGoal._id) ? percentComplete : Math.floor(goal.completedStepCount / goal.stepsCount * 100)}

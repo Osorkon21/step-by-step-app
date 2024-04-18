@@ -42,13 +42,18 @@ export default function GoalSteps({ steps, setSteps, goal, setGoal, updateCurren
 
     const catToUse = categories.find((cat) => cat.name === goal.category.name);
 
+    const completed = filteredSteps.every((step) => step.completed);
+
     const newGoal = {
       name: goal.name,
 
       // if all steps are completed, goal is completed
-      completed: filteredSteps.every((step) => step.completed),
+      completed: completed,
 
-      category: catToUse._id,
+      // if goal is newly completed update completedTimestamp, otherwise don't change it
+      completedTimestamp: (!goal.completed && completed) ? new Date() : goal.completedTimestamp ? goal.completedTimestamp : null,
+
+      category: catToUse.id,
       steps: filteredSteps
     }
 
@@ -72,7 +77,12 @@ export default function GoalSteps({ steps, setSteps, goal, setGoal, updateCurren
     if (response.ok) {
 
       // refresh dashboard after creating/updating goal
-      window.location.href = "/";
+      if (usage === "createGoal")
+        window.location.href = "/";
+      else if (usage === "updateGoal") {
+        setGoal(null); // collapse current goal
+        updateCurrentGoal();
+      }
     }
     else {
       console.log(response);
@@ -251,8 +261,7 @@ export default function GoalSteps({ steps, setSteps, goal, setGoal, updateCurren
               <textarea ref={inputRef} rows={1} className="input w-full goal-input rounded-2xl p-2 pl-4 shadow-custom focus:bg-white hover:bg-white focus:outline-none bg-lightgray focus:shadow" placeholder="Your goal, ex. Learn computer programming" name="name" value={goal.name} onChange={handleGoalNameChange} />
 
               <button className="update-goal-btn rounded-full w-auto" id="try-again" type="submit" onClick={handleTryAgain}>
-                <img src={redo} alt="Try Again" className="" width={"24"}
-                  height={"24"} />
+                <img src={redo} alt="Try Again" className="" width={"24"} height={"24"} />
               </button>
             </div>
 

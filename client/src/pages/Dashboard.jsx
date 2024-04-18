@@ -227,14 +227,12 @@ export default function Dashboard() {
   useEffect(() => {
     let interval;
 
-    console.log("celebrate is:", celebrate)
-
     if (celebrate) {
       // celebrate for a few seconds
       interval = setInterval(() => {
         setCelebrate(false);
         clearInterval(interval);
-      }, 1500);
+      }, 1750);
     }
 
     // Clean up the interval on component unmount

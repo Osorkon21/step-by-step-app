@@ -1,7 +1,8 @@
-import { DashboardHeader, GoalBar, GoalSteps } from "../components";
+import { DashboardHeader, GoalBar, GoalSteps, Congratulations } from "../components";
 import { useEffect, useState } from "react";
 import { useAppCtx } from "../utils/AppProvider";
 import { v4 as uuidv4 } from "uuid"
+import ConfettiExplosion from "react-confetti-explosion"
 
 export default function Dashboard() {
 
@@ -23,6 +24,9 @@ export default function Dashboard() {
   const [currentCategory, setCurrentCategory] = useState(null);
 
   const [submitError, setSubmitError] = useState("");
+
+  // user has completed a goal, display animation
+  const [celebrate, setCelebrate] = useState(false);
 
   // clear goal currently displayed
   function reset() {
@@ -109,6 +113,9 @@ export default function Dashboard() {
 
           return goal;
         })
+
+        if ((!currentGoal.completed && completed))
+          setCelebrate(true);
 
         setGoals(newGoals);
         renderGoals(newGoals);
@@ -217,8 +224,26 @@ export default function Dashboard() {
       getCategories();
   }, [])
 
+  useEffect(() => {
+    let interval;
+
+    if (celebrate) {
+      // celebrate for a few seconds
+      interval = setInterval(() => {
+        setCelebrate(false);
+        clearInterval(interval);
+      }, 1750);
+    }
+
+    // Clean up the interval on component unmount
+    return () => clearInterval(interval);
+  }, [celebrate])
+
   return (
     <div className="dashboard body mt-16 max-w-7xl p-4">
+      {celebrate && <ConfettiExplosion style={{ position: "fixed", top: "50%", left: "50%" }} />}
+      {celebrate && <Congratulations />}
+
       {/* buttons at the top that switch between in progress and completed goals */}
       <DashboardHeader
         categories={categories}
@@ -256,6 +281,7 @@ export default function Dashboard() {
                     setSubmitError={setSubmitError}
                     usage="updateGoal"
                     defaultChecked={false}
+                    celebrate={celebrate}
                   ></GoalSteps>
                   {submitError && (<div className="text-red-600 ms-2">
                     {submitError}
@@ -298,6 +324,7 @@ export default function Dashboard() {
                     setSubmitError={setSubmitError}
                     usage="updateGoal"
                     defaultChecked={true}
+                    celebrate={celebrate}
                   ></GoalSteps>
                   {submitError && (<div className="text-red-600 ms-2">
                     {submitError}
